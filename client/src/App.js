@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import GlobalNavbar from "./components/Navigation/GlobalNavbar";
+import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 // import { renderRoutes, allRoutes } from "./Router";
 
@@ -9,7 +11,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Register />} />
+          <Route path="/" element={
+            <Register />
+          } />
+          <Route path="/dashboard" element={<GlobalNavbar>
+            <Dashboard />
+          </GlobalNavbar>} />
           {/* <Route path="teams/new" element={<NewTeam />} /> */}
         </Routes>
       </BrowserRouter>
