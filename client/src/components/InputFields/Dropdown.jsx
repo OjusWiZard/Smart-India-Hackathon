@@ -25,6 +25,7 @@ export default function Dropdown({ heading, menuItems }) {
                 <Menu.Item key={item.text}>
                   {({ active }) => (
                     <button
+                      onClick={item.onClick}
                       className={`${
                         active ? "bg-primary-extra-light" : "text-gray-900"
                       } group flex rounded-md items-center w-full px-9 pt-8 pb-6 text-sm`}
