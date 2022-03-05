@@ -4,6 +4,7 @@ import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
 import { ReactComponent as NoFileIcon } from "../../assets/icons/no-file.svg";
 import FilledPrimary from "../../components/Buttons/Filled-primary";
 import AddCertificateModal from "../../components/Modals/AddCertifcation";
+import Certificate from "../../components/Certificates";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,8 +40,22 @@ const Dashboard = () => {
           <Dropdown heading="Upload Ceriticates..." menuItems={menuItems} />
         </div>
         <div className="mt-8">
-          <div className="flex items-center justify-center bg-white py-[115px] px-[110px] rounded-md">
+          {/* <div className="flex items-center justify-center bg-white py-[115px] px-[110px] rounded-md">
             Your certificates will appear here
+          </div> */}
+          <div
+            className="flex items-center justify-start overflow-x-scroll w-full
+          bg-white px-8 py-10 rounded-md space-x-7"
+          >
+            <Certificate certificate="EWS" />
+            <Certificate certificate="EWS" />
+            <Certificate certificate="EWS" />
+            <Certificate certificate="EWS" />
+            <Certificate certificate="EWS" />
+            {/* <Certificate certificate="EWS" /> */}
+            {/* <Certificate certificate="CASTE" />
+            <Certificate certificate="INCOME" />
+            <Certificate certificate="10th" /> */}
           </div>
         </div>
         <div className="mt-9">

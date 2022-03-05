@@ -4,6 +4,7 @@ import "./App.css";
 import GlobalNavbar from "./components/Navigation/GlobalNavbar";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
+import Scholarships from "./pages/Scholarships";
 // import { renderRoutes, allRoutes } from "./Router";
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
           } />
           <Route path="/dashboard" element={<GlobalNavbar>
             <Dashboard />
+          </GlobalNavbar>} />
+          <Route path="/scholarships" element={<GlobalNavbar>
+            <Scholarships />
           </GlobalNavbar>} />
           {/* <Route path="teams/new" element={<NewTeam />} /> */}
         </Routes>
