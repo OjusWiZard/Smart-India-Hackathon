@@ -1,0 +1,6 @@
+* {
+  box-sizing: border-box;
+}
+.action:hover svg path {
+  stroke: "#6C42C1" !important;
+}

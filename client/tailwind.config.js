@@ -6,8 +6,12 @@ module.exports = {
         primary: {
           "dark": "#6C42C1",
           "light": "#F5ECFF",
+          "extra-light": "#FBF8FE",
           "grey": "#363636"
         },
+        secondary: {
+          "dark": "#ED5B75",
+        }
       },
     },
   },
