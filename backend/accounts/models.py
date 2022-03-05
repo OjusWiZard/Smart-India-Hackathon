@@ -1,11 +1,9 @@
-from sys import last_traceback
 from django.db import models
 
 from datetime import date
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.utils.translation import ugettext_lazy as _
 
 from .manager import UserManager
 
@@ -22,16 +20,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ['phone_number']
+    USERNAME_FIELD = "phone_number"
 
     class Meta:
-        ordering = ('phone_number')
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        ordering = ("phone_number",)
+        verbose_name = "user"
+        verbose_name_plural = "users"
 
     def get_short_name(self):
-        if self.first_name != '' and self.last_name != '':
+        if self.first_name != "" and self.last_name != "":
             return self.first_name + self.last_name
         else:
             return str(self.phone_number)
