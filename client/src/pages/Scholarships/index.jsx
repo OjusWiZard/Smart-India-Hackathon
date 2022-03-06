@@ -1,5 +1,5 @@
 import React from "react";
-import ScholarshipRow from "../../components/Row/ScholarshipRow";
+import ScholarshipRow from "components/Row/ScholarshipRow";
 
 const Scholarships = () => {
   const Scholarships = [

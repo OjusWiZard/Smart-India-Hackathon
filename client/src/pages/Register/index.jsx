@@ -1,12 +1,12 @@
 import React from "react";
-import { ReactComponent as FileIcon } from "../../assets/icons/file-icon.svg";
-import { ReactComponent as Certisetu } from "../../assets/heading-vectors/CERTISETU.svg";
-import { ReactComponent as GetAhead } from "../../assets/heading-vectors/get-ahead.svg";
-import { ReactComponent as GetAScholarship } from "../../assets/heading-vectors/get-a-scholarship.svg";
-import { ReactComponent as Tick } from "../../assets/icons/purple-tick.svg";
-import Coin from "../../assets/icons/coin.svg";
-import FilledPrimary from "../../components/Buttons/Filled-primary";
-import TextInput from "../../components/InputFields/TextInput";
+import { ReactComponent as FileIcon } from "assets/icons/file-icon.svg";
+import { ReactComponent as Certisetu } from "assets/heading-vectors/CERTISETU.svg";
+import { ReactComponent as GetAhead } from "assets/heading-vectors/get-ahead.svg";
+import { ReactComponent as GetAScholarship } from "assets/heading-vectors/get-a-scholarship.svg";
+import { ReactComponent as Tick } from "assets/icons/purple-tick.svg";
+import Coin from "assets/icons/coin.svg";
+import FilledPrimary from "components/Buttons/Filled-primary";
+import TextInput from "components/InputFields/TextInput";
 
 export default function Register() {
   const menuItems = [

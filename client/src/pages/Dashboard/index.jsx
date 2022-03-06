@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Dropdown from "../../components/InputFields/Dropdown";
-import { ReactComponent as WalletIcon } from "../../assets/icons/wallet.svg";
-import { ReactComponent as NoFileIcon } from "../../assets/icons/no-file.svg";
-import FilledPrimary from "../../components/Buttons/Filled-primary";
-import AddCertificateModal from "../../components/Modals/AddCertifcation";
-import Certificate from "../../components/Certificates";
+import Dropdown from "components/InputFields/Dropdown";
+import { ReactComponent as WalletIcon } from "assets/icons/wallet.svg";
+import { ReactComponent as NoFileIcon } from "assets/icons/no-file.svg";
+import FilledPrimary from "components/Buttons/Filled-primary";
+import AddCertificateModal from "components/Modals/AddCertifcation";
+import Certificate from "components/Certificates";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
