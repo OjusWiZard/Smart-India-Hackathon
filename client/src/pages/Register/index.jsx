@@ -19,7 +19,7 @@ export default function Register() {
   ];
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-      <div className="bg-primary-dark">
+      <div className="bg-primary-dark lg:block hidden">
         <div className="py-[90px] px-[100px]">
           <div className="flex items-center justify-start">
             <FileIcon />
@@ -54,10 +54,10 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center lg:bg-white bg-primary-dark">
         <div className="max-w-md">
           <div className="w-full">
-            <div className="py-10 px-8 shadow-md rounded-2xl">
+            <div className="py-10 px-8 shadow-md rounded-2xl bg-white">
               <div className="font-normal text-md">Welcome</div>
               <div className="font-bold text-3xl">Register now</div>
               <div className="form">
@@ -71,10 +71,12 @@ export default function Register() {
                     menuItems={menuItems}
                   />
                 </div>
-                <div className="mt-8">
+                <div className="my-8">
                   <div className="flex items-center justify-start">
-                    <input type="checkbox" className="mr-3" />
-                    <div className="text-sm font-normal">Remember Me</div>
+                    <input type="radio" className="mr-3 default:ring-2" />
+                    <div className="text-sm text-[#1C1C1C] font-normal">
+                      Remember Me
+                    </div>
                   </div>
                 </div>
                 <FilledPrimary text="Register" />
