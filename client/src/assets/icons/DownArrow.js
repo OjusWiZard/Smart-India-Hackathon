@@ -1,6 +1,6 @@
 import React from "react";
 
-const DownArrow = ({arrowColor}) => {
+const DownArrow = ({ arrowColor }) => {
   return (
     <svg
       width="34"

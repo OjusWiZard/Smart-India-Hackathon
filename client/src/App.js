@@ -12,15 +12,23 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={
-            <Register />
-          } />
-          <Route path="/dashboard" element={<GlobalNavbar>
-            <Dashboard />
-          </GlobalNavbar>} />
-          <Route path="/scholarships" element={<GlobalNavbar>
-            <Scholarships />
-          </GlobalNavbar>} />
+          <Route path="/" element={<Register />} />
+          <Route
+            path="/dashboard"
+            element={
+              <GlobalNavbar>
+                <Dashboard />
+              </GlobalNavbar>
+            }
+          />
+          <Route
+            path="/scholarships"
+            element={
+              <GlobalNavbar>
+                <Scholarships />
+              </GlobalNavbar>
+            }
+          />
           {/* <Route path="teams/new" element={<NewTeam />} /> */}
         </Routes>
       </BrowserRouter>

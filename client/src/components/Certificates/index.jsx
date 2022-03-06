@@ -7,7 +7,7 @@ const Certificate = ({ certificate }) => {
     caste: "#256FEF",
     income: "#EF5DA8",
     "10th": "#5D5FEF",
-  };  
+  };
   return (
     <div
       className={`text-white rounded-lg py-5 px-4 bg-[${ColourConstants[certificate]}] w-[220px]`}
