@@ -7,7 +7,6 @@ import { ReactComponent as Tick } from "../../assets/icons/purple-tick.svg";
 import Coin from "../../assets/icons/coin.svg";
 import FilledPrimary from "../../components/Buttons/Filled-primary";
 import TextInput from "../../components/InputFields/TextInput";
-import Dropdown from "../../components/InputFields/Dropdown";
 
 export default function Register() {
   const menuItems = [
