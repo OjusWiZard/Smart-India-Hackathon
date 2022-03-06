@@ -13,7 +13,7 @@ const Certificate = ({ certificate }) => {
       className={`text-white rounded-lg py-5 px-4 bg-[${ColourConstants[certificate]}] w-[220px]`}
     >
       <div className="font-bold text-2xl capitalize">
-        {certificate} Certificate
+        {certificate}<br/>Certificate
       </div>
       <div className="mt-3">123456789</div>
       <div className="mt-7">
