@@ -1,0 +1,12 @@
+{
+    "nftID": "246346724",
+    "name": "CertiSetu",
+    "description": "Get ahead. Get a Scholarship!",
+    "version": "0.0.1",
+    "license": {
+        "name": "GPL",
+        "details": "GNU General Public License 3.0"
+    },
+    "author": "Ojuswi Rastogi ojuswimail@gmail.com",
+    "homepage": "https://certisetu.ml"
+}
