@@ -5,8 +5,8 @@ import { Fragment } from "react";
 const TextInput = ({ label = "", placeholder = "", menuItems = [] }) => {
   return (
     <div>
-      <label class="block">
-        <span class="block text-base font-regular text-primary-grey">
+      <label className="block">
+        <span className="block text-base font-regular text-primary-grey">
           {label}
         </span>
         {menuItems.length > 0 ? (
@@ -53,7 +53,7 @@ const TextInput = ({ label = "", placeholder = "", menuItems = [] }) => {
             <input
               type="text"
               placeholder={placeholder}
-              class="mt-2 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
+              className="mt-2 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
           focus:outline-none"
             />
           </div>
@@ -61,7 +61,7 @@ const TextInput = ({ label = "", placeholder = "", menuItems = [] }) => {
           <input
             type="text"
             placeholder={placeholder}
-            class="mt-2 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
+            className="mt-2 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
           focus:outline-none
         "
           />
