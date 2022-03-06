@@ -2,7 +2,12 @@ import React from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-const TextInput = ({ label = "", placeholder = "", menuItems = [] }) => {
+const TextInput = ({
+  label = "",
+  placeholder = "",
+  menuItems = [],
+  border = "",
+}) => {
   return (
     <div>
       <label className="block">
@@ -61,9 +66,12 @@ const TextInput = ({ label = "", placeholder = "", menuItems = [] }) => {
           <input
             type="text"
             placeholder={placeholder}
-            className="mt-2 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
-          focus:outline-none
-        "
+            className={`mt-2 ${
+              border === "all"
+                ? "border border-secondary-border rounded-md"
+                : "border border-white border-b-secondary-border"
+            } block w-full font-regular px-5 py-4 bg-white text-sm placeholder-secondary-placeholder
+            focus:outline-none`}
           />
         )}
       </label>

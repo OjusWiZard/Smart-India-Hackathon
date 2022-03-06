@@ -11,7 +11,7 @@ router.post("/get", (req, res) => {
 
         console.log(data);
         if (data.status == "sent") return res.send({ result: true, id: data.id });
-        res.status(400).send({ result: false, message: "Error Occured!" });
+        res.status(400).send({ result: false, error: "Error Occured!" });
     });
 });
 
@@ -33,7 +33,7 @@ router.post("/verify", (req, res) => {
             const token = jwt.sign({ name, phone: data.recipient }, process.env.JWT_SECRET);
             return res.send({ result: true, token });
         }
-        res.status(400).send({ result: false, message: "Error Occured!" });
+        res.status(400).send({ result: false, error: "Error Occured!" });
     });
 });
 
