@@ -9,19 +9,25 @@ const Certificate = ({ certificate }) => {
     "10th": "#5D5FEF",
   };
   return (
-    <div
-      className={`text-white rounded-lg py-5 px-4 bg-[${ColourConstants[certificate]}] w-[220px]`}
-    >
-      <div className="font-bold text-2xl capitalize">
-        {certificate}<br/>Certificate
-      </div>
-      <div className="mt-3">123456789</div>
-      <div className="mt-7">
-        <div className="flex justify-end pr-5">
-          <DownArrow arrowColor={ColourConstants[certificate]} />
+    <>
+      {ColourConstants[certificate] && (
+        <div
+          className={`text-black rounded-lg py-5 px-4 bg-[${ColourConstants[certificate]}] w-[220px]`}
+        >
+          <div className="font-bold text-2xl capitalize">
+            {certificate}
+            <br />
+            Certificate
+          </div>
+          <div className="mt-3">1234 56789</div>
+          <div className="mt-7">
+            <div className="flex justify-end pr-5">
+              <DownArrow arrowColor={ColourConstants[certificate]} />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
