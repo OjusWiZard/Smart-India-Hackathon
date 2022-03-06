@@ -35,5 +35,5 @@ app.use(
 app.use("/auth", require("./routes/auth"));
 
 // Server
-const PORT = process.env.PORT | 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Listening on port", PORT));
