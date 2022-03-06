@@ -45,13 +45,13 @@ const Dashboard = () => {
           </div> */}
           <div
             className="flex items-center justify-start overflow-x-scroll w-full
-          bg-white px-8 py-10 rounded-md space-x-7"
+          bg-white px-8 py-10 rounded-md space-x-7 example"
           >
-            <Certificate certificate="EWS" />
-            <Certificate certificate="EWS" />
-            <Certificate certificate="EWS" />
-            <Certificate certificate="EWS" />
-            <Certificate certificate="EWS" />
+            <Certificate certificate="ews" />
+            <Certificate certificate="caste" />
+            <Certificate certificate="income" />
+            <Certificate certificate="ews" />
+            <Certificate certificate="ews" />
             {/* <Certificate certificate="EWS" /> */}
             {/* <Certificate certificate="CASTE" />
             <Certificate certificate="INCOME" />

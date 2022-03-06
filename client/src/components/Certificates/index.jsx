@@ -1,21 +1,24 @@
 import React from "react";
-import { ReactComponent as DownArrow } from "../../assets/icons/down-arrow.svg";
+import DownArrow from "../../assets/icons/DownArrow.js";
 
 const Certificate = ({ certificate }) => {
-  const CERTIFICATE = {
-    EWS: "#119199",
-    CASTE: "#256FEF",
-    INCOME: "#EF5DA8",
+  const ColourConstants = {
+    ews: "#119199",
+    caste: "#256FEF",
+    income: "#EF5DA8",
     "10th": "#5D5FEF",
-  };
-
+  };  
   return (
-    <div className={`text-white rounded-lg py-5 bg-[#EF5DA8] w-[220px]`}>
-      <div className="font-bold text-2xl pl-5">EWS Certificate</div>
-      <div className="mt-3 pl-5">123456789</div>
+    <div
+      className={`text-white rounded-lg py-5 px-4 bg-[${ColourConstants[certificate]}] w-[220px]`}
+    >
+      <div className="font-bold text-2xl capitalize">
+        {certificate} Certificate
+      </div>
+      <div className="mt-3">123456789</div>
       <div className="mt-7">
         <div className="flex justify-end pr-5">
-          <DownArrow />
+          <DownArrow arrowColor={ColourConstants[certificate]} />
         </div>
       </div>
     </div>
