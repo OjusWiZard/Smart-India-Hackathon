@@ -3,21 +3,23 @@ FA2 = sp.io.import_script_from_url("https://smartpy.io/templates/FA2.py")
 
 
 class Certificate(FA2.FA2):
-     def __init__(self, config, metadata, admin):
-         super().__init__(config, metadata, admin)
-         self.update_initial_storage(issuers=sp.set([admin]))
+    def __init__(self, config, metadata, admin):
+        super().__init__(config, metadata, admin)
+        self.update_initial_storage(
+            issuers=sp.set([admin]),
+        )
 
     def is_issuer(self, person):
         return self.data.issuers.contains(person)
 
     @sp.entry_point
     def add_issuer(self, params):
-        sp.verify(self.is_admin(sp.sender))
+        sp.verify(self.is_administrator(sp.sender))
         self.data.issuers.add(params.issuer)
 
     @sp.entry_point
     def revoke_issuer(self, params):
-        sp.verify(self.is_admin(sp.sender))
+        sp.verify(self.is_administrator(sp.sender))
         self.data.issuers.remove(params.issuer)
 
     @sp.entry_point
@@ -38,7 +40,7 @@ class Certificate(FA2.FA2):
         sp.if self.data.ledger.contains(user):
             self.data.ledger[user].balance += params.amount
         sp.else:
-            self.data.ledger[user] = Ledger_value.make(params.amount)
+            self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
         sp.if ~ self.token_id_set.contains(self.data.all_tokens, params.token_id):
             self.token_id_set.add(self.data.all_tokens, params.token_id)
             self.data.token_metadata[params.token_id] = sp.record(
@@ -85,7 +87,7 @@ class Certificate(FA2.FA2):
                     sp.if self.data.ledger.contains(to_user):
                         self.data.ledger[to_user].balance += tx.amount
                     sp.else:
-                            self.data.ledger[to_user] = Ledger_value.make(tx.amount)
+                            self.data.ledger[to_user] = FA2.Ledger_value.make(tx.amount)
                 sp.else:
                     pass
 
@@ -129,23 +131,25 @@ def test():
 
     sc.p("issuer1 mints a certificate to student1")
     sc += fa2.mint(
+        address=student1.address,
         amount=1,
-        token_id=fa2.total_supply()+1,
-        metadata = fa2.make_metadata(
+        token_id=fa2.data.all_tokens,
+        metadata = FA2.FA2.make_metadata(
             name = "B.Tech Marksheet - Student1",
             decimals = 0,
-            symbol = "MARK1"
+            symbol = "BTECHMARK1"
         )
     ).run(sender = issuer1)
 
     sc.p("issuer1 mints a certificate to student2")
     sc += fa2.mint(
+        address=student1.address,
         amount=1,
-        token_id=fa2.total_supply()+1,
-        metadata = fa2.make_metadata(
+        token_id=fa2.data.all_tokens,
+        metadata = FA2.FA2.make_metadata(
             name = "B.Tech Marksheet - Student2",
             decimals = 0,
-            symbol = "MARK2"
+            symbol = "BTECHMARK2"
         )
     ).run(sender = issuer1)
 
