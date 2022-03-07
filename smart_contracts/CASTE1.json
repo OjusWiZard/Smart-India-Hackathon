@@ -1,0 +1,19 @@
+{
+    "name": "Jon Doe",
+    "relation": "Son",
+    "father": "John Doe",
+    "mother": "Jane Doe",
+    "city": "Baraipur",
+    "tehsil": "Gola",
+    "district": "Gorakhpur",
+    "state": "Uttar Pradesh",
+    "community": "Ahir",
+    "class": "OBC",
+    "associated": [
+        "Government of India, Ministry of Welfare Resolution No. 12011/68/93-BCC(C) dated 13th Sept. 1993, published in the Gazette of India Extra Ordinary Part-I Section-I Dated 13th Sept. 1993 and onwards till data.",
+        "Column 3 of schedule to the Government of India, Department of Personnel & Training O.M.No. 36012/22/93 Estt(SCT)",
+        "Latest notification of the Government of India, which is modified vide OM No. 36033/3/2004 Estt.(Res.) dated 09/03/2004",
+        "Further modified vide No. 36033/3/2004-Estt. (Res.) dated 14/10/2008",
+        "Latest notification by the Government of India."
+    ]
+}

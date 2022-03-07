@@ -134,11 +134,12 @@ def test():
         address=student1.address,
         amount=1,
         token_id=fa2.data.all_tokens,
-        metadata = FA2.FA2.make_metadata(
-            name = "B.Tech Marksheet - Student1",
-            decimals = 0,
-            symbol = "BTECHMARK1"
-        )
+        metadata={
+            "name" : sp.utils.bytes_of_string("Caste Certificate - Student1"),
+            "symbol" : sp.utils.bytes_of_string("CASTE1"),
+            "decimals" : sp.utils.bytes_of_string("0"),
+            "metadata": sp.utils.bytes_of_string("ipfs://QmPkVt6w7WFcDWLwnWiDSB4GFptpnUfvTDZPrNDQTn6b2B")
+        }
     ).run(sender = issuer1)
 
     sc.p("issuer1 mints a certificate to student2")
@@ -146,11 +147,12 @@ def test():
         address=student1.address,
         amount=1,
         token_id=fa2.data.all_tokens,
-        metadata = FA2.FA2.make_metadata(
-            name = "B.Tech Marksheet - Student2",
-            decimals = 0,
-            symbol = "BTECHMARK2"
-        )
+        metadata={
+            "name" : sp.utils.bytes_of_string("Caste Certificate - Student2"),
+            "symbol" : sp.utils.bytes_of_string("CASTE2"),
+            "decimals" : sp.utils.bytes_of_string("0"),
+            "metadata": sp.utils.bytes_of_string("ipfs://QmVrrVUMPpqZmd4KkhHbpHghX2mZFypckge4CEJrYfmazf")
+        }
     ).run(sender = issuer1)
 
     sc.p("issuer2 transfers MARK2 to student2")
@@ -164,3 +166,5 @@ def test():
             )]
         )
     ]).run(sender = issuer2)
+
+    sp.show(fa2.data.token_metadata[0].token_info)
