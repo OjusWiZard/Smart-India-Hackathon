@@ -6,7 +6,9 @@ import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Scholarships from "./pages/Scholarships";
 import IssuerForm from "pages/IssuerForm";
+import "./styles/main.css";
 // import { renderRoutes, allRoutes } from "./Router";
+import "./api/block";
 
 function App() {
   return (

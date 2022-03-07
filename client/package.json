@@ -4,15 +4,22 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.5.0",
+    "@taquito/beacon-wallet": "^11.2.0",
+    "@taquito/taquito": "^11.2.0",
+    "@taquito/utils": "^11.2.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "autoprefixer": "^9.8.6",
     "axios": "^0.26.0",
+    "postcss": "^8.4.8",
+    "postcss-cli": "^9.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
-    "react-scripts": "5.0.0",
+    "react-scripts": "4.0.3",
+    "tailwindcss": "^3.0.23",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
@@ -33,7 +40,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "build:css": "postcss src/index.css --output src/styles/main.css"
   },
   "eslintConfig": {
     "extends": [
@@ -55,7 +63,6 @@
   },
   "devDependencies": {
     "prettier": "^2.5.1",
-    "sass": "^1.49.9",
-    "tailwindcss": "^3.0.23"
+    "sass": "^1.49.9"
   }
 }
