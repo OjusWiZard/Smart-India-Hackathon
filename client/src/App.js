@@ -5,6 +5,7 @@ import GlobalNavbar from "./components/Navigation/GlobalNavbar";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Scholarships from "./pages/Scholarships";
+import IssuerForm from "pages/IssuerForm";
 // import { renderRoutes, allRoutes } from "./Router";
 
 function App() {
@@ -26,6 +27,14 @@ function App() {
             element={
               <GlobalNavbar>
                 <Scholarships />
+              </GlobalNavbar>
+            }
+          />
+          <Route
+            path="/form"
+            element={
+              <GlobalNavbar>
+                <IssuerForm />
               </GlobalNavbar>
             }
           />
