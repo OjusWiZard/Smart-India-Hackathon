@@ -168,3 +168,18 @@ def test():
     ]).run(sender = issuer2)
 
     sp.show(fa2.data.token_metadata[0].token_info)
+
+
+sp.add_compilation_target(
+    "NFT Certificates", 
+    Certificate(
+        admin=sp.address("tz1fpYiMjwFuRFpPaRuWUGCEVVjGreLouB1e"), 
+        config = FA2.FA2_config(
+            non_fungible=True,
+            support_operator=False,
+            store_total_supply=True,
+            use_token_metadata_offchain_view=True
+        ),
+        metadata=sp.utils.metadata_of_url("ipfs://QmeHSStwgfBcpJLU73Dp4X6Q3SdpJoZY7WJ3YhYkypFNy2")
+    )
+)
