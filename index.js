@@ -31,6 +31,7 @@ app.use(
 // Routes
 app.use("/auth", require("./routes/auth"));
 app.use("/user", require("./routes/user"));
+app.use("/cert", require("./routes/cert"));
 
 // Server
 const PORT = process.env.PORT || 5000;
