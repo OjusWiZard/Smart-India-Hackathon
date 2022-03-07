@@ -57,6 +57,7 @@ const Dashboard = () => {
             <Certificate certificate="caste" />
             <Certificate certificate="income" />
             <Certificate certificate="ews" />
+            <Certificate certificate="income" />
             <Certificate certificate="ews" />
           </div>
         </div>
