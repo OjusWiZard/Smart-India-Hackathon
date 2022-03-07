@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Dropdown from "components/InputFields/Dropdown";
 import { ReactComponent as WalletIcon } from "assets/icons/wallet.svg";
 import { ReactComponent as NoFileIcon } from "assets/icons/no-file.svg";
+import { ReactComponent as RightArrow } from "assets/icons/right-arrow.svg";
 import FilledPrimary from "components/Buttons/Filled-primary";
 import AddCertificateModal from "components/Modals/AddCertifcation";
 import Certificate from "components/Certificates";
 import styles from "./Dashboard.module.css";
+import Earning from "components/Earning/Earning";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,9 +68,11 @@ const Dashboard = () => {
 
         <div className="mt-9">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5">
-            <div className="w-full ">
+            <div className="w-full">
               <div className="font-semibold text-xl">Your Earnings</div>
               <div className="mt-5">
+                {/* <Earning name="asdsad" amount="2344" /> */}
+                {/* ------------------ when no earning ------------- */}
                 <div className="px-10 flex h-[350px] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
                   <div className="flex flex-col items-center">
                     <WalletIcon />
@@ -82,8 +86,12 @@ const Dashboard = () => {
             <div className="w-full lg:mt-0 mt-9">
               <div className="font-semibold text-xl">Your Applications</div>
               <div className="mt-5">
-                <div className="px-10 flex h-[350px] justify-center items-center bg-white rounded-md pt-[60px] pb-10">
-                  <div className="flex flex-col items-center w-full">
+                <div className="px-8 flex h-[350px] flex-col justify-start items-start bg-white rounded-md py-8">
+                  <div className="border-8  border-white border-l-red-500">
+                    aisd
+                  </div>
+                  {/* ------------------ when no application ------------- */}
+                  {/* <div className="flex flex-col items-center w-full">
                     <NoFileIcon />
                     <div className="font-normal mt-5 text-lg text-[#828282]">
                       No applications to show
@@ -93,7 +101,7 @@ const Dashboard = () => {
                       className="w-full mt-6"
                       loading={false}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

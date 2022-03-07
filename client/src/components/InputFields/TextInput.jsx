@@ -3,10 +3,12 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
 const TextInput = ({
+  name = null,
   label = "",
   placeholder = "",
   menuItems = [],
   border = "",
+  className,
   handleChange = () => {},
 }) => {
   return (
@@ -58,18 +60,22 @@ const TextInput = ({
 
             <input
               type="text"
+              name={name}
               placeholder={placeholder}
               onChange={handleChange}
-              className="mt-2 ml-3 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
-          focus:outline-none"
+              className={`mt-2 ml-3 ${
+                className && className
+              } block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
+              focus:outline-none`}
             />
           </div>
         ) : (
           <input
             type="text"
+            name={name}
             placeholder={placeholder}
             onChange={handleChange}
-            className={`mt-2 ${
+            className={`mt-2 ${className && className} ${
               border === "all"
                 ? "border border-secondary-border rounded-md"
                 : "border border-white border-b-secondary-border"
