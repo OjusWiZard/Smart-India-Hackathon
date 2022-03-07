@@ -9,9 +9,11 @@ import FilledPrimary from "components/Buttons/Filled-primary";
 import TextInput from "components/InputFields/TextInput";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { getOtp } from "api";
 
 export default function Register() {
   let [isOpen, setIsOpen] = useState(false);
+  const [phno, setPhno] = useState(0);
 
   function closeModal() {
     setIsOpen(false);
@@ -28,6 +30,13 @@ export default function Register() {
       text: "+76",
     },
   ];
+
+  const handleRegister = async () => {
+    console.log("0", phno);
+    await getOtp(phno);
+    openModal();
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
       <div className="bg-primary-dark lg:block hidden">
@@ -82,8 +91,14 @@ export default function Register() {
                 <div className="mt-3 mb-8">
                   <TextInput
                     label="Phone"
-                    placeholder="2394xxx823"
+                    placeholder="sads"
+                    // value={phno}
+                    value={phno}
                     menuItems={menuItems}
+                    handleChange={(e) => {
+                      console.log(e.target.value);
+                      setPhno(e.target.value);
+                    }}
                     border="all"
                   />
                 </div>
@@ -95,22 +110,13 @@ export default function Register() {
                     </div>
                   </div>
                 </div> */}
-
                 {/* ----- register button ---------  */}
-                <button
-                  className={`bg-primary-dark opacity-90 hover:opacity-100
-                   rounded-md w-full py-4 
-                  text-white flex justify-around items-start 
-                  
-                  font-bold text-base
-                  `}
-                  onClick={openModal}
-                >
-                  {/* {icon && <img src=icon alt="Icon" />} */}
-                  {/* {loading ? "Loading..." : text} */}
-                  Register
-                </button>
-                {/* <FilledPrimary text="Register" /> */}
+                <FilledPrimary
+                  handleClick={handleRegister}
+                  text="Register"
+                  disabled={phno.length < 10}
+                />
+
                 <Transition appear show={isOpen} as={Fragment}>
                   <Dialog
                     as="div"
@@ -157,8 +163,10 @@ export default function Register() {
                           <div className="mt-4">
                             <TextInput
                               label="OTP"
+                              value={phno}
                               placeholder="82xx92"
                               border="all"
+                              onChange={(e) => setPhno(e.target.value)}
                             />
                           </div>
 
