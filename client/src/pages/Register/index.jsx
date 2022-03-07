@@ -28,6 +28,9 @@ export default function Register() {
       text: "+76",
     },
   ];
+
+  const handleRegister = async () => {};
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
       <div className="bg-primary-dark lg:block hidden">
@@ -95,22 +98,9 @@ export default function Register() {
                     </div>
                   </div>
                 </div> */}
-
                 {/* ----- register button ---------  */}
-                <button
-                  className={`bg-primary-dark opacity-90 hover:opacity-100
-                   rounded-md w-full py-4 
-                  text-white flex justify-around items-start 
-                  
-                  font-bold text-base
-                  `}
-                  onClick={openModal}
-                >
-                  {/* {icon && <img src=icon alt="Icon" />} */}
-                  {/* {loading ? "Loading..." : text} */}
-                  Register
-                </button>
-                {/* <FilledPrimary text="Register" /> */}
+                <FilledPrimary handleClick={openModal} text="Register" />
+
                 <Transition appear show={isOpen} as={Fragment}>
                   <Dialog
                     as="div"
