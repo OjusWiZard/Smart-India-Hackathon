@@ -10,25 +10,24 @@ router.post("/get", (req, res) => {
         .services(process.env.TWILIO_SERVICE_SID)
         .verifications.create({ to, channel: "sms" })
         .then((data) => {
-            console.log(data);
             if (data.status == "pending") return res.send({ result: true, message: "OTP Sent" });
             res.status(400).send({ result: false, error: "Error Occured!" });
         });
 });
 
 router.post("/verify", (req, res) => {
-    const { to, otp, name } = req.body;
+    const { to, otp, name, email } = req.body;
 
     twilio.verify
         .services(process.env.TWILIO_SERVICE_SID)
         .verificationChecks.create({ to, code: otp })
         .then(async (data) => {
-            console.log(data);
             if (data.status == "approved") {
                 const user = await User.findOne({ phone: data.to });
                 if (!user)
                     await new User({
                         name,
+                        email,
                         phone: data.to,
                     }).save();
 

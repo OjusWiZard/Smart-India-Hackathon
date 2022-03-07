@@ -18,10 +18,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", (req, res, next) => {
-    res.setHeader(
-        "Content-Security-Policy",
-        "script-src 'self' https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js 'unsafe-inline'"
-    );
+    res.setHeader("Content-Security-Policy", "script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'");
     next();
 });
 app.use(
@@ -33,6 +30,7 @@ app.use(
 
 // Routes
 app.use("/auth", require("./routes/auth"));
+app.use("/user", require("./routes/user"));
 
 // Server
 const PORT = process.env.PORT || 5000;
