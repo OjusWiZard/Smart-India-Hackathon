@@ -68,6 +68,7 @@ const TextInput = ({
           <input
             type="text"
             placeholder={placeholder}
+            onChange={handleChange}
             className={`mt-2 ${
               border === "all"
                 ? "border border-secondary-border rounded-md"

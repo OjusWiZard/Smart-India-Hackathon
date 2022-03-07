@@ -9,13 +9,18 @@ import FilledPrimary from "components/Buttons/Filled-primary";
 import TextInput from "components/InputFields/TextInput";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { getOtp } from "api";
+import { getOtp, verifyOtp } from "api";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  let navigate = useNavigate();
   let [isOpen, setIsOpen] = useState(false);
   const [phno, setPhno] = useState(0);
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
 
-  function closeModal() {
+  function closeModal(e) {
     setIsOpen(false);
   }
 
@@ -32,14 +37,23 @@ export default function Register() {
   ];
 
   const handleRegister = async () => {
-    console.log("0", phno);
     await getOtp(phno);
     openModal();
   };
 
+  const handleVerify = async () => {
+    await verifyOtp({
+      to: `+91${phno}`,
+      otp,
+      email,
+    });
+    navigate("/dashboard");
+    setIsVerified(true);
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-      <div className="bg-primary-dark lg:block hidden">
+    <div className="grid grid-cols-1 xl:grid-cols-2 min-h-screen">
+      <div className="bg-primary-dark xl:block hidden">
         <div className="py-[90px] px-[100px]">
           <div className="flex items-center justify-start">
             <FileIcon />
@@ -74,7 +88,7 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center lg:bg-white bg-primary-dark">
+      <div className="flex justify-center items-center xl:bg-white bg-primary-dark">
         <div className="max-w-md">
           <div className="w-full">
             <div className="py-10 px-8 shadow-md rounded-2xl bg-white">
@@ -83,23 +97,23 @@ export default function Register() {
               <div className="form">
                 <div className="mt-5">
                   <TextInput
-                    label="Name"
+                    label="Email"
                     placeholder="John.snow@gmail.com"
                     border="all"
+                    value={email}
+                    handleChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="mt-3 mb-8">
                   <TextInput
                     label="Phone"
-                    placeholder="sads"
-                    // value={phno}
+                    placeholder="Enter your phone number"
                     value={phno}
                     menuItems={menuItems}
-                    handleChange={(e) => {
-                      console.log(e.target.value);
-                      setPhno(e.target.value);
-                    }}
+                    handleChange={(e) => setPhno(e.target.value)}
                     border="all"
+                    required
                   />
                 </div>
                 {/* <div className="my-8">
@@ -116,7 +130,6 @@ export default function Register() {
                   text="Register"
                   disabled={phno.length < 10}
                 />
-
                 <Transition appear show={isOpen} as={Fragment}>
                   <Dialog
                     as="div"
@@ -163,13 +176,12 @@ export default function Register() {
                           <div className="mt-4">
                             <TextInput
                               label="OTP"
-                              value={phno}
+                              value={otp}
                               placeholder="82xx92"
                               border="all"
-                              onChange={(e) => setPhno(e.target.value)}
+                              handleChange={(e) => setOtp(e.target.value)}
                             />
                           </div>
-
                           <div className="mt-4">
                             <button
                               className={`bg-primary-dark opacity-90 hover:opacity-100
@@ -177,7 +189,7 @@ export default function Register() {
                               text-white flex justify-around items-start 
                               font-bold text-base
                               `}
-                              onClick={closeModal}
+                              onClick={(e) => handleVerify(e)}
                             >
                               Submit OTP
                             </button>
