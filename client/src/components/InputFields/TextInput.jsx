@@ -7,6 +7,7 @@ const TextInput = ({
   placeholder = "",
   menuItems = [],
   border = "",
+  handleChange = () => {},
 }) => {
   return (
     <div>
@@ -58,6 +59,7 @@ const TextInput = ({
             <input
               type="text"
               placeholder={placeholder}
+              onChange={handleChange}
               className="mt-2 ml-3 block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
           focus:outline-none"
             />
