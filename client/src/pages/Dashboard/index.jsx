@@ -5,6 +5,7 @@ import { ReactComponent as NoFileIcon } from "assets/icons/no-file.svg";
 import FilledPrimary from "components/Buttons/Filled-primary";
 import AddCertificateModal from "components/Modals/AddCertifcation";
 import Certificate from "components/Certificates";
+import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,11 +35,16 @@ const Dashboard = () => {
         setIsOpen={setIsOpen}
         certificate={certificate}
       />
-      <div className="px-14 py-12 bg-primary-light w-full min-h-screen">
-        <div className="flex items-center justify-between">
-          <div className="font-normal text-2xl">Hi Vaibhav</div>
+      <div className="px-14 py-[50px] bg-primary-light min-h-screen">
+        {/* -------- */}
+
+        <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between">
+          <div className="font-normal text-2xl lg:mb-0 mb-3">Hi Vaibhav</div>
           <Dropdown heading="Upload Ceriticates..." menuItems={menuItems} />
         </div>
+
+        {/* -------- */}
+
         <div className="mt-8">
           {/* <div className="flex items-center justify-center bg-white py-[115px] px-[110px] rounded-md">
             Your certificates will appear here
@@ -52,18 +58,17 @@ const Dashboard = () => {
             <Certificate certificate="income" />
             <Certificate certificate="ews" />
             <Certificate certificate="ews" />
-            {/* <Certificate certificate="EWS" /> */}
-            {/* <Certificate certificate="CASTE" />
-            <Certificate certificate="INCOME" />
-            <Certificate certificate="10th" /> */}
           </div>
         </div>
+
+        {/* -------- */}
+
         <div className="mt-9">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5">
             <div className="w-full ">
               <div className="font-semibold text-xl">Your Earnings</div>
               <div className="mt-5">
-                <div className="px-10 flex justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
+                <div className="px-10 flex h-[350px] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
                   <div className="flex flex-col items-center">
                     <WalletIcon />
                     <div className="font-normal mt-5 text-lg text-[#828282]">
@@ -73,10 +78,10 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full ">
+            <div className="w-full lg:mt-0 mt-9">
               <div className="font-semibold text-xl">Your Applications</div>
               <div className="mt-5">
-                <div className="px-10 flex justify-center items-center bg-white rounded-md pt-[60px] pb-10">
+                <div className="px-10 flex h-[350px] justify-center items-center bg-white rounded-md pt-[60px] pb-10">
                   <div className="flex flex-col items-center w-full">
                     <NoFileIcon />
                     <div className="font-normal mt-5 text-lg text-[#828282]">
