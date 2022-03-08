@@ -2,6 +2,7 @@ import { TezosToolkit, MichelsonMap } from "@taquito/taquito";
 import { char2Bytes } from "@taquito/utils";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import axios from "axios";
+import swal from "sweetalert";
 
 export const Tezos = new TezosToolkit("https://rpc.hangzhounet.teztnets.xyz");
 export const Wallet = new BeaconWallet({
@@ -16,6 +17,7 @@ export const mint_certificate = async (address, metadata) => {
       },
     });
     Tezos.setWalletProvider(Wallet);
+    swal("Success", "Wallet connected", "success");
   }
 
   const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
@@ -38,14 +40,16 @@ export const mint_certificate = async (address, metadata) => {
     })
     .then(({ opHash }) => {
       console.log(`Waiting for ${opHash} to be confirmed...`);
+      swal("Success", "Certificate minted", "success");
       return opHash.confirmation(1).then(() => opHash);
     })
     .then((hash) =>
       console.log(`Operation injected: https://hangzhou.tzstats.com/${hash}`)
     )
-    .catch((error) =>
-      console.error(`Error: ${JSON.stringify(error, null, 2)}`)
-    );
+    .catch((error) => {
+      console.error(`Error: ${JSON.stringify(error, null, 2)}`);
+      swal("Error", "Failed to mint certificate", "error");
+    });
 };
 
 export const get_certificate = () => {
@@ -72,7 +76,7 @@ export const pin_metadata = (metadata) => {
       }
     );
   } catch (error) {
-    console.error(error);
+    swal("Error", "Metadata not pinned", "error");
   }
 };
 

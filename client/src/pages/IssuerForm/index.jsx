@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import FilledPrimary from "components/Buttons/Filled-primary";
 import { mint_certificate } from "api/block";
+import swal from "sweetalert";
 
 export default function IssuerForm() {
   const [details, setDetails] = useState({
@@ -32,6 +33,12 @@ export default function IssuerForm() {
     const metadata = { ...details, associated };
     console.log(metadata);
     const response = await mint_certificate(metadata["address"], metadata);
+    console.log(" ", response);
+    if (response.status === 200) {
+      swal("Success", "Certificate Issued Successfully", "success");
+    } else {
+      swal("Error", "Something went wrong", "error");
+    }
   };
 
   return (
