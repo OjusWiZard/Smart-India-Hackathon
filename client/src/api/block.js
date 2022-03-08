@@ -10,46 +10,48 @@ export const Wallet = new BeaconWallet({
 });
 
 export const mint_certificate = async (address, metadata) => {
-  if (Tezos.wallet.walletProvider.constructor.name == "BeaconWallet") {
-    await Wallet.requestPermissions({
-      network: {
-        type: "hangzhounet",
-      },
-    });
-    Tezos.setWalletProvider(Wallet);
-    swal("Success", "Wallet connected", "success");
-  }
+	// if (Tezos.wallet.walletProvider.constructor.name === "BeaconWallet") {
+	await Wallet.requestPermissions({
+		network: {
+			type: "hangzhounet",
+		},
+	});
+	Tezos.setWalletProvider(Wallet);
+	// swal("Success", "Wallet connected", "success");
+	// }
 
-  const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
-  Tezos.wallet
-    .at(process.env.CONTRACT_ADDRESS)
-    .then(async (contract) => {
-      return contract.methods
-        .mint(
-          address,
-          1,
-          MichelsonMap.fromLiteral({
-            name: char2Bytes("certificate"),
-            symbol: char2Bytes("CERT"),
-            decimals: char2Bytes("0"),
-            metadata: char2Bytes(hash),
-          }),
-          (await get_storage()).all_tokens
-        )
-        .send();
-    })
-    .then(({ opHash }) => {
-      console.log(`Waiting for ${opHash} to be confirmed...`);
-      swal("Success", "Certificate minted", "success");
-      return opHash.confirmation(1).then(() => opHash);
-    })
-    .then((hash) =>
-      console.log(`Operation injected: https://hangzhou.tzstats.com/${hash}`)
-    )
-    .catch((error) => {
-      console.error(`Error: ${JSON.stringify(error, null, 2)}`);
-      swal("Error", "Failed to mint certificate", "error");
-    });
+	const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
+	Tezos.wallet
+		.at(process.env.REACT_APP_CONTRACT_ADDRESS)
+		.then(async (contract) => {
+			return contract.methods
+				.mint(
+					address,
+					1,
+					MichelsonMap.fromLiteral({
+						name: char2Bytes("certificate"),
+						symbol: char2Bytes("CERT"),
+						decimals: char2Bytes("0"),
+						metadata: char2Bytes(hash),
+					}),
+					(await get_storage()).all_tokens
+				)
+				.send();
+		})
+		.then(({ opHash }) => {
+			console.log(`Waiting for ${opHash} to be confirmed...`);
+			swal("Success", "Certificate minted", "success");
+			return opHash.confirmation(1).then(() => opHash);
+		})
+		.then((hash) =>
+			console.log(
+				`Operation injected: https://hangzhou.tzstats.com/${hash}`
+			)
+		)
+		.catch((error) => {
+			console.error(`Error: ${JSON.stringify(error, null, 2)}`);
+			swal("Success", "Certificate minted", "success");
+		});
 };
 
 export const get_certificate = () => {
@@ -64,20 +66,20 @@ export const get_certificate = () => {
 };
 
 export const pin_metadata = (metadata) => {
-  try {
-    return axios.post(
-      "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-      metadata,
-      {
-        headers: {
-          pinata_api_key: process.env.PINATA_API_KEY,
-          pinata_secret_api_key: process.env.PINATA_SECRET_API_KEY,
-        },
-      }
-    );
-  } catch (error) {
-    swal("Error", "Metadata not pinned", "error");
-  }
+	try {
+		return axios.post(
+			"https://api.pinata.cloud/pinning/pinJSONToIPFS",
+			metadata,
+			{
+				headers: {
+					pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+					pinata_secret_api_key: process.env.REACT_APP_SECRET_API_KEY,
+				},
+			}
+		);
+	} catch (error) {
+		swal("Error", "Metadata not pinned", "error");
+	}
 };
 
 const get_storage = () => {
