@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dropdown from "components/InputFields/Dropdown";
 import { ReactComponent as WalletIcon } from "assets/icons/wallet.svg";
 import { ReactComponent as NoFileIcon } from "assets/icons/no-file.svg";
@@ -8,6 +8,7 @@ import AddCertificateModal from "components/Modals/AddCertifcation";
 import Certificate from "components/Certificates";
 import styles from "./Dashboard.module.css";
 import Earning from "components/Earning/Earning";
+import { sendStatus, sendVerificationCode } from "api";
 
 const Dashboard = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,10 @@ const Dashboard = () => {
 			},
 		},
 	];
+
+	// useEffect(() => {
+	// sendVerificationCode();
+	// },[])
 	return (
 		<div>
 			<AddCertificateModal

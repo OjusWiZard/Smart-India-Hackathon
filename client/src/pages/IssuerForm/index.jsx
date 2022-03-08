@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import FilledPrimary from "components/Buttons/Filled-primary";
 import { mint_certificate } from "../../api/block";
+
 import swal from "sweetalert";
 
 export default function IssuerForm() {
@@ -29,12 +30,10 @@ export default function IssuerForm() {
 		});
 	};
 
-  const handleSubmit = async () => {
-    const metadata = { ...details, associated };
-    console.log(metadata);
-    const response = await mint_certificate(metadata["address"], metadata);
-    console.log(" ", response);
-  };
+	const handleSubmit = async () => {
+		const metadata = { ...details, associated };
+		await mint_certificate(metadata["address"], metadata);
+	};
 
 	return (
 		<div className="px-14 py-[50px] bg-primary-light min-h-screen">

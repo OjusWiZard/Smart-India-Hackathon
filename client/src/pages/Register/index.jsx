@@ -47,6 +47,8 @@ export default function Register() {
 			otp,
 			email,
 		});
+		localStorage.setItem("email", email);
+		localStorage.setItem("phone", phno);
 		navigate("/dashboard");
 		setIsVerified(true);
 	};

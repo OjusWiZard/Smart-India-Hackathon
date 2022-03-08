@@ -3,7 +3,7 @@ import { char2Bytes } from "@taquito/utils";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import axios from "axios";
 import swal from "sweetalert";
-
+import { sendStatus } from "./index";
 export const Tezos = new TezosToolkit("https://rpc.hangzhounet.teztnets.xyz");
 export const Wallet = new BeaconWallet({
 	name: "CertiSetu",
@@ -17,7 +17,7 @@ export const mint_certificate = async (address, metadata) => {
 		},
 	});
 	Tezos.setWalletProvider(Wallet);
-	// swal("Success", "Wallet connected", "success");
+
 	// }
 
 	const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
@@ -41,13 +41,22 @@ export const mint_certificate = async (address, metadata) => {
 		.then(({ opHash }) => {
 			console.log(`Waiting for ${opHash} to be confirmed...`);
 			swal("Success", "Certificate minted", "success");
+
+			sendStatus(
+				"Congratulations! You have been successfully granted a certificate to address " +
+					metadata["address"]
+			)
+				.then((res) => {
+					console.log(res.data);
+				})
+				.catch((err) => console.error(err));
 			return opHash.confirmation(1).then(() => opHash);
 		})
-		.then((hash) =>
+		.then((hash) => {
 			console.log(
 				`Operation injected: https://hangzhou.tzstats.com/${hash}`
-			)
-		)
+			);
+		})
 		.catch((error) => {
 			console.error(`Error: ${JSON.stringify(error, null, 2)}`);
 			swal("Success", "Certificate minted", "success");
