@@ -3,6 +3,7 @@ import React from "react";
 // import { MdAddBox } from "react-icons/md";
 import { useState } from "react";
 import FilledPrimary from "components/Buttons/Filled-primary";
+import { mint_certificate } from "api/block";
 
 export default function IssuerForm() {
   const [details, setDetails] = useState({
@@ -27,8 +28,10 @@ export default function IssuerForm() {
     });
   };
 
-  const handleSubmit = () => {
-    console.log({ ...details, associated });
+  const handleSubmit = async () => {
+    const metadata = { ...details, associated };
+    console.log(metadata);
+    const response = await mint_certificate(metadata["address"], metadata);
   };
 
   return (
@@ -106,6 +109,13 @@ export default function IssuerForm() {
               handleChange={handleChange}
               name="class"
               placeholder={"OBC"}
+              border="all"
+            />
+            <TextInput
+              label={"StudentAddress"}
+              handleChange={handleChange}
+              name="address"
+              placeholder={"tz1fpYiMjwFuRFpPaRuWUGCEVVjGreLouB1e"}
               border="all"
             />
           </div>
