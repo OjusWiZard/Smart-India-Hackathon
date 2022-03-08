@@ -9,12 +9,14 @@ export const Wallet = new BeaconWallet({
 });
 
 export const mint_certificate = async (address, metadata) => {
-  await Wallet.requestPermissions({
-    network: {
-      type: "hangzhounet",
-    },
-  });
-  Tezos.setWalletProvider(Wallet);
+  if (Tezos.wallet.walletProvider.constructor.name == "BeaconWallet") {
+    await Wallet.requestPermissions({
+      network: {
+        type: "hangzhounet",
+      },
+    });
+    Tezos.setWalletProvider(Wallet);
+  }
 
   const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
   Tezos.wallet
@@ -36,7 +38,7 @@ export const mint_certificate = async (address, metadata) => {
     })
     .then(({ opHash }) => {
       console.log(`Waiting for ${opHash} to be confirmed...`);
-      return op.confirmation(1).then(() => opHash);
+      return opHash.confirmation(1).then(() => opHash);
     })
     .then((hash) =>
       console.log(`Operation injected: https://hangzhou.tzstats.com/${hash}`)
