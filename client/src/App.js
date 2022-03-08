@@ -11,41 +11,41 @@ import "./styles/main.css";
 import "./api/block";
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Register />} />
-          <Route
-            path="/dashboard"
-            element={
-              <GlobalNavbar>
-                <Dashboard />
-              </GlobalNavbar>
-            }
-          />
-          <Route
-            path="/scholarships"
-            element={
-              <GlobalNavbar>
-                <Scholarships />
-              </GlobalNavbar>
-            }
-          />
-          <Route
-            path="/form"
-            element={
-              <GlobalNavbar>
-                <IssuerForm />
-              </GlobalNavbar>
-            }
-          />
-          {/* <Route path="teams/new" element={<NewTeam />} /> */}
-        </Routes>
-      </BrowserRouter>
-      {/* {renderRoutes(allRoutes)} */}
-    </div>
-  );
+	return (
+		<div className="App">
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Register />} />
+					<Route
+						path="/dashboard"
+						element={
+							<GlobalNavbar>
+								<Dashboard />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/scholarships"
+						element={
+							<GlobalNavbar>
+								<Scholarships />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/form"
+						element={
+							<GlobalNavbar>
+								<IssuerForm />
+							</GlobalNavbar>
+						}
+					/>
+					{/* <Route path="teams/new" element={<NewTeam />} /> */}
+				</Routes>
+			</BrowserRouter>
+			{/* {renderRoutes(allRoutes)} */}
+		</div>
+	);
 }
 
 export default App;

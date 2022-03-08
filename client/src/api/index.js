@@ -2,20 +2,21 @@ import axios from "axios";
 import swal from "sweetalert"
 
 const API = axios.create({
-  baseURL: `https://sih-a-normal-team.herokuapp.com`,
+	baseURL: `https://sih-a-normal-team.herokuapp.com`,
 });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("jwt-token")) {
-    req.headers.Authorization = "Bearer " + localStorage.getItem("jwt-token");
-  }
-  return req;
+	if (localStorage.getItem("jwt-token")) {
+		req.headers.Authorization =
+			"Bearer " + localStorage.getItem("jwt-token");
+	}
+	return req;
 });
 
 const config = {
-  headers: {
-    "Content-Type": "application/json",
-  },
+	headers: {
+		"Content-Type": "application/json",
+	},
 };
 
 export const getOtp = async (phno) => {

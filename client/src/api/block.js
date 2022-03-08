@@ -6,7 +6,7 @@ import swal from "sweetalert";
 
 export const Tezos = new TezosToolkit("https://rpc.hangzhounet.teztnets.xyz");
 export const Wallet = new BeaconWallet({
-  name: "CertiSetu",
+	name: "CertiSetu",
 });
 
 export const mint_certificate = async (address, metadata) => {
@@ -53,14 +53,14 @@ export const mint_certificate = async (address, metadata) => {
 };
 
 export const get_certificate = () => {
-  axios
-    .get("https://api.hangzhou2net.tzkt.io/v1/bigmaps/176460/keys/0")
-    .then((res) => {
-      const id = Object.keys(res.data.value.token_info)[0].slice(7);
-      axios
-        .get("https://ipfs.io/ipfs/" + id)
-        .then((response) => console.log(response.data));
-    });
+	axios
+		.get("https://api.hangzhou2net.tzkt.io/v1/bigmaps/176460/keys/0")
+		.then((res) => {
+			const id = Object.keys(res.data.value.token_info)[0].slice(7);
+			axios
+				.get("https://ipfs.io/ipfs/" + id)
+				.then((response) => console.log(response.data));
+		});
 };
 
 export const pin_metadata = (metadata) => {
@@ -81,9 +81,9 @@ export const pin_metadata = (metadata) => {
 };
 
 const get_storage = () => {
-  return axios
-    .get(
-      `https://api.hangzhou2net.tzkt.io/v1/contracts/${process.env.CONTRACT_ADDRESS}/storage`
-    )
-    .then((res) => res.data);
+	return axios
+		.get(
+			`https://api.hangzhou2net.tzkt.io/v1/contracts/${process.env.REACT_APP_CONTRACT_ADDRESS}/storage`
+		)
+		.then((res) => res.data);
 };
