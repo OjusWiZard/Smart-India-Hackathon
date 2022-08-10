@@ -17,9 +17,12 @@ export default function IssuerForm() {
     state: "",
     community: "",
     class: "",
+    associated: [
+      `Government of India, Ministry of Welfare Resolution No. 12011/68/93-BCC(C) dated 13th Sept. 1993, published in the Gazette of India Extra Ordinary Part-I Section-I Dated 13th Sept. 1993 and onwards till data. Column 3 of schedule to the Government of India, Department of Personnel & Training O.M.No. 36012/22/93 Estt(SCT). Latest notification of the Government of India, which is modified vide OM No. 36033/3/2004 Estt.(Res.) dated 09/03/2004. Further modified vide No. 36033/3/2004-Estt. (Res.) dated 14/10/2008. Latest notification by the Government of India.`,
+    ],
   });
 
-  const [associated, setAssociated] = useState([]);
+  // const [associated, setAssociated] = useState([]);
 
   const handleChange = (e) => {
     setDetails({
@@ -29,7 +32,7 @@ export default function IssuerForm() {
   };
 
   const handleSubmit = async () => {
-    const metadata = { ...details, associated };
+    const metadata = { ...details };
     console.log(metadata);
     const response = await mint_certificate(metadata["address"], metadata);
   };
@@ -38,9 +41,12 @@ export default function IssuerForm() {
     <div className="px-14 py-[50px] bg-primary-light min-h-screen">
       <div className="font-normal text-2xl">Form</div>
       <div className="mt-8">
-        <div className="bg-white rounded-lg p-8">
+        <div
+          className="bg-primary-bg
+         rounded-lg p-8"
+        >
           <div className="font-regular text-xl">Details</div>
-          <div className="grid grid-cols-1 sm:gap-10 gap-4 sm:grid-cols-2 mt-8">
+          <div className="grid grid-cols-1 sm:gap-14 gap-10 sm:grid-cols-2 mt-8">
             <TextInput
               label={"Name"}
               name="name"
@@ -122,9 +128,11 @@ export default function IssuerForm() {
           <div className="mt-8 grid grid-col-3 gap-3">
             <TextInput
               label={"Associated"}
-              handleChange={(e) => setAssociated([e.target.value])}
+              // handleChange={(e) => setAssociated([e.target.value])}
               name="associated"
-              placeholder={"Government of India, Ministry of We.."}
+              placeholder={
+                "Government of India, Ministry of Welfare Resolution No. 12011/68/93-BCC(C) dated 13t"
+              }
               border="all"
             />
             {/* <MdAddBox className="text-[50px]" type="button" /> */}
