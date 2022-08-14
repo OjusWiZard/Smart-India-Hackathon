@@ -73,7 +73,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'CertiSetu.urls'
 
-AUTH_USER_MODEL = "account.User"
+AUTH_USER_MODEL = "accounts.User"
 CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
