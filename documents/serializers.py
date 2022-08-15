@@ -5,7 +5,7 @@ from .models import Document, Attribute, Option, Value, DocumentOwnership
 class OptionSerializer(ModelSerializer):
     class Meta:
         model = Option
-        fields = ['name']
+        fields = '__all__'
 
 
 class AttributeSerializer(ModelSerializer):
