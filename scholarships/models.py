@@ -53,3 +53,6 @@ class Eligibility(models.Model):
 
     def __str__(self):
         return self.application + ' - ' + self.eligibility_check.attribute + ' - ' + ('Passed' if self.passed else 'Failed')
+
+    class Meta:
+        verbose_name_plural = 'Eligibilities'
