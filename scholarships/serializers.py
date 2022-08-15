@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from documents.serializers import AttributeSerializer, OptionSerializer
-from .models import Scholarship, EligibilityCheck, Eligibility, Application, Attribute, Option, Logic
+from accounts.serializers import UserSerializer
+from .models import Scholarship, EligibilityCheck, Eligibility, Application, Logic
 
 
 class LogicSerializer(ModelSerializer):
@@ -25,16 +26,22 @@ class EligibilityCheckDetailSerializer(ModelSerializer):
 
 
 class ScholarshipListSerializer(ModelSerializer):
+    created_by = UserSerializer()
     class Meta:
         model = Scholarship
-        fields = ['name', 'amount', 'max_claims', 'starting', 'created_by']
+        fields = ['id', 'name', 'amount', 'max_claims', 'starting', 'created_by']
 
 
 class ScholarshipDetailSerializer(ModelSerializer):
-    attribute_checks = EligibilityCheckDetailSerializer(many=True)
+    attribute_checks = SerializerMethodField('get_attribute_checks')
+
+    def get_attribute_checks(self, obj):
+        attribute_checks = EligibilityCheck.objects.filter(scholarship=obj)
+        return EligibilityCheckDetailSerializer(attribute_checks, many=True).data
+
     class Meta:
         model = Scholarship
-        fields = ['name', 'description', 'amount', 'max_claims', 'starting', 'created_by', 'attribute_checks']
+        fields = ['id', 'name', 'description', 'amount', 'max_claims', 'starting', 'created_by', 'attribute_checks']
 
 
 class ScholarshipCreateSerializer(ModelSerializer):
