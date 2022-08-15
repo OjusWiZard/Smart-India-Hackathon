@@ -17,6 +17,7 @@ class Scholarship(models.Model):
     no_of_claims = models.IntegerField(auto_created=True, default=0)
     starting = models.DateTimeField()
     duration = models.DurationField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='scholarships_created')
     applications = models.ManyToManyField(User, through='Application', blank=True)
     attribute_checks = models.ManyToManyField(Attribute, through='EligibilityCheck', blank=True)
 
