@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework',
     "djoser",
     'corsheaders',
-    'django_rename_app'
 ]
 
 REST_FRAMEWORK = {
