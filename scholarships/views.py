@@ -35,6 +35,14 @@ class ApplicationViewSet(ModelViewSet):
         if self.action == 'update' or self.action == 'partial_update':
             return self.queryset.filter(user=self.request.user)
         return self.queryset
+    
+    def create(self, request, *args, **kwargs):
+        if not request.data.get('scholarship'):
+            return HttpResponseBadRequest('Scholarship is required')
+        scholarship = Scholarship.objects.get(pk=request.data.get('scholarship'))
+        if scholarship.max_claims < scholarship.applications.filter(status='Approved').count():
+            return HttpResponseBadRequest('No more applications allowed')
+        return super().create(request, *args, **kwargs)
 
 
 class EligibilityViewSet(ReadOnlyModelViewSet):

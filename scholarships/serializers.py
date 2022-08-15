@@ -27,21 +27,21 @@ class EligibilityCheckDetailSerializer(ModelSerializer):
 class ScholarshipListSerializer(ModelSerializer):
     class Meta:
         model = Scholarship
-        fields = ['name', 'amount', 'no_of_claims', 'starting', 'duration', 'created_by']
+        fields = ['name', 'amount', 'max_claims', 'starting', 'duration', 'created_by']
 
 
 class ScholarshipDetailSerializer(ModelSerializer):
     attribute_checks = EligibilityCheckDetailSerializer(many=True)
     class Meta:
         model = Scholarship
-        fields = ['name', 'description', 'amount', 'no_of_claims', 'starting', 'duration', 'created_by', 'attribute_checks']
+        fields = ['name', 'description', 'amount', 'max_claims', 'starting', 'duration', 'created_by', 'attribute_checks']
 
 
 class ScholarshipCreateSerializer(ModelSerializer):
     attribute_checks = EligibilityCheckSerializer(many=True)
     class Meta:
         model = Scholarship
-        fields = ['name', 'description', 'amount', 'no_of_claims', 'starting', 'duration', 'created_by', 'attribute_checks']
+        fields = ['name', 'description', 'amount', 'max_claims', 'starting', 'duration', 'created_by', 'attribute_checks']
 
 
 class EligibilitySerializer(ModelSerializer):
