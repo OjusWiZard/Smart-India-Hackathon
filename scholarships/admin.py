@@ -3,7 +3,7 @@ from .models import Logic, Scholarship, EligibilityCheck, Application, Eligibili
 
 
 class ScholarshipAdmin(admin.ModelAdmin):
-    list_display = ['name', 'amount', 'no_of_claims', 'starting', 'duration']
+    list_display = ['name', 'amount', 'max_claims', 'starting']
     search_fields = ['name', 'description']
     ordering = ['starting',]
 
