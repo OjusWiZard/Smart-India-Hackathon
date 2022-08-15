@@ -32,7 +32,7 @@ class EligibilityCheck(models.Model):
     logic = models.ForeignKey(Logic, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.scholarship.name + ' - ' + self.attribute.name + self.logic.name + self.edge_value
+        return self.scholarship.name + ' - ' + self.attribute.name + ' ' + self.logic.name + ' ' + (self.edge_option.name if self.edge_option else self.edge_value)
 
 
 class Application(models.Model):
@@ -53,7 +53,7 @@ class Eligibility(models.Model):
     eligibility_check = models.ForeignKey(EligibilityCheck, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.application + ' - ' + self.eligibility_check.attribute + ' - ' + ('Passed' if self.passed else 'Failed')
+        return str(self.application) + ' - ' + self.eligibility_check.attribute.name + ' - ' + ('Passed' if self.passed else 'Failed')
 
     class Meta:
         verbose_name_plural = 'Eligibilities'
