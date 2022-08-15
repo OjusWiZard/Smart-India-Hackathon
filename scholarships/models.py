@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import User
-from documents.models import Attribute
+from documents.models import Attribute, Option
 
 
 class Logic(models.Model):
@@ -25,7 +25,8 @@ class Scholarship(models.Model):
 
 
 class EligibilityCheck(models.Model):
-    edge_value = models.CharField(max_length=256)
+    edge_value = models.CharField(max_length=256, blank=True, null=True)
+    edge_option = models.ForeignKey(Option, on_delete=models.CASCADE, blank=True, null=True)
     scholarship = models.ForeignKey(Scholarship, on_delete=models.CASCADE)
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
     logic = models.ForeignKey(Logic, on_delete=models.CASCADE)
