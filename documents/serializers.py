@@ -16,7 +16,7 @@ class AttributeSerializer(ModelSerializer):
 
     class Meta:
         model = Attribute
-        fields = ['name', '_type', 'options']
+        fields = ['id', 'name', '_type', 'options']
 
 
 class ValueSerializer(ModelSerializer):

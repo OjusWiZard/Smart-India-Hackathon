@@ -14,7 +14,7 @@ class Scholarship(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(max_length=4096)
     amount = models.IntegerField()
-    max_claims = models.IntegerField(default=0)
+    max_claims = models.IntegerField()
     starting = models.DateTimeField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='scholarships_created')
     applications = models.ManyToManyField(User, through='Application', blank=True)

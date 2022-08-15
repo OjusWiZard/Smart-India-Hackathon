@@ -1,7 +1,8 @@
 from django.http.response import HttpResponseBadRequest
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from .models import Scholarship, Logic, Application, Eligibility
+from documents.models import Attribute, Option
+from .models import EligibilityCheck, Scholarship, Logic, Application, Eligibility
 from .serializers import ScholarshipDetailSerializer, ScholarshipListSerializer, ScholarshipCreateSerializer, LogicSerializer, ApplicationSerializer, EligibilitySerializer
 from .utils.eligibility import check_eligibility
 
@@ -29,11 +30,37 @@ class ScholarshipViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         if self.request.user.is_anonymous:
             return HttpResponseBadRequest('You must be logged in to create a scholarship')
+        request.data['created_by'] = self.request.user.id
         response = super().create(request, *args, **kwargs)
-        if response.status_code == 201:
-            created_scholarship = Scholarship.objects.get(id=response.data['id'])
-            created_scholarship.created_by = self.request.user
-            created_scholarship.save()
+
+        try:
+            if response.status_code == 201:
+                scholarship = Scholarship.objects.get(id=response.data['id'])
+                attribute_checks = request.data.get('attribute_checks', [])
+                for attribute_check in attribute_checks:
+                    attribute = attribute_check.get('attribute', None)
+                    logic = attribute_check.get('logic', None)
+                    edge_option = attribute_check.get('edge_option', None)
+                    edge_value = attribute_check.get('edge_value', None)
+                    if attribute and logic and (edge_option or edge_value):
+                        EligibilityCheck.objects.create(
+                            scholarship=scholarship,
+                            attribute=Attribute.objects.get(id=attribute_check['attribute']),
+                            logic=Logic.objects.get(id=attribute_check['logic']),
+                            edge_option=Option.objects.get(id=attribute_check['edge_option']),
+                            edge_value=attribute_check['edge_value']
+                        )
+                    else:
+                        scholarship.delete()
+                        return HttpResponseBadRequest('You must provide an attribute, logic, and edge option/value.')
+                scholarship.save()
+            
+            response.data['attribute_checks'] = attribute_checks
+        
+        except Exception as e:
+            print(e)
+            scholarship.delete()
+            return HttpResponseBadRequest('Error creating scholarship')
         return response
         
 

@@ -45,10 +45,9 @@ class ScholarshipDetailSerializer(ModelSerializer):
 
 
 class ScholarshipCreateSerializer(ModelSerializer):
-    attribute_checks = EligibilityCheckSerializer(many=True)
     class Meta:
         model = Scholarship
-        fields = ['name', 'description', 'amount', 'max_claims', 'starting', 'attribute_checks']
+        fields = ['id', 'name', 'description', 'amount', 'max_claims', 'starting', 'created_by']
 
 
 class EligibilitySerializer(ModelSerializer):
