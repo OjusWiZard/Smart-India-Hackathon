@@ -25,6 +25,17 @@ class ScholarshipViewSet(ModelViewSet):
         if self.action == 'update' or self.action == 'partial_update':
             return self.queryset.filter(created_by=self.request.user)
         return self.queryset
+    
+    def create(self, request, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return HttpResponseBadRequest('You must be logged in to create a scholarship')
+        response = super().create(request, *args, **kwargs)
+        if response.status_code == 201:
+            created_scholarship = Scholarship.objects.get(id=response.data['id'])
+            created_scholarship.created_by = self.request.user
+            created_scholarship.save()
+        return response
+        
 
 
 class ApplicationViewSet(ModelViewSet):
