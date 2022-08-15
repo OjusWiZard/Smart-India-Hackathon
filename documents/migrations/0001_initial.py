@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=32)),
-                ('attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='scholarships.attribute')),
+                ('attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='documents.attribute')),
             ],
         ),
         migrations.CreateModel(
@@ -43,22 +43,22 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('value', models.CharField(blank=True, max_length=256, null=True)),
-                ('attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='scholarships.attribute')),
-                ('option', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='scholarships.option')),
+                ('attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='documents.attribute')),
+                ('option', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='documents.option')),
             ],
         ),
         migrations.CreateModel(
             name='DocumentOwnership',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('document', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='scholarships.document')),
+                ('document', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='documents.document')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('values', models.ManyToManyField(blank=True, to='scholarships.value')),
+                ('values', models.ManyToManyField(blank=True, to='documents.value')),
             ],
         ),
         migrations.AddField(
             model_name='document',
             name='owned_by',
-            field=models.ManyToManyField(related_name='documents', through='scholarships.DocumentOwnership', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(related_name='documents', through='documents.DocumentOwnership', to=settings.AUTH_USER_MODEL),
         ),
     ]

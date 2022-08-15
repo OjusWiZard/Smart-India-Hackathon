@@ -44,7 +44,7 @@ class Value(models.Model):
 class DocumentOwnership(models.Model):
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    values = models.ManyToManyField(Value, blank=True)
+    values = models.ManyToManyField(Value, related_name='owned_documents', blank=True)
 
     def __str__(self):
         return self.document.name + ' of ' + self.owner.full_name

@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'scholarships',
+    'documents',
     'rest_framework',
     "djoser",
-    "corsheaders",
+    'corsheaders',
+    'django_rename_app'
 ]
 
 REST_FRAMEWORK = {
