@@ -58,8 +58,13 @@ class EligibilitySerializer(ModelSerializer):
 
 
 class ApplicationSerializer(ModelSerializer):
-    eligibilities = EligibilitySerializer(many=True)
     scholarship = ScholarshipListSerializer()
+    eligibilities = SerializerMethodField('get_eligibilities')
+    
+    def get_eligibilities(self, obj):
+        eligibilities = Eligibility.objects.filter(application=obj)
+        return EligibilitySerializer(eligibilities, many=True).data
+
     class Meta:
         model = Application
         fields = ['status', 'created_at', 'updated_at', 'user', 'scholarship', 'eligibilities']
