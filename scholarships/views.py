@@ -112,6 +112,8 @@ class ApplicationViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         if not request.data.get('scholarship'):
             return HttpResponseBadRequest('scholarship id is required')
+        if not Scholarship.objects.filter(pk=request.data.get('scholarship')).exists():
+            return HttpResponseBadRequest('scholarship does not exist')
         scholarship = Scholarship.objects.get(pk=request.data.get('scholarship'))
         approved_applications = Application.objects.filter(scholarship=scholarship, status='approved')
         if scholarship.max_claims < approved_applications.count():
