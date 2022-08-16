@@ -51,7 +51,7 @@ class ScholarshipCreateSerializer(ModelSerializer):
 
 
 class EligibilitySerializer(ModelSerializer):
-    eligibility_checks = EligibilityCheckDetailSerializer()
+    eligibility_check = EligibilityCheckDetailSerializer()
     class Meta:
         model = Eligibility
         fields = ['eligibility_check', 'passed']

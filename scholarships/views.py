@@ -1,4 +1,5 @@
 from django.http.response import HttpResponseBadRequest
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from documents.models import Attribute, Option
@@ -64,7 +65,6 @@ class ScholarshipViewSet(ModelViewSet):
         return response
         
 
-
 class ApplicationViewSet(ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
@@ -76,35 +76,38 @@ class ApplicationViewSet(ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         if not request.data.get('scholarship'):
-            return HttpResponseBadRequest('Scholarship is required')
+            return HttpResponseBadRequest('scholarship is required')
         scholarship = Scholarship.objects.get(pk=request.data.get('scholarship'))
         if scholarship.max_claims < scholarship.applications.filter(status='Approved').count():
             return HttpResponseBadRequest('No more applications allowed')
+        
+        # TODO: check eligibility
+
         return super().create(request, *args, **kwargs)
 
 
 class EligibilityViewSet(ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Eligibility.objects.all()
     serializer_class = EligibilitySerializer
-    lookup_field = 'application'
+    lookup_field = 'scholarship'
 
     def list(self, request, *args, **kwargs):
         return HttpResponseBadRequest()
     
     def retrieve(self, request, *args, **kwargs):
-        application = self.get_object()
-        eligibility_checks = application.scholarship.attribute_checks
+        scholarship = Scholarship.objects.get(pk=kwargs['scholarship'])
+        eligibility_checks = EligibilityCheck.objects.filter(scholarship=scholarship)
+        application = Application.objects.get_or_create(
+            user=request.user,
+            scholarship=scholarship
+        )[0]
 
-        eligibilities = []
         for eligibility_check in eligibility_checks:
-            if Eligibility.objects.filter(application=application, eligibility_check=eligibility_check).exists():
-                eligibility = Eligibility.objects.get(application=application, eligibility_check=eligibility_check)
-                eligibilities.append(eligibility)
-            else:
-                eligibility = Eligibility(application=application, eligibility_check=eligibility_check)
-                eligibility.passed = check_eligibility(application, eligibility_check)
-                eligibility.save()
-                eligibilities.append(eligibility)
+            eligibility = Eligibility.objects.get_or_create(application=application, eligibility_check=eligibility_check)[0]
+            eligibility.passed = check_eligibility(application, eligibility_check)
+            eligibility.save()
         
-        serializer = self.get_serializer(eligibilities, many=True)
+        eligibilities = Eligibility.objects.filter(application=application)
+        serializer = EligibilitySerializer(eligibilities, many=True)
         return Response(serializer.data)
