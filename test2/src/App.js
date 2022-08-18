@@ -5,12 +5,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import Register from "pages/Register";
 import Scholarships from "pages/Scholarships";
-// import IssuerForm from "pages/IssuerForm";
+import IssuerForm from "pages/IssuerForm";
 
 import "./App.css";
 
 // Utilities
 import GlobalNavbar from "components/Navigation/GlobalNavbar";
+import ScholarshipDetails from "pages/ScholarshipDetails";
 
 function App() {
 	return (
@@ -34,14 +35,22 @@ function App() {
 							</GlobalNavbar>
 						}
 					/>
-					{/* <Route
+					<Route
 						path="/create-scholarship"
 						element={
 							<GlobalNavbar>
 								<IssuerForm />
 							</GlobalNavbar>
 						}
-					/> */}
+					/>
+					<Route
+						path="/scholarships/:id"
+						element={
+							<GlobalNavbar>
+								<ScholarshipDetails />
+							</GlobalNavbar>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</div>

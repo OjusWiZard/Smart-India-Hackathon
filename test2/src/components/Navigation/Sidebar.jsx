@@ -19,7 +19,7 @@ const Sidebar = () => {
 			name: "Scholarships",
 		},
 		{
-			link: "/form",
+			link: "/create-scholarship",
 			icon: <AiOutlineForm className="mx-3 text-[26px]" />,
 			name: "Form",
 		},

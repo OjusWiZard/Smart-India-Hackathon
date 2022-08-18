@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import ScholarshipRow from "components/Row/ScholarshipRow";
 
@@ -64,18 +63,20 @@ const Scholarships = () => {
 	return (
 		<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
 			<div className="flex items-center justify-between">
-				<div className="font-bold text-2xl">Scholarships</div>
+				<div className="font-normal text-2xl">Scholarships</div>
 				<Link
 					to="/create-scholarship"
-					className="bg-primary-dark px-10 rounded-xl py-3 text-white text-base "
+					className="bg-primary-dark px-10 py-3 text-white text-base "
 				>
 					Create Scholarship
 				</Link>
 			</div>
 			<div className="mt-8">
 				<div className="bg-white rounded-lg">
-					{Scholarships.map((scholarship) => (
-						<ScholarshipRow scholarship={scholarship} />
+					{Scholarships.map((scholarship, index) => (
+						<Link to={`/scholarships/${index}`}>
+							<ScholarshipRow scholarship={scholarship} />
+						</Link>
 					))}
 				</div>
 			</div>

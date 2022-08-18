@@ -3,7 +3,7 @@ import React from "react";
 // import { MdAddBox } from "react-icons/md";
 import { useState } from "react";
 import FilledPrimary from "components/Buttons/Filled-primary";
-import { mint_certificate } from "../../api/block";
+// import { mint_certificate } from "../../api/block";
 
 import swal from "sweetalert";
 
@@ -35,7 +35,7 @@ export default function IssuerForm() {
 
 	const handleSubmit = async () => {
 		const metadata = { ...details, associated };
-		await mint_certificate(metadata["address"], metadata);
+		// await mint_certificate(metadata["address"], metadata);
 	};
 
 	return (
