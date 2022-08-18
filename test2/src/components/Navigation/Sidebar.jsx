@@ -4,9 +4,6 @@ import { BiHomeAlt } from "react-icons/bi";
 import { MdOutlineSchool } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineForm } from "react-icons/ai";
-import { ReactComponent as ScholarshipIcon } from "../../assets/icons/scholarship-icon.svg";
-import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-icon.svg";
-import { ReactComponent as HomeIcon } from "../../assets/icons/home.svg";
 import { ReactComponent as FileIcon } from "assets/icons/file-icon-red.svg";
 
 const Sidebar = () => {

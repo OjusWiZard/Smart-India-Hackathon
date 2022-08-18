@@ -64,7 +64,7 @@ const Scholarships = () => {
 	return (
 		<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
 			<div className="flex items-center justify-between">
-				<div className="font-normal text-2xl">Scholarships</div>
+				<div className="font-bold text-2xl">Scholarships</div>
 				<Link
 					to="/create-scholarship"
 					className="bg-primary-dark px-10 rounded-xl py-3 text-white text-base "
