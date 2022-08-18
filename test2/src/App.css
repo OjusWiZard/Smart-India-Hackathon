@@ -1,6 +1,11 @@
 body {
 	overflow-x: hidden !important;
 	font-family: Okra-Regular !important;
+	top: 0 !important;
+}
+
+body > .skiptranslate {
+	display: none;
 }
 
 /* font and font family */
@@ -32,4 +37,35 @@ body {
 
 .font-bold {
 	font-family: Okra-Bold !important;
+}
+
+select {
+	border: none;
+	background: white;
+	color: #000 !important;
+	outline: none;
+}
+
+.goog-logo-link {
+	display: none !important;
+}
+
+.goog-te-banner {
+	display: none !important;
+	background-image: none !important;
+	color: transparent !important;
+}
+.goog-te-gadget {
+	font-size: 10px !important;
+	color: transparent !important;
+}
+
+.goog-te-combo {
+	margin: 10px;
+	margin-right: 12px !important;
+	/* color: transparent !important; */
+}
+
+#google_translate_element {
+	margin-top: 15px;
 }

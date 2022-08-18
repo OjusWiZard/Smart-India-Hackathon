@@ -12,6 +12,7 @@ import "./App.css";
 // Utilities
 import GlobalNavbar from "components/Navigation/GlobalNavbar";
 import ScholarshipDetails from "pages/ScholarshipDetails";
+import Profile from "pages/Profile";
 
 function App() {
 	return (
@@ -48,6 +49,14 @@ function App() {
 						element={
 							<GlobalNavbar>
 								<ScholarshipDetails />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/profile"
+						element={
+							<GlobalNavbar>
+								<Profile />
 							</GlobalNavbar>
 						}
 					/>
