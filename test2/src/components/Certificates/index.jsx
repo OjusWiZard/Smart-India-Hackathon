@@ -4,10 +4,11 @@ import styles from "../../pages/Dashboard/Dashboard.module.css";
 
 const Certificate = ({ certificate }) => {
 	const ColourConstants = {
-		ews: "bg-[#119199]",
-		caste: "bg-[#256FEF]",
-		income: "bg-[#EF5DA8]",
+		ews: "bg-[#5D5FEF]",
+		caste: "bg-[#E86C37]",
+		income: "bg-[#EF4F5F]",
 		"10th": "bg-[#5D5FEF]",
+		domicile: "bg-[#9FBB3A]",
 	};
 	return (
 		<>
