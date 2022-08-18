@@ -1,0 +1,35 @@
+body {
+	overflow-x: hidden !important;
+	font-family: Okra-Regular !important;
+}
+
+/* font and font family */
+@font-face {
+	font-family: Okra-Regular;
+	src: url("./assets/fonts/Okra-Regular.ttf");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Okra-Bold;
+	src: url("./assets/fonts/Okra-Bold.ttf");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Okra-Medium;
+	src: url("./assets/fonts/Okra-Medium.ttf");
+	font-display: swap;
+}
+
+.font-regular {
+	font-family: Okra-Regular;
+}
+
+.font-medium {
+	font-family: Okra-Medium;
+}
+
+.font-bold {
+	font-family: Okra-Bold !important;
+}
