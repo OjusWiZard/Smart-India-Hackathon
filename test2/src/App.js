@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Pages Imports
 import Dashboard from "pages/Dashboard";
 import Register from "pages/Register";
+import Login from "pages/Login";
 import Scholarships from "pages/Scholarships";
 import IssuerForm from "pages/IssuerForm";
 
@@ -20,6 +21,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Register />} />
+					<Route path="/login" element={<Login />} />
 					<Route
 						path="/dashboard"
 						element={

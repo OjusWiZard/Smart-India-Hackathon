@@ -5,6 +5,7 @@ import { Fragment } from "react";
 const TextInput = ({
 	name = null,
 	label = "",
+	type = "text",
 	placeholder = "",
 	menuItems = [],
 	border = "",
@@ -18,14 +19,14 @@ const TextInput = ({
 					{label}
 				</span>
 				{menuItems.length > 0 ? (
-					<div className="flex justify-around items-center">
+					<div className="flex items-center justify-around">
 						<div className="w-[45%] h-[50px] text-sm">
 							<Menu
 								as="div"
-								className="relative w-full inline-block text-left"
+								className="relative inline-block w-full text-left"
 							>
 								<div>
-									<Menu.Button className="text-secondary-placeholder border inline-flex justify-center w-full mt-1 px-4 py-4 text-sm font-normal bg-white rounded-md  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+									<Menu.Button className="inline-flex justify-center w-full px-4 py-4 mt-1 text-sm font-normal bg-white border rounded-md text-secondary-placeholder hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 										+91
 									</Menu.Button>
 								</div>
@@ -38,7 +39,7 @@ const TextInput = ({
 									leaveFrom="transform opacity-100 scale-100"
 									leaveTo="transform opacity-0 scale-95"
 								>
-									<Menu.Items className="absolute z-10 border border-primary-light rounded-lg right-0 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 focus:outline-none">
+									<Menu.Items className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white border divide-y divide-gray-100 rounded-lg border-primary-light focus:outline-none">
 										<div className="">
 											{menuItems.map((item) => (
 												<Menu.Item key={item.text}>
@@ -74,7 +75,7 @@ const TextInput = ({
 					</div>
 				) : (
 					<input
-						type="text"
+						type={type}
 						name={name}
 						placeholder={placeholder}
 						onChange={handleChange}

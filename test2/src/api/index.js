@@ -2,7 +2,8 @@ import axios from "axios";
 import swal from "sweetalert";
 
 const API = axios.create({
-	baseURL: `http://localhost:5000/`,
+	baseURL: `http://3.110.67.226:8000/`,
+	// baseURL: `http://localhost:5000/`,
 	// baseURL: `https://sih-a-normal-team.herokuapp.com`,
 });
 
@@ -36,6 +37,32 @@ const config = {
 	headers: {
 		"Content-Type": "application/json",
 	},
+};
+
+export const registerUser = async (formData) => {
+	try {
+		const res = await API.post("/accounts/users/", formData, config);
+		swal("Success", res.statusText);
+		console.log(res);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
+export const LoginUser = async (formData) => {
+	try {
+		const res = await API.post("/accounts/jwt/create/", formData, config);
+		localStorage.setItem("jwt-token", res.data.access);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
 };
 
 export const getOtp = async (phno) => {
