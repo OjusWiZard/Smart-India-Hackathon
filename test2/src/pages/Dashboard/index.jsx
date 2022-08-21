@@ -8,11 +8,12 @@ import AddCertificateModal from "components/Modals/AddCertifcation";
 import Certificate from "components/Certificates";
 import styles from "./Dashboard.module.css";
 import Earning from "components/Earning/Earning";
-import { sendStatus, sendVerificationCode } from "api";
+import { getMyDocument, sendStatus, sendVerificationCode } from "api";
 
 const Dashboard = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [certificate, setCertificate] = useState();
+	const [myDocuments, setMyDocuments] = useState([]);
 	const menuItems = [
 		{
 			text: "Domicile Certificate",
@@ -32,9 +33,16 @@ const Dashboard = () => {
 		},
 	];
 
-	// useEffect(() => {
-	// sendVerificationCode();
-	// },[])
+	// calling my Documents api and listing them commenting as no doc currently
+	useEffect(() => {
+		(async () => {
+			// let jwtToken = localStorage.getItem("jwt-token");
+			let { data } = await getMyDocument();
+			setMyDocuments(data);
+			// sendVerificationCode();
+		})();
+	}, []);
+
 	return (
 		<div className="px-12 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
 			<AddCertificateModal
@@ -44,7 +52,7 @@ const Dashboard = () => {
 			/>
 			<div className="flex lg:flex-row flex-col lg:items-center items-start justify-between">
 				<div className="font-normal text-2xl lg:mb-0 mb-3">
-					Hi Shruti
+					Hi {`{name}`}
 				</div>
 				<Dropdown
 					heading="Upload Ceriticates..."
@@ -54,6 +62,10 @@ const Dashboard = () => {
 
 			<div className="mt-10">
 				<div className="flex items-center overflow-x-scroll bg-white py-10 w-full">
+					{/* no doc so commented */}
+					{/* {myDocuments && myDocuments.map(doc => {
+						return <Certificate doc={doc} certificate="ews" />
+					})} */}
 					<Certificate certificate="ews" />
 					<Certificate certificate="caste" />
 					<Certificate certificate="income" />

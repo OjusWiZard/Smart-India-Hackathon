@@ -14,7 +14,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { getOtp, registerUser, verifyOtp } from "api";
 import { useNavigate } from "react-router-dom";
-import { LoginUser } from "api";
+import { loginUser } from "api";
 
 export default function Login() {
 	let navigate = useNavigate();
@@ -33,13 +33,13 @@ export default function Login() {
 		});
 	};
 
-	const handleRegister = async (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault();
 		const formData = new FormData();
 		const { email, password } = details;
 		formData.append("email", email);
 		formData.append("password", password);
-		const { data } = await LoginUser(formData);
+		const { data } = await loginUser(formData);
 		if (data.access) {
 			navigate("/dashboard");
 		}
@@ -83,18 +83,16 @@ export default function Login() {
 				</div>
 			</div>
 
-			<div className="flex-col items-center content-center justify-center xl:flex xl:bg-white bg-primary-dark">
-				<div className="flex items-center w-full justify-start h-[130px] pt-[100px] px-[100px] xl:hidden">
-					{/* <div className="flex items-center justify-start"> */}
+			<div className="flex-col items-center content-center justify-center xl:flex xl:bg-white bg-primary-dark overflow-hidden">
+				<div className="flex items-center w-full justify-start h-[100px] pt-[0px] px-[50px] xl:px-[100px] xl:hidden">
 					<FileIcon />
 					<Certisetu className="ml-3" />
-					{/* </div> */}
 				</div>
 				<div className="flex items-center justify-center py-10 h-[calc(100vh-130px)]">
 					<div className="max-w-md">
 						<form
-							onSubmit={handleRegister}
-							className="px-8 py-10 mx-5 bg-white shadow-xl border min-w-[350px] rounded-2xl"
+							onSubmit={handleLogin}
+							className="px-8 py-10 mx-5 bg-white shadow-xl border sm:min-w-[350px] min-w-[300px] rounded-2xl"
 						>
 							<div className="font-normal text-md">
 								Welcome Back

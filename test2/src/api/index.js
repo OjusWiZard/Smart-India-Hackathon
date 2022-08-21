@@ -39,6 +39,30 @@ const config = {
 	},
 };
 
+export const getLogicList = async () => {
+	try {
+		const res = await API.get("/scholarships/logic/", config);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
+export const getAttributes = async () => {
+	try {
+		const res = await API.get("/documents/attributes/", config);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
 export const registerUser = async (formData) => {
 	try {
 		const res = await API.post("/accounts/users/", formData, config);
@@ -52,10 +76,46 @@ export const registerUser = async (formData) => {
 	}
 };
 
-export const LoginUser = async (formData) => {
+export const loginUser = async (formData) => {
 	try {
 		const res = await API.post("/accounts/jwt/create/", formData, config);
 		localStorage.setItem("jwt-token", res.data.access);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
+export const getMyDocument = async () => {
+	try {
+		const res = await API.get("/documents/", config);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
+export const getScholarships = async () => {
+	try {
+		const res = await API.get("/scholarships/scholarship/", config);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
+export const getScholarshipDetails = async (id) => {
+	try {
+		const res = await API.get(`/scholarships/scholarship/${id}`, config);
 		return res;
 	} catch (err) {
 		const { response } = err;

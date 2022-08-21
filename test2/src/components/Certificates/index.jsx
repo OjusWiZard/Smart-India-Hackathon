@@ -2,7 +2,7 @@ import React from "react";
 import DownArrow from "../../assets/icons/DownArrow.js";
 import styles from "../../pages/Dashboard/Dashboard.module.css";
 
-const Certificate = ({ certificate }) => {
+const Certificate = ({ certificate, doc }) => {
 	const ColourConstants = {
 		ews: "bg-[#5D5FEF]",
 		caste: "bg-[#E86C37]",

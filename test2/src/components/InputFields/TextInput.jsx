@@ -4,6 +4,7 @@ import { Fragment } from "react";
 
 const TextInput = ({
 	name = null,
+	value,
 	label = "",
 	type = "text",
 	placeholder = "",
@@ -76,6 +77,7 @@ const TextInput = ({
 				) : (
 					<input
 						type={type}
+						value={value}
 						name={name}
 						placeholder={placeholder}
 						onChange={handleChange}
