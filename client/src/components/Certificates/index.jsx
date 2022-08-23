@@ -2,18 +2,19 @@ import React from "react";
 import DownArrow from "../../assets/icons/DownArrow.js";
 import styles from "../../pages/Dashboard/Dashboard.module.css";
 
-const Certificate = ({ certificate }) => {
+const Certificate = ({ certificate, doc }) => {
 	const ColourConstants = {
-		ews: "bg-[#119199]",
-		caste: "bg-[#256FEF]",
-		income: "bg-[#EF5DA8]",
+		ews: "bg-[#5D5FEF]",
+		caste: "bg-[#E86C37]",
+		income: "bg-[#EF4F5F]",
 		"10th": "bg-[#5D5FEF]",
+		domicile: "bg-[#9FBB3A]",
 	};
 	return (
 		<>
 			{ColourConstants[certificate] && (
 				<div
-					className={`text-white rounded-lg py-5 px-4 ${ColourConstants[certificate]} ${styles.certi_card} `}
+					className={`text-white rounded-lg py-5 px-4 mx-5 ${ColourConstants[certificate]} ${styles.certi_card} `}
 				>
 					<div className="font-bold text-2xl capitalize">
 						{certificate}

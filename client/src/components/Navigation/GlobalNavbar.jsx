@@ -7,7 +7,7 @@ const GlobalNavbar = ({ children }) => {
 		<div>
 			<div className="flex w-full items-start">
 				<Sidebar />
-				<div className="w-full">
+				<div className="w-[calc(100%-240px)]">
 					<Navbar />
 					{children}
 				</div>

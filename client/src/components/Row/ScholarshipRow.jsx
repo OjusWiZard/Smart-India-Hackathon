@@ -1,18 +1,21 @@
 import React from "react";
 
 const ScholarshipRow = ({
-	scholarship: { title, description, startingDate, endingDate, link },
+	scholarship: { name, amount, starting, max_claims },
 }) => {
 	return (
-		<div className="border-gray-200 border-b">
-			<div className="px-8 py-7">
-				<div className="font-semibold text-lg">{title}</div>
+		<div className="border-gray-200 border-b px-8 py-3 h-24 rounded-t-xl ">
+			<div>
+				<div className="font-semibold text-xl">{name}</div>
+				<div className="text-sm font-normal text-gray-600 mt-1">
+					Amount : {amount}
+				</div>
 				<div className="flex justify-between items-center">
-					<div className="text-sm font-normal text-gray-400">
-						{description}
+					<div className="text-sm font-normal text-gray-600">
+						Claims - {max_claims}
 					</div>
-					<div className="text-sm font-semibold text-gray-400">
-						{startingDate} - {endingDate}
+					<div className="text-sm font-normal text-gray-400">
+						{starting}
 					</div>
 				</div>
 			</div>

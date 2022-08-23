@@ -1,16 +1,71 @@
-* {
-	box-sizing: border-box;
+body {
+	overflow-x: hidden !important;
+	font-family: Okra-Regular !important;
+	top: 0 !important;
 }
-.action:hover svg path {
-	stroke: "#6C42C1" !important;
-}
-/* Hide scrollbar for Chrome, Safari and Opera */
-.example::-webkit-scrollbar {
+
+body > .skiptranslate {
 	display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.example {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+/* font and font family */
+@font-face {
+	font-family: Okra-Regular;
+	src: url("./assets/fonts/Okra-Regular.ttf");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Okra-Bold;
+	src: url("./assets/fonts/Okra-Bold.ttf");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Okra-Medium;
+	src: url("./assets/fonts/Okra-Medium.ttf");
+	font-display: swap;
+}
+
+.font-regular {
+	font-family: Okra-Regular;
+}
+
+.font-medium {
+	font-family: Okra-Medium;
+}
+
+.font-bold {
+	font-family: Okra-Bold !important;
+}
+
+select {
+	border: none;
+	background: white;
+	color: #000 !important;
+	outline: none;
+}
+
+.goog-logo-link {
+	display: none !important;
+}
+
+.goog-te-banner {
+	display: none !important;
+	background-image: none !important;
+	color: transparent !important;
+}
+.goog-te-gadget {
+	font-size: 10px !important;
+	color: transparent !important;
+}
+
+.goog-te-combo {
+	margin: 10px;
+	margin-right: 12px !important;
+	/* color: transparent !important; */
+}
+
+#google_translate_element {
+	margin-top: 15px;
 }

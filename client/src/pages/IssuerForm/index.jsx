@@ -1,30 +1,49 @@
 import TextInput from "components/InputFields/TextInput";
-import React from "react";
+import React, { useEffect } from "react";
 // import { MdAddBox } from "react-icons/md";
 import { useState } from "react";
 import FilledPrimary from "components/Buttons/Filled-primary";
-import { mint_certificate } from "../../api/block";
+// import { mint_certificate } from "../../api/block";
 
 import swal from "sweetalert";
+import { getAttributes, getLogicList } from "api";
+import { Listbox } from "@headlessui/react";
 
 export default function IssuerForm() {
 	const [details, setDetails] = useState({
 		name: "",
-		relation: "",
-		father: "",
-		mother: "",
-		city: "",
-		tehsil: "",
-		district: "",
-		state: "",
-		community: "",
-		class: "",
-		associated: [
-			`Government of India, Ministry of Welfare Resolution No. 12011/68/93-BCC(C) dated 13th Sept. 1993, published in the Gazette of India Extra Ordinary Part-I Section-I Dated 13th Sept. 1993 and onwards till data. Column 3 of schedule to the Government of India, Department of Personnel & Training O.M.No. 36012/22/93 Estt(SCT). Latest notification of the Government of India, which is modified vide OM No. 36033/3/2004 Estt.(Res.) dated 09/03/2004. Further modified vide No. 36033/3/2004-Estt. (Res.) dated 14/10/2008. Latest notification by the Government of India.`,
-		],
+		amount: "",
+		description: "",
 	});
 
+	const people = [
+		{ id: 1, name: "Durward Reynolds", unavailable: false },
+		{ id: 2, name: "Kenton Towne", unavailable: false },
+		{ id: 3, name: "Therese Wunsch", unavailable: false },
+		{ id: 4, name: "Benedict Kessler", unavailable: true },
+		{ id: 5, name: "Katelyn Rohan", unavailable: false },
+	];
+
 	const [associated, setAssociated] = useState([]);
+	const [attributes, setAttributes] = useState();
+	const [logic, SetLogic] = useState();
+
+	useEffect(() => {
+		(async () => {
+			const logic = await getLogicList();
+			const attr = await getAttributes();
+			SetLogic(logic.data);
+			setAttributes(attr.data);
+			setSelectedLogic(logic.data[0]);
+			setSelectedAttribute(attr.data[0]);
+		})();
+	}, []);
+
+	const [selectedLogic, setSelectedLogic] = useState();
+	const [selectedAttribute, setSelectedAttribute] = useState();
+
+	const handleAddCriteria = () => {};
+	console.log(attributes);
 
 	const handleChange = (e) => {
 		setDetails({
@@ -33,118 +52,181 @@ export default function IssuerForm() {
 		});
 	};
 
-	const handleSubmit = async () => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(details);
 		const metadata = { ...details, associated };
-		await mint_certificate(metadata["address"], metadata);
+		// await mint_certificate(metadata["address"], metadata);
 	};
-
+	console.log(selectedAttribute);
 	return (
-		<div className="px-14 py-[50px] bg-primary-light min-h-screen">
-			<div className="font-normal text-2xl">Form</div>
-			<div className="mt-8">
-				<div className="bg-white rounded-lg p-8">
-					<div className="font-regular text-xl">Details</div>
-					<div className="grid grid-cols-1 sm:gap-10 gap-4 sm:grid-cols-2 mt-8">
-						<TextInput
-							label={"Name"}
-							name="name"
-							handleChange={handleChange}
-							placeholder={"John"}
-							border="all"
-						/>
-						<TextInput
-							label={"Relation"}
-							name="relation"
-							handleChange={handleChange}
-							placeholder={"son"}
-							border="all"
-						/>
-						<TextInput
-							label={"Father"}
-							name="father"
-							handleChange={handleChange}
-							placeholder={"Jack"}
-							border="all"
-						/>
-						<TextInput
-							label={"Mother"}
-							name="mother"
-							handleChange={handleChange}
-							placeholder={"Jane"}
-							border="all"
-						/>
-						<TextInput
-							label={"City"}
-							name="city"
-							handleChange={handleChange}
-							placeholder={"Baraipur"}
-							border="all"
-						/>
-						<TextInput
-							label={"Tehsil"}
-							name="tehsil"
-							handleChange={handleChange}
-							placeholder={"Gola"}
-							border="all"
-						/>
-						<TextInput
-							label={"District"}
-							name="district"
-							handleChange={handleChange}
-							placeholder={"Gorakhpur"}
-							border="all"
-						/>
-						<TextInput
-							label={"State"}
-							name="state"
-							handleChange={handleChange}
-							placeholder={"Utter Pradesh"}
-							border="all"
-						/>
-						<TextInput
-							label={"Community"}
-							handleChange={handleChange}
-							name="community"
-							placeholder={"Ahir"}
-							border="all"
-						/>
-						<TextInput
-							label={"Class"}
-							handleChange={handleChange}
-							name="class"
-							placeholder={"OBC"}
-							border="all"
-						/>
-						<TextInput
-							label={"StudentAddress"}
-							handleChange={handleChange}
-							name="address"
-							placeholder={"tz1fpYiMjwFuRFpPaRuWUGCEVVjGreLouB1e"}
-							border="all"
-						/>
+		<>
+			{logic && attributes && (
+				<div className="px-14 py-[50px] bg-primary-light min-h-screen">
+					<div className="font-normal text-2xl">
+						Create Scholarship Form
 					</div>
-					<div className="mt-8 grid grid-col-3 gap-3">
-						<TextInput
-							label={"Associated"}
-							handleChange={(e) =>
-								setAssociated([e.target.value])
-							}
-							name="associated"
-							placeholder={
-								"Government of India, Ministry of We.."
-							}
-							border="all"
-						/>
-						{/* <MdAddBox className="text-[50px]" type="button" /> */}
-					</div>
-					<div className="mt-8 grid grid-col-3 gap-3">
-						<FilledPrimary
-							text={"Submit"}
-							handleClick={handleSubmit}
-						/>
+					<div className="mt-8">
+						<form
+							onSubmit={handleSubmit}
+							className="bg-white rounded-lg p-8"
+						>
+							<div className="font-regular text-xl">Details</div>
+							<div className="grid grid-cols-1 sm:gap-10 gap-4 sm:grid-cols-2 mt-8">
+								<TextInput
+									label={"Name"}
+									type="text"
+									name="name"
+									handleChange={handleChange}
+									placeholder={"John"}
+									border="all"
+								/>
+								<TextInput
+									label={"Amount"}
+									name="amount"
+									handleChange={handleChange}
+									placeholder={"xx"}
+									border="all"
+								/>
+							</div>
+							<div className="mt-8 grid grid-col-3 gap-3">
+								<div>Description</div>
+								<textarea
+									name={"description"}
+									placeholder={
+										"Description of the scholarship"
+									}
+									onChange={handleChange}
+									className={
+										"border border-secondary-border rounded-md block w-full font-regular px-5 py-4 bg-white text-sm placeholder-secondary-placeholder focus:outline-none"
+									}
+								/>
+							</div>
+							<FilledPrimary
+								className={"my-4 bg-primary-dark"}
+								text={"Add Eligibility Criteria"}
+								handleClick={handleAddCriteria}
+							/>
+							<div className="mt-8 grid grid-col-3 gap-3">
+								<div className="flex items-center">
+									{/* attribute */}
+									<div className="flex flex-col">
+										<Listbox
+											value={selectedAttribute.id}
+											onChange={setSelectedAttribute}
+										>
+											<Listbox.Label
+												className={
+													"block text-base font-regular text-primary-grey"
+												}
+											>
+												Criteria:
+											</Listbox.Label>
+											<Listbox.Button
+												className={
+													"relative w-60 border border-secondary-border rounded-md py-1"
+												}
+											>
+												{selectedAttribute.name}
+											</Listbox.Button>
+											<Listbox.Options
+												className={
+													"absolute mt-14 text-center w-60 bg-white border p-2"
+												}
+											>
+												{attributes?.map(
+													(attribute) => (
+														<Listbox.Option
+															className={
+																"hover:bg-slate-100 cursor-pointer"
+															}
+															key={attribute.id}
+															value={attribute}
+														>
+															{attribute.name}
+														</Listbox.Option>
+													)
+												)}
+											</Listbox.Options>
+										</Listbox>
+									</div>
+									<div className="flex flex-col ml-4">
+										<Listbox
+											value={selectedLogic.id}
+											onChange={setSelectedLogic}
+										>
+											<Listbox.Label
+												className={
+													"block text-base font-regular text-primary-grey"
+												}
+											>
+												Condition:
+											</Listbox.Label>
+											<Listbox.Button
+												className={
+													"relative w-8 border border-secondary-border rounded-md py-1"
+												}
+											>
+												{selectedLogic.name}
+											</Listbox.Button>
+											<Listbox.Options
+												className={
+													"absolute mt-14 text-center w-20 bg-white border p-2"
+												}
+											>
+												{logic?.map((logic) => (
+													<Listbox.Option
+														className={
+															"hover:bg-slate-100 cursor-pointer"
+														}
+														key={logic.id}
+														value={logic}
+													>
+														{logic.name}
+													</Listbox.Option>
+												))}
+											</Listbox.Options>
+										</Listbox>
+									</div>
+									<div className="flex flex-col ml-4">
+										<TextInput
+											label={"Value:"}
+											type="text"
+											name="name"
+											className={"py-2 mt-0 text-black"}
+											handleChange={handleChange}
+											placeholder={"Value"}
+											border="all"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="mt-8 grid grid-col-3 gap-3">
+								<div>Description</div>
+								<textarea
+									name={"description"}
+									placeholder={
+										"Description of the scholarship"
+									}
+									onChange={handleChange}
+									className={
+										"border border-secondary-border rounded-md block w-full font-regular px-5 py-4 bg-white text-sm placeholder-secondary-placeholder focus:outline-none"
+									}
+								/>
+							</div>
+							<div className="mt-8 grid grid-col-3 gap-3">
+								<TextInput
+									type="submit"
+									value="Create Scolarship"
+									text="Create Scolarship"
+									className="font-bold text-white bg-purple-800 rounded-md text-bas"
+								/>
+							</div>
+						</form>
 					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 }

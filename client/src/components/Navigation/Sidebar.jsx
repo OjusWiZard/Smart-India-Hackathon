@@ -1,37 +1,61 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { ReactComponent as ScholarshipIcon } from "../../assets/icons/scholarship-icon.svg";
-import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-icon.svg";
-import { ReactComponent as HomeIcon } from "../../assets/icons/home.svg";
+import { NavLink } from "react-router-dom";
+import { BiHomeAlt } from "react-icons/bi";
+import { MdOutlineSchool } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineForm } from "react-icons/ai";
+import { ReactComponent as FileIcon } from "assets/icons/file-icon-red.svg";
 
 const Sidebar = () => {
+	const links = [
+		{
+			link: "/dashboard",
+			icon: <BiHomeAlt className="mx-3 text-[26px]" />,
+			name: "Dashboard",
+		},
+		{
+			link: "/scholarships",
+			icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+			name: "Scholarships",
+		},
+		{
+			link: "/create-scholarship",
+			icon: <AiOutlineForm className="mx-3 text-[26px]" />,
+			name: "Form",
+		},
+		{
+			link: "/profile",
+			icon: <CgProfile className="mx-3 text-[26px]" />,
+			name: "Profile",
+		},
+	];
 	return (
-		<aside className="w-72 pt-16" aria-label="Sidebar">
-			<div className="overflow-y-auto py-4 px-3 bg-white">
-				<ul className="space-y-2">
-					<Link as="li" to="/dashboard">
-						<div className="flex items-center p-4 text-base font-normal hover:text-primary-dark hover:border-l-4 hover:border-secondary-dark rounded-lg cursor-pointer hover:bg-primary-light">
-							<HomeIcon className="mr-3" />
-							<span className="font-normal">Dashboard</span>
-						</div>
-					</Link>
-					<Link as="li" to="/scholarships">
-						<div className="flex items-center p-4 text-base font-normal hover:text-primary-dark hover:border-l-4 hover:border-secondary-dark rounded-lg cursor-pointer hover:bg-primary-light">
-							<ScholarshipIcon className="mr-3" />
-							<span className="flex-1 font-normal">
-								Scholarship
-							</span>
-						</div>
-					</Link>
-					<Link as="li" to="/scholarships">
-						<div className="flex items-center p-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-							<ProfileIcon className="mr-3" />
-							<span className="flex-1 whitespace-nowrap">
-								Profile
-							</span>
-						</div>
-					</Link>
-				</ul>
+		<aside className="w-60">
+			<div className="fixed">
+				<div className="h-[80px] py-6 px-9">
+					<FileIcon />
+				</div>
+				<div className="overflow-hidden py-12 px-4">
+					<ul className="space-y-2">
+						{links.map((linkItem) => {
+							const { link, icon, name } = linkItem;
+							return (
+								<NavLink
+									as="li"
+									to={link}
+									className={({ isActive }) =>
+										isActive
+											? "flex items-center p-4 text-base font-normal text-primary-dark rounded-lg cursor-pointer bg-primary-light"
+											: "flex items-center p-4 text-[#9C9C9C] text-base font-normal hover:text-primary-dark rounded-lg cursor-pointer hover:bg-primary-light"
+									}
+								>
+									{icon}
+									<span className="font-normal">{name}</span>
+								</NavLink>
+							);
+						})}
+					</ul>
+				</div>
 			</div>
 		</aside>
 	);

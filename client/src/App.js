@@ -1,14 +1,19 @@
-import React from "react";
+// React router imports from react-router-dom
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import GlobalNavbar from "./components/Navigation/GlobalNavbar";
-import Dashboard from "./pages/Dashboard";
-import Register from "./pages/Register";
-import Scholarships from "./pages/Scholarships";
+
+// Pages Imports
+import Dashboard from "pages/Dashboard";
+import Register from "pages/Register";
+import Login from "pages/Login";
+import Scholarships from "pages/Scholarships";
 import IssuerForm from "pages/IssuerForm";
-import "./styles/main.css";
-// import { renderRoutes, allRoutes } from "./Router";
-import "./api/block";
+
+import "./App.css";
+
+// Utilities
+import GlobalNavbar from "components/Navigation/GlobalNavbar";
+import ScholarshipDetails from "pages/ScholarshipDetails";
+import Profile from "pages/Profile";
 
 function App() {
 	return (
@@ -16,6 +21,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Register />} />
+					<Route path="/login" element={<Login />} />
 					<Route
 						path="/dashboard"
 						element={
@@ -33,17 +39,31 @@ function App() {
 						}
 					/>
 					<Route
-						path="/form"
+						path="/create-scholarship"
 						element={
 							<GlobalNavbar>
 								<IssuerForm />
 							</GlobalNavbar>
 						}
 					/>
-					{/* <Route path="teams/new" element={<NewTeam />} /> */}
+					<Route
+						path="/scholarships/:id"
+						element={
+							<GlobalNavbar>
+								<ScholarshipDetails />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/profile"
+						element={
+							<GlobalNavbar>
+								<Profile />
+							</GlobalNavbar>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
-			{/* {renderRoutes(allRoutes)} */}
 		</div>
 	);
 }
