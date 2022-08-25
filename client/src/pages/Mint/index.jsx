@@ -123,10 +123,7 @@ export default function Mint() {
 							<FilledPrimary
 								className={"my-4 bg-primary-dark"}
 								text={"Mint Certificate"}
-								handleClick={() => {
-									console.log("check");
-									return mint_certificate();
-								}}
+								handleClick={() => mint_certificate()}
 							/>
 						</div>
 					</form>

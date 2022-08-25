@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { UserTypeContext } from "../../context/userTypeContext"
 import { useNavigate } from "react-router-dom"
 export default function AuthenticatedIssuer({ children }) {
