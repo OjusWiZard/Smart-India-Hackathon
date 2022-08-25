@@ -71,7 +71,7 @@ export const registerUser = async (formData) => {
 		return res;
 	} catch (err) {
 		const { response } = err;
-		swal("Error", Object.values(response.data)[0][0], "error");
+		swal("Error", Object.values(response.data)[0], "error");
 		return response;
 	}
 };
