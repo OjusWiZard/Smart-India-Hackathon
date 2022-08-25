@@ -78,8 +78,14 @@ select {
 	);
 }
 
-.remove_scroll::-webkit-scrollbar {
-	display: none;
-	/* -ms-overflow-style: none; 
-    scrollbar-width: none;   */
+.border-left::before {
+	content: "";
+	width: 5px;
+	height: 20px;
+	margin: 0 20px;
+	/* margin-right: 20px; */
+	color: red;
+	position: absolute;
+	/* top: 50%; */
+	background-color: red;
 }

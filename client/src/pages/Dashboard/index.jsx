@@ -16,21 +16,28 @@ const Dashboard = () => {
 	const [myDocuments, setMyDocuments] = useState([]);
 	const menuItems = [
 		{
-			text: "Domicile Certificate",
-			value: "domicile",
-			onClick: () => {
-				setIsOpen(true);
-				setCertificate("domicile");
-			},
-		},
-		{
-			text: "10th Marksheet",
-			value: "10th",
+			text: "Digilocker",
 			onClick: () => {
 				setIsOpen(true);
 				setCertificate("10th");
 			},
 		},
+		// {
+		// 	text: "Domicile Certificate",
+		// 	value: "domicile",
+		// 	onClick: () => {
+		// 		setIsOpen(true);
+		// 		setCertificate("domicile");
+		// 	},
+		// },
+		// {
+		// 	text: "10th Marksheet",
+		// 	value: "10th",
+		// 	onClick: () => {
+		// 		setIsOpen(true);
+		// 		setCertificate("10th");
+		// 	},
+		// },
 	];
 
 	// calling my Documents api and listing them commenting as no doc currently
@@ -86,12 +93,43 @@ const Dashboard = () => {
 							Your Earnings
 						</div>
 						<div className="mt-5">
-							<div className="px-10 flex h-[300pxx] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
+							{/* when no scolraship */}
+							{/* <div className="px-10 flex h-[300pxx] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
 								<div className="flex flex-col items-center">
 									<WalletIcon />
 									<div className="font-normal mt-5 text-lg text-[#828282]">
 										Apply for scholarships to see your
 										earnings here.
+									</div>
+								</div>
+							</div> */}
+							<div className="px-7 py-4 bg-white rounded-md">
+								<div className="flex flex-col items-start">
+									<div className="font-normal text-lg text-[#828282]">
+										Uttar Pradesh Scholarship
+									</div>
+									<div className="font-bold mt-2">
+										₹11,11,190
+									</div>
+								</div>
+							</div>
+							<div className="px-7 py-4 bg-white rounded-md mt-4">
+								<div className="flex flex-col items-start">
+									<div className="font-normal text-lg text-[#828282]">
+										HDFC Student Scholarship
+									</div>
+									<div className="font-bold mt-2">
+										₹1,21,900
+									</div>
+								</div>
+							</div>
+							<div className="px-7 py-4 bg-white rounded-md mt-4">
+								<div className="flex flex-col items-start">
+									<div className="font-normal text-lg text-[#828282]">
+										MHRD Scholarship
+									</div>
+									<div className="font-bold mt-2">
+										₹62,800
 									</div>
 								</div>
 							</div>
@@ -102,25 +140,25 @@ const Dashboard = () => {
 							Your Applications
 						</div>
 						<div className="mt-5">
-							<div className="px-8 flex h-[300px] flex-col justify-start items-start bg-white rounded-md py-8">
+							<div className="px-8 flex flex-col justify-start items-start bg-white rounded-md py-8">
 								<div className="border-4  border-white border-l-red-500 pl-3 text-[#1C1C1C] font-bold text-[23px]">
 									Uttar Pradesh Scholarship
 									<br />
-									<div className="text-[#9C9C9C] text-[15px] font-normal">
+									<div className="text-[#9C9C9C] text-[15px] font-regular">
 										Form Pending
 									</div>
 								</div>
 								<div className="border-4  border-white border-l-yellow-500 pl-3 text-[#1C1C1C] font-bold text-[23px] mt-4">
 									HDFC Student Scholarship
 									<br />
-									<div className="text-[#9C9C9C] text-[15px] font-normal">
+									<div className="text-[#9C9C9C] text-[15px] font-regular">
 										Document Verification Pending
 									</div>
 								</div>
 								<div className="border-4  border-white border-l-green-500 pl-3 text-[#1C1C1C] font-bold text-[23px] mt-4">
 									DoSJE Scholarship
 									<br />
-									<div className="text-[#9C9C9C] text-[15px] font-normal">
+									<div className="text-[#9C9C9C] text-[15px] font-regular">
 										Application Submitted
 									</div>
 								</div>

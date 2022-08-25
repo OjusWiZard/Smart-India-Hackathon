@@ -1,34 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { BiHomeAlt } from "react-icons/bi";
 import { MdOutlineSchool } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineForm } from "react-icons/ai";
 import { ReactComponent as FileIcon } from "assets/icons/file-icon-red.svg";
+import { UserTypeContext } from "../../context/userTypeContext";
 
 const Sidebar = () => {
-	const links = [
-		{
-			link: "/dashboard",
-			icon: <BiHomeAlt className="mx-3 text-[26px]" />,
-			name: "Dashboard",
-		},
-		{
-			link: "/scholarships",
-			icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
-			name: "Scholarships",
-		},
-		{
-			link: "/create-scholarship",
-			icon: <AiOutlineForm className="mx-3 text-[26px]" />,
-			name: "Form",
-		},
-		{
-			link: "/profile",
-			icon: <CgProfile className="mx-3 text-[26px]" />,
-			name: "Profile",
-		},
-	];
+	const { isStudent } = useContext(UserTypeContext);
+	const links = isStudent
+		? [
+				{
+					link: "/scholarships",
+					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+					name: "Scholarships",
+				},
+				{
+					link: "/create-scholarship",
+					icon: <AiOutlineForm className="mx-3 text-[26px]" />,
+					name: "Create",
+				},
+				{
+					link: "/profile",
+					icon: <CgProfile className="mx-3 text-[26px]" />,
+					name: "Profile",
+				},
+		  ]
+		: [
+				{
+					link: "/dashboard",
+					icon: <BiHomeAlt className="mx-3 text-[26px]" />,
+					name: "Dashboard",
+				},
+				{
+					link: "/scholarships",
+					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+					name: "Scholarships",
+				},
+				{
+					link: "/profile",
+					icon: <CgProfile className="mx-3 text-[26px]" />,
+					name: "Profile",
+				},
+		  ];
 	return (
 		<aside className="w-60">
 			<div className="fixed">
