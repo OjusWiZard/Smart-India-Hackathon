@@ -66,7 +66,7 @@ export const getAttributes = async () => {
 export const registerUser = async (formData) => {
 	try {
 		const res = await API.post("/accounts/users/", formData, config);
-		swal("Success", res.statusText);
+		swal("Success", res.statusText, "success");
 		console.log(res);
 		return res;
 	} catch (err) {

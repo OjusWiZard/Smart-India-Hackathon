@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 const ScholarshipRow = ({
 	scholarship: { name, amount, starting, max_claims, isPassed },
@@ -19,7 +20,7 @@ const ScholarshipRow = ({
 						Claims - {max_claims}
 					</div>
 					<div className="text-sm font-normal text-gray-400">
-						{starting}
+						{moment(starting).format("MMM do YYYY")}
 					</div>
 				</div>
 			</div>

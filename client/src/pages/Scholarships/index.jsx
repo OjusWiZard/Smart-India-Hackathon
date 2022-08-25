@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import ScholarshipRow from "components/Row/ScholarshipRow";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getScholarships } from "api";
+import { UserTypeContext } from "../../context/userTypeContext";
 
 const Scholarships = () => {
 	const [scholarships, setScholarships] = useState([]);
+	const { isStudent } = useContext(UserTypeContext);
 	useEffect(() => {
 		(async () => {
 			const { data } = await getScholarships();
@@ -22,12 +24,14 @@ const Scholarships = () => {
 		<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
 			<div className="flex items-center justify-between">
 				<div className="font-normal text-2xl">Scholarships</div>
-				<Link
-					to="/create-scholarship"
-					className="bg-primary-dark px-10 py-3 text-white text-base "
-				>
-					Create Scholarship
-				</Link>
+				{!isStudent && (
+					<Link
+						to="/create-scholarship"
+						className="bg-primary-dark px-10 py-3 text-white text-base "
+					>
+						Create Scholarship
+					</Link>
+				)}
 			</div>
 			<div className="mt-8">
 				<div className="bg-white rounded-lg">

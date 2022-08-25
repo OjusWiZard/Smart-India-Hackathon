@@ -57,10 +57,12 @@ export default function Register() {
 		formData.append("full_name", full_name);
 		formData.append("password", password);
 		formData.append("contact_no", contact_no);
-		const { data } = await registerUser(formData);
-		if (data.id) {
-			navigate("/login");
-		}
+		// to be integrated later
+		// const { data } = await registerUser(formData);
+		// if (data.id) {
+		// 	navigate("/login");
+		// }
+		navigate("/login");
 		//data.id means true
 		// openModal();
 	};
@@ -195,10 +197,13 @@ export default function Register() {
 									// }
 								/>
 
-								<div className="">
+								<div className="font-regular mt-4 w-full text-right">
 									Already Registered ?
 									<Link to="/login">
-										<span>Login</span>
+										<span className="font-bold">
+											{" "}
+											Login
+										</span>
 									</Link>
 								</div>
 								{/* <Transition appear show={isOpen} as={Fragment}>

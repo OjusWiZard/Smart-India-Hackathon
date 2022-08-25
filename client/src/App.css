@@ -77,3 +77,9 @@ select {
 		rgba(255, 255, 255, 0.0704) 105.69%
 	);
 }
+
+.remove_scroll::-webkit-scrollbar {
+	display: none;
+	/* -ms-overflow-style: none; 
+    scrollbar-width: none;   */
+}

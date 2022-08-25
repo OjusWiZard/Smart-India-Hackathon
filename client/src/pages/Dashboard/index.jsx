@@ -37,8 +37,9 @@ const Dashboard = () => {
 	useEffect(() => {
 		(async () => {
 			// let jwtToken = localStorage.getItem("jwt-token");
-			let { data } = await getMyDocument();
-			setMyDocuments(data);
+			// to be integrated later
+			// let { data } = await getMyDocument();
+			// setMyDocuments(data);
 			// sendVerificationCode();
 		})();
 	}, []);
@@ -52,10 +53,10 @@ const Dashboard = () => {
 			/>
 			<div className="flex lg:flex-row flex-col lg:items-center items-start justify-between">
 				<div className="font-normal text-2xl lg:mb-0 mb-3">
-					Hi {`{name}`}
+					Hi {`Shruti`}
 				</div>
 				<Dropdown
-					heading="Upload Ceriticates..."
+					heading="import Ceriticates..."
 					menuItems={menuItems}
 				/>
 			</div>
@@ -66,6 +67,9 @@ const Dashboard = () => {
 					{/* {myDocuments && myDocuments.map(doc => {
 						return <Certificate doc={doc} certificate="ews" />
 					})} */}
+					{/* <div className="font-regular remove_scroll text-[#828282] text-center w-full">
+						Your certificates will appear here
+					</div> */}
 					<Certificate certificate="ews" />
 					<Certificate certificate="caste" />
 					<Certificate certificate="income" />

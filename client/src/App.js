@@ -1,6 +1,7 @@
 // React router imports from react-router-dom
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import { useContext } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { UserTypeContext } from "./context/userTypeContext"
 // Pages Imports
 import Dashboard from "pages/Dashboard";
 import Register from "pages/Register";
@@ -16,6 +17,7 @@ import ScholarshipDetails from "pages/ScholarshipDetails";
 import Profile from "pages/Profile";
 
 function App() {
+	const { isStudent } = useContext(UserTypeContext);
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -41,9 +43,10 @@ function App() {
 					<Route
 						path="/create-scholarship"
 						element={
-							<GlobalNavbar>
-								<IssuerForm />
-							</GlobalNavbar>
+							isStudent ? (
+								<GlobalNavbar>
+									<IssuerForm />
+								</GlobalNavbar>) : (<Navigate to="/dashboard" />)
 						}
 					/>
 					<Route
