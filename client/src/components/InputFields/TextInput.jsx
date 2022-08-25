@@ -12,6 +12,7 @@ const TextInput = ({
 	border = "",
 	className,
 	handleChange = () => {},
+	disabled = false,
 }) => {
 	return (
 		<div>
@@ -72,6 +73,7 @@ const TextInput = ({
 								className && className
 							} block w-full font-regular px-5 py-4 bg-white border border-secondary-border rounded-md text-sm shadow-sm placeholder-secondary-placeholder
               focus:outline-none`}
+							disabled
 						/>
 					</div>
 				) : (
@@ -87,6 +89,7 @@ const TextInput = ({
 								: "border border-white border-b-secondary-border"
 						} block w-full font-regular px-5 py-4 bg-white text-sm placeholder-secondary-placeholder
             focus:outline-none`}
+						disabled={disabled == true ? true : false}
 					/>
 				)}
 			</label>

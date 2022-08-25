@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineForm } from "react-icons/ai";
 import { ReactComponent as FileIcon } from "assets/icons/file-icon-red.svg";
 import { UserTypeContext } from "../../context/userTypeContext";
+import { FaCertificate } from "react-icons/fa";
 
 const Sidebar = () => {
 	const { isStudent } = useContext(UserTypeContext);
@@ -26,6 +27,16 @@ const Sidebar = () => {
 					icon: <CgProfile className="mx-3 text-[26px]" />,
 					name: "Profile",
 				},
+				{
+					link: "/nft",
+					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+					name: "My Certificates	",
+				},
+				{
+					link: "/mint",
+					icon: <FaCertificate className="mx-3 text-[26px]" />,
+					name: "Mint Certi	",
+				},
 		  ]
 		: [
 				{
@@ -42,6 +53,16 @@ const Sidebar = () => {
 					link: "/profile",
 					icon: <CgProfile className="mx-3 text-[26px]" />,
 					name: "Profile",
+				},
+				{
+					link: "/nft",
+					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+					name: "My Certificates	",
+				},
+				{
+					link: "/mint",
+					icon: <FaCertificate className="mx-3 text-[26px]" />,
+					name: "Mint Certi	",
 				},
 		  ];
 	return (

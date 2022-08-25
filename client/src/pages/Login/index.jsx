@@ -40,11 +40,10 @@ export default function Login() {
 		formData.append("email", email);
 		formData.append("password", password);
 		// to be integrated later
-		// const { data } = await loginUser(formData);
-		// if (data.access) {
-		// 	navigate("/dashboard");
-		// }
-		navigate("/dashboard");
+		const { data } = await loginUser(formData);
+		if (data.access) {
+			navigate("/dashboard");
+		}
 	};
 
 	return (

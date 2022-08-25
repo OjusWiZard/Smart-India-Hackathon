@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useNavigation } from "react";
 import Dropdown from "components/InputFields/Dropdown";
 import { ReactComponent as WalletIcon } from "assets/icons/wallet.svg";
 import { ReactComponent as NoFileIcon } from "assets/icons/no-file.svg";
@@ -9,16 +9,24 @@ import Certificate from "components/Certificates";
 import styles from "./Dashboard.module.css";
 import Earning from "components/Earning/Earning";
 import { getMyDocument, sendStatus, sendVerificationCode } from "api";
+import { UserTypeContext } from "../../context/userTypeContext";
 
 const Dashboard = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [certificate, setCertificate] = useState();
 	const [myDocuments, setMyDocuments] = useState([]);
+	const [importElement, setImportElement] = useState(false);
+	const [showCerti, setShowCerti] = useState(false);
 	const menuItems = [
 		{
 			text: "Digilocker",
 			onClick: () => {
 				setIsOpen(true);
+				setImportElement(true);
+				setTimeout(() => {
+					setIsOpen(false);
+					setShowCerti(true);
+				}, 3000);
 				setCertificate("10th");
 			},
 		},
@@ -57,15 +65,13 @@ const Dashboard = () => {
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 				certificate={certificate}
+				importElement={importElement}
 			/>
 			<div className="flex lg:flex-row flex-col lg:items-center items-start justify-between">
 				<div className="font-normal text-2xl lg:mb-0 mb-3">
 					Hi {`Shruti`}
 				</div>
-				<Dropdown
-					heading="import Ceriticates..."
-					menuItems={menuItems}
-				/>
+				<Dropdown heading="Import Documents..." menuItems={menuItems} />
 			</div>
 
 			<div className="mt-10">
@@ -74,15 +80,20 @@ const Dashboard = () => {
 					{/* {myDocuments && myDocuments.map(doc => {
 						return <Certificate doc={doc} certificate="ews" />
 					})} */}
-					{/* <div className="font-regular remove_scroll text-[#828282] text-center w-full">
-						Your certificates will appear here
-					</div> */}
-					<Certificate certificate="ews" />
-					<Certificate certificate="caste" />
-					<Certificate certificate="income" />
-					<Certificate certificate="domicile" />
-					<Certificate certificate="ews" />
-					<Certificate certificate="income" />
+					{showCerti ? (
+						<>
+							<Certificate certificate="ews" />
+							<Certificate certificate="caste" />
+							<Certificate certificate="income" />
+							<Certificate certificate="domicile" />
+							<Certificate certificate="ews" />
+							<Certificate certificate="income" />
+						</>
+					) : (
+						<div className="font-regular remove_scroll text-[#828282] text-center w-full">
+							Your certificates will appear here
+						</div>
+					)}
 				</div>
 			</div>
 
@@ -141,7 +152,7 @@ const Dashboard = () => {
 						</div>
 						<div className="mt-5">
 							<div className="px-8 flex flex-col justify-start items-start bg-white rounded-md py-8">
-								<div className="border-4  border-white border-l-red-500 pl-3 text-[#1C1C1C] font-bold text-[23px]">
+								<div className="border-4 border-white border-l-red-500 pl-3 text-[#1C1C1C] font-bold text-[23px]">
 									Uttar Pradesh Scholarship
 									<br />
 									<div className="text-[#9C9C9C] text-[15px] font-regular">

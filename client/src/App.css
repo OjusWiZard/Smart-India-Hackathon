@@ -78,11 +78,11 @@ select {
 	);
 }
 
-.border-left::before {
+.before-border::before {
 	content: "";
 	width: 5px;
 	height: 20px;
-	margin: 0 20px;
+	/* margin: 0 20px; */
 	/* margin-right: 20px; */
 	color: red;
 	position: absolute;

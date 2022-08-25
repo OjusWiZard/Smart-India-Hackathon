@@ -19,13 +19,6 @@ export default function IssuerForm() {
 		description: "",
 	});
 
-	// const handleAttriChange = (index, e) => {
-	// 	console.log("-----");
-	// 	let newFormValues = [...number];
-	// 	newFormValues[index]["selectedValue"] = e.target.value;
-	// 	setNumber(newFormValues);
-	// };
-
 	const initialState = {
 		attribute: [
 			{
@@ -103,6 +96,14 @@ export default function IssuerForm() {
 	const [attributes, setAttributes] = useState();
 	const [logic, SetLogic] = useState();
 	const [number, setNumber] = useState([initialState]);
+
+	const handleAttriChange = (index, e) => {
+		console.log("-----");
+		let newFormValues = [...number];
+		newFormValues[index]["selectedValue"] = e.target.value;
+		setNumber(newFormValues);
+	};
+
 	// const [selected, setSelected] = useState(people[0]);
 
 	// useEffect(() => {

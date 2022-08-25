@@ -1,11 +1,13 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import FilledPrimary from "../Buttons/Filled-primary";
+import BounceLoader from "react-spinners/BounceLoader";
 
 export default function AddCertificateModal({
 	isOpen,
 	setIsOpen,
 	certificate,
+	importElement,
 }) {
 	function closeModal() {
 		setIsOpen(false);
@@ -53,8 +55,13 @@ export default function AddCertificateModal({
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-95"
 						>
-							<div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-								<Dialog.Title
+							<div className="inline-block w-30 max-w-md p-6 my-8 overflow-hidden text-center align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+								<BounceLoader
+									color="#6C42C1"
+									loading={importElement}
+									size={50}
+								/>
+								{/* <Dialog.Title
 									as="h3"
 									className="text-2xl font-bold leading-6 text-gray-900"
 								>
@@ -80,7 +87,7 @@ export default function AddCertificateModal({
 										text="Add"
 										disabled={referenceId.length === 0}
 									/>
-								</div>
+								</div> */}
 							</div>
 						</Transition.Child>
 					</div>

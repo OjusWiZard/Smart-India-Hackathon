@@ -25,7 +25,7 @@ const Navbar = () => {
 						} inline-block h-4 w-4 transform rounded-full bg-white`}
 					/>
 				</Switch>
-				<div>Issuer</div>
+				<div>Scholarship Creator</div>
 			</div>
 			<div className="flex items-center justify-start">
 				<div className="flex items-center">

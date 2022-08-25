@@ -71,10 +71,22 @@ export const registerUser = async (formData) => {
 		return res;
 	} catch (err) {
 		const { response } = err;
-		swal("Error", Object.values(response.data)[0], "error");
+		swal("Error", Object.values(response.data)[0][0], "error");
 		return response;
 	}
 };
+
+export const getUserInfo = async (accessToken) => {
+	try {
+		const res = await API.post("/accounts/users/me/", accessToken, config);
+		localStorage.setItem("user", res.data);
+		return res;
+	} catch (error) {
+		const { response } = error;
+		swal("Error", "Something went wrong", "error");
+		return response;
+	}
+}
 
 export const loginUser = async (formData) => {
 	try {
@@ -83,8 +95,13 @@ export const loginUser = async (formData) => {
 		return res;
 	} catch (err) {
 		const { response } = err;
-		console.log(response);
-		swal("Error", Object.values(response.data)[0], "error");
+		// console.log(response);
+		// if (Object.values(response.data)[0][0].length === 1) {
+		// 	console.log(Object.values(response.data)[0])
+		// 	// swal("Error", Object.values(response.data), "error");
+		swal("Error", "No active account found with the given credentials", "error");
+		// }
+		// swal("Error", Object.values(response.data)[0][0], "error");
 		return response;
 	}
 };

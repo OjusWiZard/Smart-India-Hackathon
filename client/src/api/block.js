@@ -1,67 +1,74 @@
-import { TezosToolkit, MichelsonMap } from "@taquito/taquito";
-import { char2Bytes } from "@taquito/utils";
+import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import { NetworkType } from "@airgap/beacon-sdk";
 import axios from "axios";
 import swal from "sweetalert";
-import { sendStatus } from "./index";
-export const Tezos = new TezosToolkit("https://rpc.hangzhounet.teztnets.xyz");
+// import { sendStatus } from "./index";
+export const Tezos = new TezosToolkit(process.env.REACT_APP_RPC_URL);
 export const Wallet = new BeaconWallet({
 	name: "CertiSetu",
+	preferredNetwork: NetworkType.CUSTOM
 });
 
-export const mint_certificate = async (address, metadata) => {
-	// if (Tezos.wallet.walletProvider.constructor.name === "BeaconWallet") {
+export const mint_certificate = async () =>
+	console.log("MAI YAHAN PAHUCH GAYA HU");
+new Promise(async (resolve, reject) => {
 	await Wallet.requestPermissions({
 		network: {
-			type: "hangzhounet",
+			name: "Ghostnet",
+			type: NetworkType.CUSTOM,
+			rpcUrl: process.env.REACT_APP_RPC_URL
 		},
 	});
 	Tezos.setWalletProvider(Wallet);
+	resolve();
 
-	// }
+})
 
-	const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
-	Tezos.wallet
-		.at(process.env.REACT_APP_CONTRACT_ADDRESS)
-		.then(async (contract) => {
-			return contract.methods
-				.mint(
-					address,
-					1,
-					MichelsonMap.fromLiteral({
-						name: char2Bytes("certificate"),
-						symbol: char2Bytes("CERT"),
-						decimals: char2Bytes("0"),
-						metadata: char2Bytes(hash),
-					}),
-					(await get_storage()).all_tokens
-				)
-				.send();
-		})
-		.then(({ opHash }) => {
-			console.log(`Waiting for ${opHash} to be confirmed...`);
-			swal("Success", "Certificate minted", "success");
+// }
 
-			sendStatus(
-				"Congratulations! You have been successfully granted a certificate to address " +
-					metadata["address"]
-			)
-				.then((res) => {
-					console.log(res.data);
-				})
-				.catch((err) => console.error(err));
-			return opHash.confirmation(1).then(() => opHash);
-		})
-		.then((hash) => {
-			console.log(
-				`Operation injected: https://hangzhou.tzstats.com/${hash}`
-			);
-		})
-		.catch((error) => {
-			console.error(`Error: ${JSON.stringify(error, null, 2)}`);
-			swal("Success", "Certificate minted", "success");
-		});
-};
+// const hash = "ipfs://" + (await pin_metadata(metadata)).data.IpfsHash;
+// Tezos.wallet
+// 	.at(process.env.REACT_APP_CONTRACT_ADDRESS)
+// 	.then(async (contract) => {
+// 		return contract.methods
+// 			.mint(
+// 				address,
+// 				1,
+// 				MichelsonMap.fromLiteral({
+// 					name: char2Bytes("certificate"),
+// 					symbol: char2Bytes("CERT"),
+// 					decimals: char2Bytes("0"),
+// 					metadata: char2Bytes(hash),
+// 				}),
+// 				(await get_storage()).all_tokens
+// 			)
+// 			.send();
+// 	})
+// 	.then(({ opHash }) => {
+// 		console.log(`Waiting for ${opHash} to be confirmed...`);
+// 		swal("Success", "Certificate minted", "success");
+
+// 		sendStatus(
+// 			"Congratulations! You have been successfully granted a certificate to address " +
+// 			metadata["address"]
+// 		)
+// 			.then((res) => {
+// 				console.log(res.data);
+// 			})
+// 			.catch((err) => console.error(err));
+// 		return opHash.confirmation(1).then(() => opHash);
+// 	})
+// 	.then((hash) => {
+// 		console.log(
+// 			`Operation injected: https://hangzhou.tzstats.com/${hash}`
+// 		);
+// 	})
+// 	.catch((error) => {
+// 		console.error(`Error: ${JSON.stringify(error, null, 2)}`);
+// 		swal("Success", "Certificate minted", "success");
+// 	});
+
 
 export const get_certificate = () => {
 	axios

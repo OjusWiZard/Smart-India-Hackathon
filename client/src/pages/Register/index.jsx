@@ -57,12 +57,11 @@ export default function Register() {
 		formData.append("full_name", full_name);
 		formData.append("password", password);
 		formData.append("contact_no", contact_no);
-		// to be integrated later
-		// const { data } = await registerUser(formData);
-		// if (data.id) {
-		// 	navigate("/login");
-		// }
-		navigate("/login");
+		const { data } = await registerUser(formData);
+		if (data.id) {
+			navigate("/login");
+		}
+		// navigate("/login");
 		//data.id means true
 		// openModal();
 	};
