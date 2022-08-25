@@ -1969,6 +1969,13 @@
     elliptic "^6.5.4"
     typedarray-to-buffer "^4.0.0"
 
+"@temple-wallet/dapp@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@temple-wallet/dapp/-/dapp-7.0.0.tgz#f7baf38ccd775b3eb8424e62ddbbfcd57c718227"
+  integrity sha512-JbpXompkVDh4Wl0Oa+i8iKEGinFqYPTM4uuqw8eBH57vHxq52W5K3NSgVaKjfyWms9UYQ8xOfsUOzzUVWSYtxA==
+  dependencies:
+    nanoid "^3.1.30"
+
 "@testing-library/dom@^8.5.0":
   version "8.17.1"
   resolved "https://registry.npmjs.org/@testing-library/dom/-/dom-8.17.1.tgz"
@@ -2013,6 +2020,13 @@
   integrity sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==
   dependencies:
     "@babel/runtime" "^7.12.5"
+
+"@thanos-wallet/dapp@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@thanos-wallet/dapp/-/dapp-2.2.2.tgz#644c16c9c9a1b6521eaf391eee7d3dd7cd7cea31"
+  integrity sha512-FI22fVaU0AMeGrGAYHvIy5iPA3ttZaKPRbwOYK4NIvUCSc8Ah3FIhs196rY1BHtz9XgrhzBknbZ7PzGakV88qA==
+  dependencies:
+    nanoid "^3.1.10"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -6708,7 +6722,7 @@ multicast-dns@^7.2.5:
     dns-packet "^5.2.2"
     thunky "^1.0.2"
 
-nanoid@^3.3.4:
+nanoid@^3.1.10, nanoid@^3.1.30, nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==

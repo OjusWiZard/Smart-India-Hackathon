@@ -1,29 +1,25 @@
 import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
-import { NetworkType } from "@airgap/beacon-sdk";
+import { TempleWallet } from '@temple-wallet/dapp';
+import { ThanosWallet } from '@thanos-wallet/dapp';
 import axios from "axios";
 import swal from "sweetalert";
 // import { sendStatus } from "./index";
 export const Tezos = new TezosToolkit(process.env.REACT_APP_RPC_URL);
-export const Wallet = new BeaconWallet({
-	name: "CertiSetu",
-	preferredNetwork: NetworkType.CUSTOM
-});
 
-export const mint_certificate = async () =>
-	console.log("MAI YAHAN PAHUCH GAYA HU");
-new Promise(async (resolve, reject) => {
-	await Wallet.requestPermissions({
-		network: {
-			name: "Ghostnet",
-			type: NetworkType.CUSTOM,
-			rpcUrl: process.env.REACT_APP_RPC_URL
-		},
-	});
-	Tezos.setWalletProvider(Wallet);
-	resolve();
 
-})
+export const mint_certificate = async () => {
+	try {
+		const available = await ThanosWallet.isAvailable();
+		if (!available) {
+			swal("Error", "Thanos Wallet not installed", "error");
+		}
+		const wallet = new ThanosWallet('CertiSetu');
+		await wallet.connect('ghostnet');
+		Tezos.setWalletProvider(wallet);
+	} catch (err) {
+		console.log(err);
+	}
+}
 
 // }
 
