@@ -6,7 +6,7 @@ const ScholarshipRow = ({
 }) => {
 	return (
 		<div
-			className={`px-8 py-3 min-h-24 border ${
+			className={`px-8 py-3 min-h-24 mb-1.5 bg-white border ${
 				isPassed ? "border-red-200 " : "border-gray-200"
 			}`}
 		>

@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import Img from "../../assets/icons/coin.svg";
 
-const UserDropdown = () => {
+const UserDropdown = ({ user }) => {
+	// const user = JSON.parse(localStorage.getItem("user"));
 	const navigate = useNavigate();
 	const logoutUser = () => {
-		navigate("/login");
 		localStorage.clear();
+		navigate("/login");
 	};
 	return (
 		<div className="text-right">
@@ -20,7 +21,7 @@ const UserDropdown = () => {
 							className="w-9 h-9 rounded-full"
 						/>
 						<div className="ml-3 text-[#959595]">
-							Shruti Agarwal
+							{user?.full_name}
 						</div>
 					</Menu.Button>
 				</div>

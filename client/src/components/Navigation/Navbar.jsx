@@ -1,16 +1,43 @@
 import React, { useContext } from "react";
+import { connectWallet } from "../../api/block";
+import { useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
 import UserDropdown from "components/Dropdown/user-dropdown";
 import { UserTypeContext } from "../../context/userTypeContext";
 
 const Navbar = () => {
+	const user = JSON.parse(localStorage.getItem("user"));
+	const wallet = localStorage.getItem("wallet");
 	const { isStudent, toggleUserType } = useContext(UserTypeContext);
 	console.log("FIRST: ", isStudent);
+	useEffect(() => {});
 	return (
 		<div className="flex items-center justify-between px-7 h-[80px] w-full sticky top-0 bg-white z-10">
 			{/* <div className="text-2xl font-bold text-[#5C5C5C]">Dashboard</div> */}
 			<div className="mt-5 flex font-regular">
-				<div className="">Student</div>
+				{wallet ? (
+					<div
+						onClick={() => {
+							localStorage.removeItem("walletAddress");
+						}}
+						className="border border-gray-400 py-2 px-4 bg-gradient-to-r from-blue-500 rounded-lg cursor-pointer to-primary-dark text-white font-semibold text-sm"
+					>
+						{wallet}
+					</div>
+				) : (
+					<div
+						onClick={async () => {
+							await connectWallet();
+
+							window.location.reload();
+						}}
+						className="border border-gray-400 py-2 px-4 bg-gradient-to-r from-blue-500 rounded-lg cursor-pointer to-primary-dark text-white font-semibold text-sm"
+					>
+						Connect Wallet
+					</div>
+				)}
+
+				{/* <div className="">Student</div>
 				<Switch
 					checked={!isStudent}
 					onChange={() => toggleUserType(isStudent)}
@@ -25,12 +52,12 @@ const Navbar = () => {
 						} inline-block h-4 w-4 transform rounded-full bg-white`}
 					/>
 				</Switch>
-				<div>Scholarship Creator</div>
+				<div>Scholarship Creator</div> */}
 			</div>
 			<div className="flex items-center justify-start">
 				<div className="flex items-center">
 					<div id="google_translate_element"></div>
-					<UserDropdown />
+					<UserDropdown user={user} />
 				</div>
 			</div>
 		</div>

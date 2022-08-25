@@ -89,7 +89,7 @@ const TextInput = ({
 								: "border border-white border-b-secondary-border"
 						} block w-full font-regular px-5 py-4 bg-white text-sm placeholder-secondary-placeholder
             focus:outline-none`}
-						disabled={disabled == true ? true : false}
+						disabled={disabled ? true : false}
 					/>
 				)}
 			</label>

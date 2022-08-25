@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN yarn --silent
 
-COPY . ./
+COPY . .
 
 RUN yarn build
 

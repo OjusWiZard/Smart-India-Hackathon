@@ -86,7 +86,7 @@ export const getUserInfo = async (accessToken) => {
 		swal("Error", "Something went wrong", "error");
 		return response;
 	}
-}
+};
 
 export const loginUser = async (formData) => {
 	try {
@@ -99,21 +99,13 @@ export const loginUser = async (formData) => {
 		// if (Object.values(response.data)[0][0].length === 1) {
 		// 	console.log(Object.values(response.data)[0])
 		// 	// swal("Error", Object.values(response.data), "error");
-		swal("Error", "No active account found with the given credentials", "error");
+		swal(
+			"Error",
+			"No active account found with the given credentials",
+			"error"
+		);
 		// }
 		// swal("Error", Object.values(response.data)[0][0], "error");
-		return response;
-	}
-};
-
-export const getMyDocument = async () => {
-	try {
-		const res = await API.get("/documents/", config);
-		return res;
-	} catch (err) {
-		const { response } = err;
-		console.log(response);
-		swal("Error", Object.values(response.data)[0][0], "error");
 		return response;
 	}
 };
@@ -154,25 +146,77 @@ export const getOtp = async (phno) => {
 	}
 };
 
-export const verifyOtp = async (formData) => {
-	try {
-		const res = await API.post("/auth/verify", formData, config);
-		localStorage.setItem("jwt-token", res.data.token);
-		// swal("Success", "OTP verified", "success");
-		return res;
-	} catch (error) {
-		console.log(error);
-		swal("Error", "OTP not verified", "error");
-	}
-};
+// export const verifyOtp = async (formData) => {
+// 	try {
+// 		const res = await API.post("/auth/verify", formData, config);
+// 		localStorage.setItem("jwt-token", res.data.token);
+// 		// swal("Success", "OTP verified", "success");
+// 		return res;
+// 	} catch (error) {
+// 		console.log(error);
+// 		swal("Error", "OTP not verified", "error");
+// 	}
+// };
 
-export const sendStatus = async (body) => {
+// export const sendStatus = async (body) => {
+// 	try {
+// 		const res = await API.post("/auth/status", { body }, config);
+// 		console.log(res.data);
+// 		return res.data;
+// 	} catch (error) {
+// 		console.log(error);
+// 		swal("Error", "Message not sent", "error");
+// 	}
+// };
+
+export const getMyApplications = async () => {
 	try {
-		const res = await API.post("/auth/status", { body }, config);
-		console.log(res.data);
+		const res = await API.get("/scholarships/application/?mine=true");
 		return res.data;
 	} catch (error) {
 		console.log(error);
-		swal("Error", "Message not sent", "error");
+		swal("Error", "Something went wrong", "error");
+	}
+};
+
+export const getMyDocument = async () => {
+	try {
+		const res = await API.get("/documents/", config);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		console.log(response);
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
+export const applyScholarship = async (formData) => {
+	try {
+		const res = await API.post(
+			"/scholarships/application/",
+			formData,
+			config
+		);
+		return res.data;
+	} catch (error) {
+		swal("Error", "Something went wrong", "error");
+		return;
+	}
+};
+
+export const getUserCustomCertificates = async () => {
+	try {
+		const res = await API.get(
+			`https://api.ghostnet.tzkt.io/v1/tokens/balances?account=${localStorage.getItem(
+				"wallet"
+			)}&balance.gt=0&token.contract=${
+				process.env.REACT_APP_CONTRACT_ADDRESS_NFT
+			}`
+		);
+		return res.data;
+	} catch (error) {
+		swal("Error", "Something went wrong", "error");
+		return;
 	}
 };

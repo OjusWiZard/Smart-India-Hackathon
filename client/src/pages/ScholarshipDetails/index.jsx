@@ -1,4 +1,4 @@
-import { getScholarshipDetails } from "api";
+import { applyScholarship } from "api";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
@@ -70,14 +70,11 @@ const ScholarshipDetails = () => {
 
 	const applyForScholarship = async () => {
 		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-			setResponse(true);
-			setDetails({
-				...details,
-				hasApplied: true,
-			});
-		}, 1000);
+		const formData = new FormData();
+		formData.append("scholarship", id);
+		const res = await applyScholarship(formData);
+		setResponse(res);
+		setLoading(false);
 	};
 
 	const certis = [
@@ -105,7 +102,7 @@ const ScholarshipDetails = () => {
 			</div>
 			<div className="flex items-center justify-between">
 				<div className="font-normal text-2xl">
-					{`Scholarships/${id}`}
+					{`Scholarships / ${details?.name}`}
 				</div>
 			</div>
 			<div className="my-4">

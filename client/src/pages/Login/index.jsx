@@ -5,7 +5,7 @@ import { ReactComponent as GetAhead } from "assets/heading-vectors/get-ahead.svg
 import { ReactComponent as GetAScholarship } from "assets/heading-vectors/get-a-scholarship.svg";
 import { ReactComponent as Tick } from "assets/icons/purple-tick.svg";
 import Coin from "assets/icons/coin.svg";
-
+import { Link } from "react-router-dom";
 // Components imports
 import FilledPrimary from "components/Buttons/Filled-primary";
 import TextInput from "components/InputFields/TextInput";
@@ -132,6 +132,15 @@ export default function Login() {
 									text="Login"
 									className="cursor-pointer font-bold text-white bg-purple-800 rounded-md text-bas"
 								/>
+								<div className="font-regular mt-4 w-full text-right">
+									Do not have an account ?
+									<Link to="/">
+										<span className="font-bold">
+											{" "}
+											Register
+										</span>
+									</Link>
+								</div>
 							</div>
 						</form>
 					</div>

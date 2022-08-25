@@ -53,3 +53,15 @@ const get_storage = () => {
 		)
 		.then((res) => res.data);
 };
+
+export const connectWallet = async () => {
+	const available = await ThanosWallet.isAvailable();
+	if (!available) swal("Error", "Thanos Wallet not installed", "error");
+	else
+		wallet
+			.connect("ghostnet")
+			.then(() => wallet.connect("ghostnet"))
+			.then(async () => {
+				localStorage.setItem("wallet", await wallet.getPKH());
+			});
+};

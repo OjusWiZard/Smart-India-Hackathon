@@ -5,6 +5,7 @@ import { getScholarships } from "api";
 import { UserTypeContext } from "../../context/userTypeContext";
 
 const Scholarships = () => {
+	const [loading, setLoading] = useState(true);
 	const scholar = [
 		{
 			id: 1,
@@ -53,17 +54,28 @@ const Scholarships = () => {
 	const { isStudent } = useContext(UserTypeContext);
 	useEffect(() => {
 		(async () => {
-			const { data } = await getScholarships();
-			setScholarships(
-				data.map((scholarship) => {
-					return {
-						...scholarship,
-						isPassed: true,
-					};
-				})
-			);
+			if (localStorage.getItem("jwt-token")) {
+				const { data } = await getScholarships();
+				setScholarships(
+					data.map((scholarship) => {
+						return {
+							...scholarship,
+							isPassed: true,
+						};
+					})
+				);
+				setLoading(false);
+			}
 		})();
 	}, []);
+	if (loading) {
+		return (
+			<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
+				Loading
+			</div>
+		);
+	}
+
 	return (
 		<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
 			<div className="flex items-center justify-between">
@@ -78,9 +90,9 @@ const Scholarships = () => {
 				)}
 			</div>
 			<div className="mt-8">
-				<div className="bg-white rounded-lg">
-					{scholar.length > 0 ? (
-						scholar.map((scholarship, index) => (
+				<div className=" rounded-lg">
+					{scholarships.length > 0 ? (
+						scholarships.map((scholarship, index) => (
 							<Link
 								key={scholarship.id}
 								to={`/scholarships/${scholarship.id}`}
