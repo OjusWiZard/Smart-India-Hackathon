@@ -23,11 +23,6 @@ const Sidebar = () => {
 					name: "Create",
 				},
 				{
-					link: "/profile",
-					icon: <CgProfile className="mx-3 text-[26px]" />,
-					name: "Profile",
-				},
-				{
 					link: "/nft",
 					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
 					name: "My Certificates	",

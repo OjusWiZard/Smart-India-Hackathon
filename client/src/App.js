@@ -11,7 +11,7 @@ import IssuerForm from "pages/IssuerForm";
 import NFT from "pages/NFT";
 import NFTDetails from "pages/NFTDetails";
 import Mint from "pages/Mint";
-
+import { getUserInfo } from "api"
 import "./App.css";
 
 // Utilities
@@ -27,6 +27,11 @@ function App() {
 	const { isStudent } = useContext(UserTypeContext);
 	// const user = localStorage.getItem('jwt-token');
 	useEffect(() => {
+		(async () => {
+			let token = localStorage.getItem('jwt-token');
+			const { data } = await getUserInfo(token)
+			console.log(data)
+		})()
 		const user = localStorage.getItem('jwt-token');
 		if (user) {
 			setUser(user)

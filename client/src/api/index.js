@@ -78,7 +78,7 @@ export const registerUser = async (formData) => {
 
 export const getUserInfo = async (accessToken) => {
 	try {
-		const res = await API.post("/accounts/users/me/", accessToken, config);
+		const res = await API.get("/accounts/users/me/", accessToken, config);
 		localStorage.setItem("user", res.data);
 		return res;
 	} catch (error) {
