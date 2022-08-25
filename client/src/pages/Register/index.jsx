@@ -5,13 +5,11 @@ import { ReactComponent as GetAhead } from "assets/heading-vectors/get-ahead.svg
 import { ReactComponent as GetAScholarship } from "assets/heading-vectors/get-a-scholarship.svg";
 import { ReactComponent as Tick } from "assets/icons/purple-tick.svg";
 import Coin from "assets/icons/coin.svg";
-
+import { Link } from "react-router-dom";
 // Components imports
-import FilledPrimary from "components/Buttons/Filled-primary";
 import TextInput from "components/InputFields/TextInput";
 
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { getOtp, registerUser, verifyOtp } from "api";
 import { useNavigate } from "react-router-dom";
 
@@ -188,7 +186,7 @@ export default function Register() {
 									value="Register"
 									// handleClick={handleRegister}
 									text="Register"
-									className="text-base font-bold text-white bg-purple-800 rounded-md"
+									className="cursor-pointer text-base font-bold text-white bg-purple-800 rounded-md"
 									// disabled={
 									// 	phno.length < 10 &&
 									// 	fullName.length < 0 &&
@@ -196,6 +194,13 @@ export default function Register() {
 									// 	password.length < 6
 									// }
 								/>
+
+								<div className="">
+									Already Registered ?
+									<Link to="/login">
+										<span>Login</span>
+									</Link>
+								</div>
 								{/* <Transition appear show={isOpen} as={Fragment}>
 									<Dialog
 										as="div"

@@ -84,7 +84,7 @@ export const loginUser = async (formData) => {
 	} catch (err) {
 		const { response } = err;
 		console.log(response);
-		swal("Error", Object.values(response.data)[0][0], "error");
+		swal("Error", Object.values(response.data)[0], "error");
 		return response;
 	}
 };

@@ -8,7 +8,14 @@ const Scholarships = () => {
 	useEffect(() => {
 		(async () => {
 			const { data } = await getScholarships();
-			setScholarships(data);
+			setScholarships(
+				data.map((scholarship) => {
+					return {
+						...scholarship,
+						isPassed: true,
+					};
+				})
+			);
 		})();
 	}, []);
 	return (

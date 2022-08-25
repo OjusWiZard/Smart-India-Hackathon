@@ -99,11 +99,25 @@ const Dashboard = () => {
 						</div>
 						<div className="mt-5">
 							<div className="px-8 flex h-[300px] flex-col justify-start items-start bg-white rounded-md py-8">
-								<div className="border-4  border-white border-l-red-500 pl-3 text-[#1C1C1C] font-bold text-[26px]">
+								<div className="border-4  border-white border-l-red-500 pl-3 text-[#1C1C1C] font-bold text-[23px]">
 									Uttar Pradesh Scholarship
 									<br />
 									<div className="text-[#9C9C9C] text-[15px] font-normal">
 										Form Pending
+									</div>
+								</div>
+								<div className="border-4  border-white border-l-yellow-500 pl-3 text-[#1C1C1C] font-bold text-[23px] mt-4">
+									HDFC Student Scholarship
+									<br />
+									<div className="text-[#9C9C9C] text-[15px] font-normal">
+										Document Verification Pending
+									</div>
+								</div>
+								<div className="border-4  border-white border-l-green-500 pl-3 text-[#1C1C1C] font-bold text-[23px] mt-4">
+									DoSJE Scholarship
+									<br />
+									<div className="text-[#9C9C9C] text-[15px] font-normal">
+										Application Submitted
 									</div>
 								</div>
 							</div>

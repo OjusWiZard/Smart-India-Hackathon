@@ -69,3 +69,11 @@ select {
 #google_translate_element {
 	margin-top: 15px;
 }
+
+.red-scholarship-bg {
+	background: linear-gradient(
+		89.95deg,
+		rgba(255, 50, 60, 0.274) 3.17%,
+		rgba(255, 255, 255, 0.0704) 105.69%
+	);
+}

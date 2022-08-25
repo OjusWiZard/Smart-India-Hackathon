@@ -129,7 +129,7 @@ export default function Login() {
 									type="submit"
 									value="Login"
 									text="Login"
-									className="font-bold text-white bg-purple-800 rounded-md text-bas"
+									className="cursor-pointer font-bold text-white bg-purple-800 rounded-md text-bas"
 								/>
 							</div>
 						</form>

@@ -1,10 +1,14 @@
 import React from "react";
 
 const ScholarshipRow = ({
-	scholarship: { name, amount, starting, max_claims },
+	scholarship: { name, amount, starting, max_claims, isPassed },
 }) => {
 	return (
-		<div className="border-gray-200 border-b px-8 py-3 h-24 rounded-t-xl ">
+		<div
+			className={`px-8 py-3 h-24 border ${
+				isPassed ? "border-red-200 " : "border-gray-200"
+			}`}
+		>
 			<div>
 				<div className="font-semibold text-xl">{name}</div>
 				<div className="text-sm font-normal text-gray-600 mt-1">

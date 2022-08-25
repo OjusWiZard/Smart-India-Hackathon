@@ -27,6 +27,7 @@ export default function IssuerForm() {
 	const [associated, setAssociated] = useState([]);
 	const [attributes, setAttributes] = useState();
 	const [logic, SetLogic] = useState();
+	const [number, setNumber] = useState([{}]);
 
 	useEffect(() => {
 		(async () => {
@@ -42,7 +43,9 @@ export default function IssuerForm() {
 	const [selectedLogic, setSelectedLogic] = useState();
 	const [selectedAttribute, setSelectedAttribute] = useState();
 
-	const handleAddCriteria = () => {};
+	const handleAddCriteria = () => {
+		setNumber(() => [...number, {}]);
+	};
 	console.log(attributes);
 
 	const handleChange = (e) => {
@@ -107,100 +110,132 @@ export default function IssuerForm() {
 								text={"Add Eligibility Criteria"}
 								handleClick={handleAddCriteria}
 							/>
-							<div className="mt-8 grid grid-col-3 gap-3">
-								<div className="flex items-center">
-									{/* attribute */}
-									<div className="flex flex-col">
-										<Listbox
-											value={selectedAttribute.id}
-											onChange={setSelectedAttribute}
-										>
-											<Listbox.Label
-												className={
-													"block text-base font-regular text-primary-grey"
-												}
-											>
-												Criteria:
-											</Listbox.Label>
-											<Listbox.Button
-												className={
-													"relative w-60 border border-secondary-border rounded-md py-1"
-												}
-											>
-												{selectedAttribute.name}
-											</Listbox.Button>
-											<Listbox.Options
-												className={
-													"absolute mt-14 text-center w-60 bg-white border p-2"
-												}
-											>
-												{attributes?.map(
-													(attribute) => (
-														<Listbox.Option
-															className={
-																"hover:bg-slate-100 cursor-pointer"
-															}
-															key={attribute.id}
-															value={attribute}
-														>
-															{attribute.name}
-														</Listbox.Option>
-													)
-												)}
-											</Listbox.Options>
-										</Listbox>
-									</div>
-									<div className="flex flex-col ml-4">
-										<Listbox
-											value={selectedLogic.id}
-											onChange={setSelectedLogic}
-										>
-											<Listbox.Label
-												className={
-													"block text-base font-regular text-primary-grey"
-												}
-											>
-												Condition:
-											</Listbox.Label>
-											<Listbox.Button
-												className={
-													"relative w-8 border border-secondary-border rounded-md py-1"
-												}
-											>
-												{selectedLogic.name}
-											</Listbox.Button>
-											<Listbox.Options
-												className={
-													"absolute mt-14 text-center w-20 bg-white border p-2"
-												}
-											>
-												{logic?.map((logic) => (
-													<Listbox.Option
-														className={
-															"hover:bg-slate-100 cursor-pointer"
+							{number &&
+								number?.length &&
+								number.map(() => (
+									<>
+										<div className="mt-8 grid grid-col-3 gap-3">
+											<div className="flex items-center">
+												{/* attribute */}
+												<div className="flex flex-col">
+													<Listbox
+														value={
+															selectedAttribute.id
 														}
-														key={logic.id}
-														value={logic}
+														onChange={
+															setSelectedAttribute
+														}
 													>
-														{logic.name}
-													</Listbox.Option>
-												))}
-											</Listbox.Options>
-										</Listbox>
-									</div>
-									<div className="flex flex-col ml-4">
-										<TextInput
-											label={"Value:"}
-											type="text"
-											name="name"
-											className={"py-2 mt-0 text-black"}
-											handleChange={handleChange}
-											placeholder={"Value"}
-											border="all"
-										/>
-									</div>
-								</div>
-							</div>
+														<Listbox.Label
+															className={
+																"block text-base font-regular text-primary-grey"
+															}
+														>
+															Criteria:
+														</Listbox.Label>
+														<Listbox.Button
+															className={
+																"relative w-60 border border-secondary-border rounded-md py-1"
+															}
+														>
+															{
+																selectedAttribute.name
+															}
+														</Listbox.Button>
+														<Listbox.Options
+															className={
+																"absolute mt-14 text-center w-60 bg-white border p-2"
+															}
+														>
+															{attributes?.map(
+																(attribute) => (
+																	<Listbox.Option
+																		className={
+																			"hover:bg-slate-100 cursor-pointer"
+																		}
+																		key={
+																			attribute.id
+																		}
+																		value={
+																			attribute
+																		}
+																	>
+																		{
+																			attribute.name
+																		}
+																	</Listbox.Option>
+																)
+															)}
+														</Listbox.Options>
+													</Listbox>
+												</div>
+												<div className="flex flex-col ml-4">
+													<Listbox
+														value={selectedLogic.id}
+														onChange={
+															setSelectedLogic
+														}
+													>
+														<Listbox.Label
+															className={
+																"block text-base font-regular text-primary-grey"
+															}
+														>
+															Condition:
+														</Listbox.Label>
+														<Listbox.Button
+															className={
+																"relative w-8 border border-secondary-border rounded-md py-1"
+															}
+														>
+															{selectedLogic.name}
+														</Listbox.Button>
+														<Listbox.Options
+															className={
+																"absolute mt-14 text-center w-20 bg-white border p-2"
+															}
+														>
+															{logic?.map(
+																(logic) => (
+																	<Listbox.Option
+																		className={
+																			"hover:bg-slate-100 cursor-pointer"
+																		}
+																		key={
+																			logic.id
+																		}
+																		value={
+																			logic
+																		}
+																	>
+																		{
+																			logic.name
+																		}
+																	</Listbox.Option>
+																)
+															)}
+														</Listbox.Options>
+													</Listbox>
+												</div>
+												<div className="flex flex-col ml-4">
+													<TextInput
+														label={"Value:"}
+														type="text"
+														name="name"
+														className={
+															"py-2 mt-0 text-black"
+														}
+														handleChange={
+															handleChange
+														}
+														placeholder={"Value"}
+														border="all"
+													/>
+												</div>
+											</div>
+										</div>
+									</>
+								))}
 
 							<div className="mt-8 grid grid-col-3 gap-3">
 								<div>Description</div>

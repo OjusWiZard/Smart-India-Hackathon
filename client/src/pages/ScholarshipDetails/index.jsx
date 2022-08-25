@@ -1,17 +1,27 @@
 import { getScholarshipDetails } from "api";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ScholarshipDetails = () => {
 	let { id } = useParams();
+	const navigate = useNavigate();
 	const [details, setDetails] = useState();
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		(async () => {
 			const { data } = await getScholarshipDetails(id);
-			setDetails(data);
+			setDetails({ ...data, hasApplied: false });
 		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const applyForScholarship = async () => {
+		setTimeout(() => {
+			setLoading(false);
+		}, 1000);
+	};
 	return (
 		<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
 			<div className="my-4">
@@ -42,12 +52,26 @@ const ScholarshipDetails = () => {
 				</div>
 			</div>
 			<div className="flex items-center justify-between">
-				<Link
-					to="/create-scholarship"
-					className="bg-primary-dark px-10 py-3 text-white text-base "
+				<button
+					disabled={details?.hasApplied}
+					onClick={() => applyForScholarship()}
+					className={`px-10 py-3 text-white text-base flex items-center ${
+						details?.hasApplied
+							? "bg-gray-300 cursor-not-allowed"
+							: "bg-primary-dark"
+					}`}
 				>
 					Click to Apply
-				</Link>
+					{loading && (
+						<div className="ml-3">
+							<ClipLoader
+								color="#7F6CF9"
+								loading={loading}
+								size={30}
+							/>
+						</div>
+					)}
+				</button>
 			</div>
 		</div>
 	);
