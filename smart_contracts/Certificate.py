@@ -100,7 +100,7 @@ def test():
             use_token_metadata_offchain_view=True
         ),
         admin=admin.address,
-        metadata = sp.utils.metadata_of_url("ipfs://QmeHSStwgfBcpJLU73Dp4X6Q3SdpJoZY7WJ3YhYkypFNy2")
+        metadata = sp.utils.metadata_of_url("ipfs://QmQNZQmNyuTkSMjJvNzVLdHXitSUcHx6CSWFePeobTtCMB")
     )
     sc += fa2
 
@@ -156,6 +156,6 @@ sp.add_compilation_target(
             non_fungible=True,
             use_token_metadata_offchain_view=True
         ),
-        metadata=sp.utils.metadata_of_url("ipfs://QmeHSStwgfBcpJLU73Dp4X6Q3SdpJoZY7WJ3YhYkypFNy2")
+        metadata=sp.utils.metadata_of_url("ipfs://QmQNZQmNyuTkSMjJvNzVLdHXitSUcHx6CSWFePeobTtCMB")
     )
 )
