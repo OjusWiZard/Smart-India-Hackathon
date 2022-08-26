@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatamapsIndia from "react-datamaps-india";
+import mapCss from "./issuer.module.css";
 
 const STATES = {
 	Maharashtra: {
@@ -116,7 +117,9 @@ const Issuer = () => {
 		setactiveState({ data, name });
 	};
 	return (
-		<div className="px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
+		<div
+			className={`px-14 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]`}
+		>
 			<div className="flex md:flex-row flex-col md:items-center items-start justify-between">
 				<div className="font-normal text-2xl">
 					Number of Issuers and Approved Scholarships in different

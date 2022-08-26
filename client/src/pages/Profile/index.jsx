@@ -7,7 +7,6 @@ const Profile = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const isAdmin = localStorage.getItem("isAdmin");
 	const { contact_no, email, full_name } = user;
-	console.log(user);
 	const [loading, setLoading] = useState(false);
 	const [state, setState] = useState({
 		bank_name: "",
@@ -21,8 +20,14 @@ const Profile = () => {
 	// 	}
 	// }, [user]);
 
-	const handleRegister = async () => {
-		// let {data} = await addBankAccount(formData)
+	const handleRegister = async (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		const { bank_name, bank_account_no, bank_ifsc_code } = state;
+		formData.append("bank_name", bank_name);
+		formData.append("bank_account_no", bank_account_no);
+		formData.append("bank_ifsc_code", bank_ifsc_code);
+		let { data } = await addBankAccount(formData);
 		console.log(data);
 	};
 
