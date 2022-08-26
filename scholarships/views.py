@@ -1,3 +1,4 @@
+from requests import request as req
 from django.http.response import HttpResponseBadRequest
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -135,6 +136,13 @@ class ApplicationViewSet(ModelViewSet):
         
         if all_passed:
             application.status = 'Eligible'
+            req(
+                'POST',
+                'http://3.110.67.226:5050/', json={
+                'to': application.user.email,
+                'subject': 'Successfull Application: ' + application.scholarship.name,
+                'body': 'You have successfully applied to ' + application.scholarship.name + '!\nYou are 100 percent ELIGIBLE!!!\n'
+            })
         else:
             application.status = 'Ineligible'
         application.save()
