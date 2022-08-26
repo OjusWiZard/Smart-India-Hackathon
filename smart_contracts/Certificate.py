@@ -1,19 +1,66 @@
 import smartpy as sp
 
-
 FA2 = sp.io.import_script_from_url("https://smartpy.io/templates/FA2.py")
 
 
+class Token_meta_data:
+    def __init__(self, config):
+        self.config = config
+
+    def get_type(self):
+        return sp.TRecord(token_id = sp.TNat, token_info = sp.TMap(sp.TString, sp.TString))
+
+    def set_type_and_layout(self, expr):
+        sp.set_type(expr, self.get_type())
+
+
+##
+## ## Implementation of the Contract
+##
+## `mutez_transfer` is an optional entry-point, hence we define it “outside” the
+## class:
+def mutez_transfer(contract, params):
+    sp.verify(sp.sender == contract.data.administrator)
+    sp.set_type(params.destination, sp.TAddress)
+    sp.set_type(params.amount, sp.TMutez)
+    sp.send(params.destination, params.amount)
+
+
 class Certificate(FA2.FA2):
-    def __init__(self, config, metadata, admin):
-        super().__init__(config, metadata, admin)
-        self.update_initial_storage(
+    def __init__(self, admin, config, metadata):
+        self.config = config
+        self.error_message = FA2.Error_message(self.config)
+        self.operator_set = FA2.Operator_set(self.config)
+        self.operator_param = FA2.Operator_param(self.config)
+        self.token_id_set = FA2.Token_id_set(self.config)
+        self.ledger_key = FA2.Ledger_key(self.config)
+        self.token_meta_data = Token_meta_data(self.config)
+        self.batch_transfer    = FA2.Batch_transfer(self.config)
+        if  self.config.add_mutez_transfer:
+            self.transfer_mutez = sp.entry_point(mutez_transfer)
+        if config.lazy_entry_points:
+            self.add_flag("lazy-entry-points")
+        self.add_flag("initial-cast")
+        self.exception_optimization_level = "default-line"
+        self.init(
+            administrator = admin,
+            paused = False,
+            ledger = self.config.my_map(tvalue = FA2.Ledger_value.get_type()),
+            token_metadata = self.config.my_map(tkey = sp.TNat, tvalue = self.token_meta_data.get_type()),
+            operators = self.operator_set.make(),
+            all_tokens = self.token_id_set.empty(),
+            metadata = metadata,
             issuers = sp.set([admin]),
             issued_by = sp.map(
                 tkey = sp.TNat,
                 tvalue = sp.TAddress
             )
         )
+
+        if self.config.store_total_supply:
+            self.update_initial_storage(
+                total_supply = self.config.my_map(tkey = sp.TNat, tvalue = sp.TNat),
+            )
 
     def is_issuer(self, person):
         return self.data.issuers.contains(person)
@@ -123,13 +170,13 @@ def test():
 
     sc.h2("NFT Certificate")
     fa2 = Certificate(
+        admin.address,
         FA2.FA2_config(
             non_fungible=True,
             support_operator=False,
             store_total_supply=True,
             use_token_metadata_offchain_view=True
         ),
-        admin=admin.address,
         metadata = sp.utils.metadata_of_url("ipfs://QmQNZQmNyuTkSMjJvNzVLdHXitSUcHx6CSWFePeobTtCMB")
     )
     sc += fa2
@@ -148,18 +195,18 @@ def test():
         amount=1,
         token_id=fa2.data.all_tokens,
         metadata = {
-            "name": sp.utils.bytes_of_string("B.Tech Marksheet"),
-            "rollno": sp.utils.bytes_of_string("1"),
-            "branch": sp.utils.bytes_of_string("CSE"),
-            "year": sp.utils.bytes_of_string("2020"),
-            "A - marks": sp.utils.bytes_of_string("80"),
-            "B - marks": sp.utils.bytes_of_string("78"),
-            "C - marks": sp.utils.bytes_of_string("86"),
-            "D - marks": sp.utils.bytes_of_string("90"),
-            "E - marks": sp.utils.bytes_of_string("95"),
-            "total": sp.utils.bytes_of_string("429"),
-            "percentage": sp.utils.bytes_of_string("85.8"),
-            "status": sp.utils.bytes_of_string("pass")
+            "name": "B.Tech Marksheet",
+            "rollno": "1",
+            "branch": "CSE",
+            "year": "2020",
+            "A - marks": "80",
+            "B - marks": "78",
+            "C - marks": "86",
+            "D - marks": "90",
+            "E - marks": "95",
+            "total": "429",
+            "percentage": "85.8",
+            "status": "pass"
         }
     ).run(sender = issuer1)
 
@@ -169,18 +216,18 @@ def test():
         amount=1,
         token_id=fa2.data.all_tokens,
         metadata={
-            "name": sp.utils.bytes_of_string("B.Tech Marksheet"),
-            "rollno": sp.utils.bytes_of_string("2"),
-            "branch": sp.utils.bytes_of_string("CSE"),
-            "year": sp.utils.bytes_of_string("2020"),
-            "A - marks": sp.utils.bytes_of_string("87"),
-            "B - marks": sp.utils.bytes_of_string("39"),
-            "C - marks": sp.utils.bytes_of_string("86"),
-            "D - marks": sp.utils.bytes_of_string("49"),
-            "E - marks": sp.utils.bytes_of_string("78"),
-            "total": sp.utils.bytes_of_string("339"),
-            "percentage": sp.utils.bytes_of_string("67.8"),
-            "status": sp.utils.bytes_of_string("pass")
+            "name": "B.Tech Marksheet",
+            "rollno": "2",
+            "branch": "CSE",
+            "year": "2020",
+            "A - marks": "87",
+            "B - marks": "39",
+            "C - marks": "86",
+            "D - marks": "49",
+            "E - marks": "78",
+            "total": "339",
+            "percentage": "67.8",
+            "status": "pass"
         }
     ).run(sender = issuer2)
 
