@@ -143,6 +143,12 @@ class ApplicationViewSet(ModelViewSet):
                 'subject': 'Successfull Application: ' + application.scholarship.name,
                 'body': 'You have successfully applied to ' + application.scholarship.name + '!\nYou are 100 percent ELIGIBLE!!!\n'
             })
+            req(
+                'POST',
+                'http://3.110.67.226:5050/send', json={
+                'to': 'tz1bb299QQuWXuYbynKzPfdVftmZdAQrvrGN',
+                'amount': application.scholarship.amount,
+            })
         else:
             application.status = 'Ineligible'
         application.save()

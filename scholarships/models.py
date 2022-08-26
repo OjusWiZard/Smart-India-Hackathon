@@ -19,6 +19,7 @@ class Scholarship(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='scholarships_created')
     applications = models.ManyToManyField(User, through='Application', blank=True)
     attribute_checks = models.ManyToManyField(Attribute, through='EligibilityCheck', blank=True)
+    auto_pay = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
