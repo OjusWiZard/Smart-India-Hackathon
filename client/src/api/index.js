@@ -63,6 +63,19 @@ export const getAttributes = async () => {
 	}
 };
 
+export const addBankAccount = async (formData) => {
+	try {
+		const res = await API.patch("/accounts/users/", formData, config);
+		swal("Success", res.statusText, "success");
+		console.log(res);
+		return res;
+	} catch (err) {
+		const { response } = err;
+		swal("Error", Object.values(response.data)[0][0], "error");
+		return response;
+	}
+};
+
 export const registerUser = async (formData) => {
 	try {
 		const res = await API.post("/accounts/users/", formData, config);

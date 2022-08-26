@@ -50,11 +50,13 @@ const Dashboard = () => {
 		(async () => {
 			if (localStorage.getItem("jwt-token")) {
 				let res = await getMyApplications();
+
 				setMyApplications(res);
 				setMyApplicationsLoading(false);
 			}
 		})();
 	}, []);
+	console.log(showCerti);
 
 	const colorMap = new Map();
 	colorMap.set("Eligible", "border-l-green-500");
@@ -80,10 +82,13 @@ const Dashboard = () => {
 					{showCerti ? (
 						<>
 							{myDocuments?.map((certi) => (
-								<Certificate
-									certificateName={certi.document.name}
-									doc={certi}
-								/>
+								<>
+									{console.log("CLG: ", certi)}
+									<Certificate
+										certificateName={certi.document.name}
+										doc={certi}
+									/>
+								</>
 							))}
 						</>
 					) : (
@@ -102,45 +107,50 @@ const Dashboard = () => {
 						</div>
 						<div className="mt-5">
 							{/* when no scolraship */}
-							{/* <div className="px-10 flex h-[300pxx] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
-								<div className="flex flex-col items-center">
-									<WalletIcon />
-									<div className="font-normal mt-5 text-lg text-[#828282]">
-										Apply for scholarships to see your
-										earnings here.
+							{false ? (
+								<>
+									<div className="px-7 py-4 bg-white rounded-md">
+										<div className="flex flex-col items-start">
+											<div className="font-normal text-lg text-[#828282]">
+												Uttar Pradesh Scholarship
+											</div>
+											<div className="font-bold mt-2">
+												₹11,11,190
+											</div>
+										</div>
+									</div>
+									<div className="px-7 py-4 bg-white rounded-md mt-4">
+										<div className="flex flex-col items-start">
+											<div className="font-normal text-lg text-[#828282]">
+												HDFC Student Scholarship
+											</div>
+											<div className="font-bold mt-2">
+												₹1,21,900
+											</div>
+										</div>
+									</div>
+									<div className="px-7 py-4 bg-white rounded-md mt-4">
+										<div className="flex flex-col items-start">
+											<div className="font-normal text-lg text-[#828282]">
+												MHRD Scholarship
+											</div>
+											<div className="font-bold mt-2">
+												₹62,800
+											</div>
+										</div>
+									</div>
+								</>
+							) : (
+								<div className="px-10 flex h-[300pxx] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]">
+									<div className="flex flex-col items-center">
+										<WalletIcon />
+										<div className="font-normal mt-5 text-lg text-[#828282]">
+											Apply for scholarships to see your
+											earnings here.
+										</div>
 									</div>
 								</div>
-							</div> */}
-							<div className="px-7 py-4 bg-white rounded-md">
-								<div className="flex flex-col items-start">
-									<div className="font-normal text-lg text-[#828282]">
-										Uttar Pradesh Scholarship
-									</div>
-									<div className="font-bold mt-2">
-										₹11,11,190
-									</div>
-								</div>
-							</div>
-							<div className="px-7 py-4 bg-white rounded-md mt-4">
-								<div className="flex flex-col items-start">
-									<div className="font-normal text-lg text-[#828282]">
-										HDFC Student Scholarship
-									</div>
-									<div className="font-bold mt-2">
-										₹1,21,900
-									</div>
-								</div>
-							</div>
-							<div className="px-7 py-4 bg-white rounded-md mt-4">
-								<div className="flex flex-col items-start">
-									<div className="font-normal text-lg text-[#828282]">
-										MHRD Scholarship
-									</div>
-									<div className="font-bold mt-2">
-										₹62,800
-									</div>
-								</div>
-							</div>
+							)}
 						</div>
 					</div>
 					<div className="w-full lg:mt-0 mt-9">
@@ -149,10 +159,8 @@ const Dashboard = () => {
 						</div>
 						<div className="mt-5">
 							<div className="px-8 flex flex-col justify-start items-start bg-white rounded-md py-8">
-								{myApplicationsLoading ? (
-									<div>Loading..</div>
-								) : (
-									<>
+								{showCerti ? (
+									<div className="px-8 flex flex-col justify-start items-start bg-white rounded-md py-8">
 										{myApplications.map((application) => (
 											<div
 												className={`border-4 mb-4 border-white ${colorMap.get(
@@ -166,7 +174,18 @@ const Dashboard = () => {
 												</div>
 											</div>
 										))}
-									</>
+									</div>
+								) : (
+									<div className="flex justify-center items-center bg-white rounded-md w-full py-14">
+										{/* <div className="px-10 flex h-[300pxx] justify-center items-center bg-white rounded-md pt-[60px] pb-[120px]"> */}
+										<div className="flex flex-col items-center">
+											<NoFileIcon />
+											<div className="font-normal mt-5 text-lg text-[#828282]">
+												No applications to show
+											</div>
+										</div>
+										{/* </div> */}
+									</div>
 								)}
 
 								{/* <div className="border-4 border-white border-l-red-500 pl-3 text-[#1C1C1C] font-bold text-[23px]">

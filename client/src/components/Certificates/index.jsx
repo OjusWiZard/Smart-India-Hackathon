@@ -5,10 +5,10 @@ import CertificatePopver from "../Popover/certificate-popover";
 
 const Certificate = ({ certificateName, doc }) => {
 	const ColourConstants = {
-		ews: "bg-[#5D5FEF]",
+		"Driving License": "bg-[#E86C37]",
 		caste: "bg-[#E86C37]",
 		income: "bg-[#EF4F5F]",
-		"10th": "bg-[#5D5FEF]",
+		"Xth Marksheet": "bg-[#5D5FEF]",
 		domicile: "bg-[#9FBB3A]",
 		"Aadhar Card": "bg-[#EF4F5F]",
 	};
@@ -24,7 +24,14 @@ const Certificate = ({ certificateName, doc }) => {
 						<br />
 						Certificate
 					</div>
-					<div className="mt-3">1234 56789</div>
+					<div className="mt-3">
+						{Math.floor(Math.random() * (10000 - 19999 + 1)) +
+							10000}{" "}
+						{Math.floor(Math.random() * (10000 - 19999 + 1)) +
+							10000}{" "}
+						{Math.floor(Math.random() * (10000 - 19999 + 1)) +
+							10000}
+					</div>
 					<div className="mt-7">
 						<div className="flex justify-end pr-5 cursor-pointer">
 							<CertificatePopver
@@ -37,7 +44,15 @@ const Certificate = ({ certificateName, doc }) => {
 								}
 								popoverItem={popoverItem.map((item) => {
 									return {
-										info: `${item.attribute}: ${item.option}`,
+										info: `${item.attribute}: ${
+											item.value === null
+												? ""
+												: item.value
+										} ${
+											item.option === null
+												? ""
+												: item.option
+										}`,
 									};
 								})}
 							/>

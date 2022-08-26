@@ -16,7 +16,9 @@ import Scholarships from "pages/Scholarships";
 import IssuerForm from "pages/IssuerForm";
 import NFT from "pages/NFT";
 import NFTDetails from "pages/NFTDetails";
+import Issuer from "pages/Issuer";
 import Mint from "pages/Mint";
+import Payment from "pages/payment";
 import { getUserInfo } from "api";
 import "./App.css";
 
@@ -25,6 +27,7 @@ import GlobalNavbar from "components/Navigation/GlobalNavbar";
 import ScholarshipDetails from "pages/ScholarshipDetails";
 import Profile from "pages/Profile";
 import AuthenticatedIssuer from "components/Gaurds/AuthenticatedIssuer";
+import AdminDashboard from "pages/AdminDashboard";
 
 function App() {
 	const pathname = window.location.pathname;
@@ -43,6 +46,7 @@ function App() {
 			(async () => {
 				let token = localStorage.getItem("jwt-token");
 				const { data } = await getUserInfo(token);
+				console.log(data);
 				localStorage.setItem("user", JSON.stringify(data));
 			})();
 		}
@@ -131,6 +135,70 @@ function App() {
 						element={
 							<GlobalNavbar>
 								<Mint />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/dashboard"
+						element={
+							<GlobalNavbar>
+								<AdminDashboard />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/scholarship"
+						element={
+							<GlobalNavbar>
+								<Scholarships />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/scholarship/:id"
+						element={
+							<GlobalNavbar>
+								<Scholarships />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/create"
+						element={
+							<GlobalNavbar>
+								<IssuerForm />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/mintCertificates"
+						element={
+							<GlobalNavbar>
+								<Mint />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/issuers"
+						element={
+							<GlobalNavbar>
+								<Issuer />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/admin/profile"
+						element={
+							<GlobalNavbar>
+								<Profile />
+							</GlobalNavbar>
+						}
+					/>
+					<Route
+						path="/payment"
+						element={
+							<GlobalNavbar>
+								<Payment />
 							</GlobalNavbar>
 						}
 					/>

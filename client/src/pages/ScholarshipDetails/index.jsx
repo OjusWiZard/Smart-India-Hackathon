@@ -7,6 +7,7 @@ import moment from "moment";
 import CertificateCardApply from "../../components/Cards/certificate-card-apply";
 
 const ScholarshipDetails = () => {
+	const isAdmin = localStorage.getItem("isAdmin");
 	let { id } = useParams();
 	const navigate = useNavigate();
 	const [details, setDetails] = useState();
@@ -136,30 +137,42 @@ const ScholarshipDetails = () => {
 					</div>
 				</div>
 			</div>
-			<div className="flex items-center justify-between">
-				<button
-					disabled={details?.hasApplied}
-					onClick={() => applyForScholarship()}
-					className={`px-10 py-3 text-white text-base flex items-center ${
-						details?.hasApplied
-							? "bg-gray-300 cursor-not-allowed"
-							: "bg-primary-dark"
-					}`}
-				>
-					Click to Apply
-					{loading && (
-						<div className="ml-3">
-							<BounceLoader
-								color="#E2E3E5"
-								loading={loading}
-								size={30}
-							/>
-						</div>
-					)}
-				</button>
-			</div>
+			{!isAdmin && (
+				<div className="flex items-center justify-between">
+					<button
+						disabled={details?.hasApplied}
+						onClick={() => applyForScholarship()}
+						className={`px-10 py-3 text-white text-base flex items-center ${
+							details?.hasApplied
+								? "bg-gray-300 cursor-not-allowed"
+								: "bg-primary-dark"
+						}`}
+					>
+						Click to Apply
+						{loading && (
+							<div className="ml-3">
+								<BounceLoader
+									color="#E2E3E5"
+									loading={loading}
+									size={30}
+								/>
+							</div>
+						)}
+					</button>
+				</div>
+			)}
 			{response && (
 				<div className="mt-8">
+					{certificates.length > 0 ? (
+						<div className="bg-red-200 my-4 px-3 py-2 font-bold shadow-md">
+							We regret to inform you that your application was
+							not approved due to eligibility issues
+						</div>
+					) : (
+						<div className="bg-green-200 my-4 px-3 py-2 font-bold shadow-md">
+							Congratulations! your application is good to proceed
+						</div>
+					)}
 					<div className="grid grid-cols-3 gap-x-8">
 						{certificates.map((certi) => (
 							<CertificateCardApply

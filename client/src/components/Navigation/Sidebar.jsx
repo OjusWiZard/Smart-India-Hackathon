@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BiHomeAlt } from "react-icons/bi";
 import { MdOutlineSchool } from "react-icons/md";
@@ -10,6 +10,42 @@ import { FaCertificate } from "react-icons/fa";
 
 const Sidebar = () => {
 	const { isStudent } = useContext(UserTypeContext);
+	const [isAdmin, setIsAdmin] = useState(false);
+	useEffect(() => {
+		setIsAdmin(true);
+	});
+	const adminLink = [
+		{
+			link: "/admin/dashboard",
+			icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+			name: "Dashboard",
+		},
+		{
+			link: "/admin/scholarship",
+			icon: <AiOutlineForm className="mx-3 text-[26px]" />,
+			name: "Scholarships",
+		},
+		{
+			link: "/admin/create",
+			icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+			name: "Create	",
+		},
+		{
+			link: "/admin/mintCertificates",
+			icon: <FaCertificate className="mx-3 text-[26px]" />,
+			name: "Mint Certis	",
+		},
+		{
+			link: "/admin/issuers",
+			icon: <CgProfile className="mx-3 text-[26px]" />,
+			name: "Issuers",
+		},
+		{
+			link: "/admin/profile",
+			icon: <CgProfile className="mx-3 text-[26px]" />,
+			name: "Profile",
+		},
+	];
 	const links = isStudent
 		? [
 				{
@@ -65,7 +101,36 @@ const Sidebar = () => {
 					name: "Profile",
 				},
 		  ];
-	return (
+	return isAdmin ? (
+		<aside className="w-60">
+			<div className="fixed">
+				<div className="h-[80px] py-6 px-9">
+					<FileIcon />
+				</div>
+				<div className="overflow-hidden py-12 px-4">
+					<ul className="space-y-2">
+						{adminLink.map((linkItem) => {
+							const { link, icon, name } = linkItem;
+							return (
+								<NavLink
+									as="li"
+									to={link}
+									className={({ isActive }) =>
+										isActive
+											? "flex items-center p-4 text-base font-normal text-primary-dark rounded-lg cursor-pointer bg-primary-light"
+											: "flex items-center p-4 text-[#9C9C9C] text-base font-normal hover:text-primary-dark rounded-lg cursor-pointer hover:bg-primary-light"
+									}
+								>
+									{icon}
+									<span className="font-normal">{name}</span>
+								</NavLink>
+							);
+						})}
+					</ul>
+				</div>
+			</div>
+		</aside>
+	) : (
 		<aside className="w-60">
 			<div className="fixed">
 				<div className="h-[80px] py-6 px-9">
