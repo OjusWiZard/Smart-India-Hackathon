@@ -1,4 +1,4 @@
-import { applyScholarship } from "api";
+import { applyScholarship, getScholarshipDetails } from "api";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
@@ -12,6 +12,7 @@ const ScholarshipDetails = () => {
 	const [details, setDetails] = useState();
 	const [response, setResponse] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [certificates, setCertificates] = useState([]);
 
 	const scholar = [
 		{
@@ -59,25 +60,40 @@ const ScholarshipDetails = () => {
 	];
 	useEffect(() => {
 		(async () => {
-			// const { data } = await getScholarshipDetails(id);
+			const { data } = await getScholarshipDetails(id);
 
-			const data = scholar.filter((sch) => String(sch.id) === id);
-			console.log("data", data);
-			setDetails({ ...data[0], hasApplied: false });
+			// const data = scholar.filter((sch) => String(sch.id) === id);
+			// console.log("data", data);
+			setDetails({ ...data, hasApplied: false });
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 
 	const applyForScholarship = async () => {
+		console.log("----");
 		setLoading(true);
 		const formData = new FormData();
 		formData.append("scholarship", id);
 		const res = await applyScholarship(formData);
-		setResponse(res);
+		console.log("SUBAH KE 6 BAJ re", res);
+		setCertificates(res?.eligibilities);
+		setResponse(true);
 		setLoading(false);
 	};
 
 	const certis = [
+		{
+			name: "Domicile",
+			isPassed: true,
+		},
+		{
+			name: "Class XII Marksheet",
+			isPassed: false,
+		},
+		{
+			name: "Class X Marksheet",
+			isPassed: true,
+		},
 		{
 			name: "Domicile",
 			isPassed: true,
@@ -110,7 +126,9 @@ const ScholarshipDetails = () => {
 					<h1 className="font-bold text-[24px] mb-2">
 						{details?.name}
 					</h1>
-					<div className="text-gray-600 my-2">{details?.desc}</div>
+					<div className="text-gray-600 my-2">
+						{details?.description}
+					</div>
 					{/* <div className="my-2">Claims : {details?.max_claims}</div> */}
 					<div className="my-2">Amount : {details?.amount}</div>
 					<div className="text-right text-gray-500 mt-4">
@@ -143,10 +161,18 @@ const ScholarshipDetails = () => {
 			{response && (
 				<div className="mt-8">
 					<div className="grid grid-cols-3 gap-x-8">
-						{certis.map((certi) => (
+						{certificates.map((certi) => (
 							<CertificateCardApply
-								name={certi.name}
-								isPassed={certi.isPassed}
+								name={certi?.eligibility_check?.attribute?.name}
+								isPassed={certi?.passed}
+								logic={certi?.eligibility_check?.logic?.name}
+								value={
+									certi?.eligibility_check?.edge_option
+										? certi?.eligibility_check?.edge_option
+												?.name
+										: certi?.eligibility_check?.edge_value
+												?.name
+								}
 							/>
 						))}
 					</div>

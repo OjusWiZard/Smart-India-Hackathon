@@ -32,6 +32,11 @@ const Sidebar = () => {
 					icon: <FaCertificate className="mx-3 text-[26px]" />,
 					name: "Mint Certi	",
 				},
+				{
+					link: "/profile",
+					icon: <CgProfile className="mx-3 text-[26px]" />,
+					name: "Profile",
+				},
 		  ]
 		: [
 				{
@@ -45,11 +50,6 @@ const Sidebar = () => {
 					name: "Scholarships",
 				},
 				{
-					link: "/profile",
-					icon: <CgProfile className="mx-3 text-[26px]" />,
-					name: "Profile",
-				},
-				{
 					link: "/nft",
 					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
 					name: "My Certificates	",
@@ -58,6 +58,11 @@ const Sidebar = () => {
 					link: "/mint",
 					icon: <FaCertificate className="mx-3 text-[26px]" />,
 					name: "Mint Certi	",
+				},
+				{
+					link: "/profile",
+					icon: <CgProfile className="mx-3 text-[26px]" />,
+					name: "Profile",
 				},
 		  ];
 	return (

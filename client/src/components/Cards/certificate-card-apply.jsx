@@ -1,6 +1,6 @@
 import React from "react";
 
-const CertificateCardApply = ({ name, isPassed }) => {
+const CertificateCardApply = ({ name, isPassed, logic, value }) => {
 	return (
 		<div
 			className={`py-4 px-4 rounded-lg border ${
@@ -9,7 +9,9 @@ const CertificateCardApply = ({ name, isPassed }) => {
 					: "border-red-200 bg-red-100"
 			} bg-opacity-40`}
 		>
-			<span className="text-md font-semibold">{name}</span>
+			<span className="text-md font-semibold">
+				{name} {logic} {value}
+			</span>
 		</div>
 	);
 };
