@@ -39,6 +39,13 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
+roles = [
+    ('Student', 'Student'),
+    ('Creator', 'Creator'),
+    ('Issuer', 'Issuer')
+]
+
+
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     is_staff = models.BooleanField(default=False)
@@ -48,9 +55,10 @@ class User(AbstractUser):
     username = models.CharField(max_length=50, blank=True, null=True)
     full_name = models.CharField(max_length=64)
     contact_no = models.CharField(max_length=10, validators=[validate_contact_number], unique=True)
+    role = models.CharField(max_length=16, default='Student', choices=roles)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["full_name", "contact_no"]
+    REQUIRED_FIELDS = ["full_name", "contact_no", 'role']
 
     objects = UserManager()
 
