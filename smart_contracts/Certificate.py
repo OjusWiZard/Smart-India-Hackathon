@@ -5,14 +5,39 @@ FA2 = sp.io.import_script_from_url("https://smartpy.io/templates/FA2.py")
 
 
 class Certificate(FA2.FA2):
+    def __init__(self, config, metadata, admin):
+        super().__init__(config, metadata, admin)
+        self.update_initial_storage(
+            issuers = sp.set([admin]),
+            issued_by = sp.map(
+                tkey = sp.TNat,
+                tvalue = sp.TAddress
+            )
+        )
+
+    def is_issuer(self, person):
+        return self.data.issuers.contains(person)
+
     @sp.onchain_view(pure=True)
     def count_tokens(self):
         sp.result(self.data.all_tokens)
 
     @sp.entry_point
+    def add_issuer(self, params):
+        sp.verify(self.is_administrator(sp.sender))
+        self.data.issuers.add(params.issuer)
+
+    @sp.entry_point
+    def revoke_issuer(self, params):
+        sp.verify(self.is_administrator(sp.sender))
+        self.data.issuers.remove(params.issuer)
+
+    @sp.entry_point
     def mint(self, params):
-        sp.verify(~self.is_paused(), message = self.error_message.paused())
-        # We don't check for pauseness because we're the admin.
+        # Only issuer can issue certificate
+        sp.verify(self.is_issuer(sp.sender), message = self.error_message.not_admin())
+        
+        # Rest all same as in FA2
         if self.config.single_asset:
             sp.verify(params.token_id == 0, message = "single-asset: token-id <> 0")
         if self.config.non_fungible:
@@ -35,25 +60,26 @@ class Certificate(FA2.FA2):
         if self.config.store_total_supply:
             self.data.total_supply[params.token_id] = params.amount + self.data.total_supply.get(params.token_id, default_value = 0)
 
+        self.data.issued_by[params.token_id] = sp.sender
+
     @sp.entry_point
     def transfer(self, params):
         sp.verify( ~self.is_paused(), message = self.error_message.paused() )
         sp.set_type(params, self.batch_transfer.get_type())
         sp.for transfer in params:
-           current_from = transfer.from_
-           sp.for tx in transfer.txs:
+            current_from = transfer.from_
+            sp.for tx in transfer.txs:
                 if self.config.single_asset:
                     sp.verify(tx.token_id == 0, message = "single-asset: token-id <> 0")
 
-                sender_verify = ((self.is_administrator(sp.sender)) |
-                                (current_from == sp.sender))
+                sender_verify = self.data.issued_by[tx.token_id] == sp.sender   # Only issuer transfer certificate
                 message = self.error_message.not_owner()
                 if self.config.support_operator:
                     message = self.error_message.not_operator()
                     sender_verify |= (self.operator_set.is_member(self.data.operators,
-                                                                  current_from,
-                                                                  sp.sender,
-                                                                  tx.token_id))
+                                                                    current_from,
+                                                                    sp.sender,
+                                                                    tx.token_id))
                 if self.config.allow_self_transfer:
                     sender_verify |= (sp.sender == sp.self_address)
                 sp.verify(sender_verify, message = message)
@@ -73,7 +99,7 @@ class Certificate(FA2.FA2):
                     sp.if self.data.ledger.contains(to_user):
                         self.data.ledger[to_user].balance += tx.amount
                     sp.else:
-                         self.data.ledger[to_user] = FA2.Ledger_value.make(tx.amount)
+                            self.data.ledger[to_user] = FA2.Ledger_value.make(tx.amount)
                 sp.else:
                     pass
 
@@ -82,21 +108,25 @@ class Certificate(FA2.FA2):
 def test():
 
     admin = sp.test_account("admin")
+    issuer1 = sp.test_account("issuer1")
+    issuer2 = sp.test_account("issuer2")
     student1 = sp.test_account("student1")
     student2 = sp.test_account("student2")
+    student2_1 = sp.test_account("student2.1")
 
     sc = sp.test_scenario()
     sc.h1("CertiSetu")
     sc.table_of_contents()
 
     sc.h2("Accounts")
-    sc.show([admin,student1,student2])
+    sc.show([admin,issuer1,issuer2,student1,student2])
 
     sc.h2("NFT Certificate")
     fa2 = Certificate(
         FA2.FA2_config(
-            debug_mode = True,
             non_fungible=True,
+            support_operator=False,
+            store_total_supply=True,
             use_token_metadata_offchain_view=True
         ),
         admin=admin.address,
@@ -104,7 +134,15 @@ def test():
     )
     sc += fa2
 
-    sc.p("admin mints a certificate to student1")
+    sc.p("admin adds issuer1 and issuer2")
+    sc += fa2.add_issuer(
+        sp.record(issuer = issuer1.address)
+    ).run(sender = admin)
+    sc += fa2.add_issuer(
+        sp.record(issuer = issuer2.address)
+    ).run(sender = admin)
+
+    sc.p("issuer1 mints a certificate to student1")
     sc += fa2.mint(
         address=student1.address,
         amount=1,
@@ -123,9 +161,9 @@ def test():
             "percentage": sp.utils.bytes_of_string("85.8"),
             "status": sp.utils.bytes_of_string("pass")
         }
-    ).run(sender = admin)
+    ).run(sender = issuer1)
 
-    sc.p("admin mints a certificate to student2")
+    sc.p("issuer2 mints a certificate to student2")
     sc += fa2.mint(
         address=student2.address,
         amount=1,
@@ -144,7 +182,31 @@ def test():
             "percentage": sp.utils.bytes_of_string("67.8"),
             "status": sp.utils.bytes_of_string("pass")
         }
-    ).run(sender = admin)
+    ).run(sender = issuer2)
+
+    sc.p("issuer2 can't transfer MARK1 of student1")
+    sc += fa2.transfer([
+        fa2.batch_transfer.item(
+            from_ = student1.address,
+            txs = [sp.record(
+                to_ = student2_1.address,
+                amount = 1,
+                token_id = 0
+            )]
+        )
+    ]).run(sender = issuer2, valid=False)
+
+    sc.p("issuer2 can transfer MARK2 of student2")
+    sc += fa2.transfer([
+        fa2.batch_transfer.item(
+            from_ = student2.address,
+            txs = [sp.record(
+                to_ = student2_1.address,
+                amount = 1,
+                token_id = 1
+            )]
+        )
+    ]).run(sender = issuer2)
 
 
 sp.add_compilation_target(
