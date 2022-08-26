@@ -56,9 +56,12 @@ class User(AbstractUser):
     full_name = models.CharField(max_length=64)
     contact_no = models.CharField(max_length=10, validators=[validate_contact_number], unique=True)
     role = models.CharField(max_length=16, default='Student', choices=roles)
+    bank_name = models.CharField(max_length=64, blank=True, null=True)
+    bank_account_no = models.CharField(max_length=64, blank=True, null=True)
+    bank_ifsc_code = models.CharField(max_length=64, blank=True, null=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["full_name", "contact_no", 'role']
+    REQUIRED_FIELDS = ["full_name", "contact_no", 'role', 'bank_name', 'bank_account_no', 'bank_ifsc_code']
 
     objects = UserManager()
 
