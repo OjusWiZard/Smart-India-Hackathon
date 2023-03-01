@@ -89,3 +89,7 @@ select {
 	/* top: 50%; */
 	background-color: red;
 }
+
+#root-svg-group > g:nth-child(2) > path:nth-child(n) {
+	fill: #b39aff;
+}

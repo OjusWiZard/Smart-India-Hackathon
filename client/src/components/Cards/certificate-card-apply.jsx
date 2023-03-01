@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 
 const CertificateCardApply = ({ name, isPassed, logic, value }) => {
+	const parseLogic = (opr) => {
+		switch (opr) {
+			case ">":
+				return "is less than";
+			case "<":
+				return "is greater than";
+			case "=":
+				return "should not be as same as";
+			case "!=":
+				return "should not be equal to";
+			default:
+				return "";
+		}
+	};
 	return (
 		<div
 			className={`py-4 px-4 rounded-lg border ${
@@ -10,7 +24,7 @@ const CertificateCardApply = ({ name, isPassed, logic, value }) => {
 			} bg-opacity-40`}
 		>
 			<span className="text-md font-semibold">
-				{name} {logic} {value}
+				{name} {parseLogic(logic)} {value}
 			</span>
 		</div>
 	);

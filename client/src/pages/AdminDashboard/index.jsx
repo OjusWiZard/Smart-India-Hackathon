@@ -4,17 +4,17 @@ import DonutChart from "react-donut-chart";
 const AdminDashboard = () => {
 	return (
 		<div className="px-12 py-[50px] bg-primary-light min-h-[calc(100vh-80px)]">
-			<div className="font-normal text-2xl lg:mb-0 mb-3">
+			<div className="font-normal text-2xl sm:mb-0 mb-3">
 				Statistical Information
 			</div>
-			<div className="grid grid-cols-2 mt-8 gap-x-12 gap-y-12">
+			<div className="grid grid-cols-2 mt-8 gap-x-6 gap-y-12">
 				<div className="bg-white flex items-center justify-center p-7">
 					<DonutChart
 						colors={["#6C42C1", "#6456CB"]}
-						className="text-2xl"
+						className="text-xl overflow-scroll max-w-full"
 						data={[
 							{
-								label: "Monthly Expenditure",
+								label: "Monthly Expense",
 								value: 60,
 							},
 							{
@@ -27,15 +27,15 @@ const AdminDashboard = () => {
 				<div className="bg-white flex items-center justify-center p-7">
 					<DonutChart
 						colors={["#6C42C1", "#6456CB"]}
-						className="text-2xl"
+						className="text-xl"
 						data={[
 							{
-								label: "Scholarships Approved",
-								value: 60,
+								label: "Scholarship Grant",
+								value: 80,
 							},
 							{
 								label: "Students Left",
-								value: 40,
+								value: 20,
 							},
 						]}
 					/>
@@ -43,15 +43,15 @@ const AdminDashboard = () => {
 				<div className="bg-white flex items-center justify-center p-7">
 					<DonutChart
 						colors={["#6C42C1", "#6456CB"]}
-						className="text-2xl"
+						className="text-xl"
 						data={[
 							{
-								label: "Number of Issuers",
-								value: 60,
+								label: "No of Issuers",
+								value: 30,
 							},
 							{
 								label: "Students Left",
-								value: 40,
+								value: 70,
 							},
 						]}
 					/>

@@ -7,13 +7,15 @@ import { AiOutlineForm } from "react-icons/ai";
 import { ReactComponent as FileIcon } from "assets/icons/file-icon-red.svg";
 import { UserTypeContext } from "../../context/userTypeContext";
 import { FaCertificate } from "react-icons/fa";
+import { BsPeople } from "react-icons/bs";
+import { TbCertificate, TbFileCertificate } from "react-icons/tb";
 
 const Sidebar = () => {
 	const { isStudent } = useContext(UserTypeContext);
-	const [isAdmin, setIsAdmin] = useState(false);
-	useEffect(() => {
-		setIsAdmin(true);
-	});
+	const isAdmin = localStorage.getItem("isAdmin");
+	// useEffect(() => {
+	// 	setIsAdmin(true);
+	// }, []);
 	const adminLink = [
 		{
 			link: "/admin/dashboard",
@@ -32,12 +34,12 @@ const Sidebar = () => {
 		},
 		{
 			link: "/admin/mintCertificates",
-			icon: <FaCertificate className="mx-3 text-[26px]" />,
+			icon: <TbCertificate className="mx-3 text-[26px]" />,
 			name: "Mint Certis	",
 		},
 		{
 			link: "/admin/issuers",
-			icon: <CgProfile className="mx-3 text-[26px]" />,
+			icon: <BsPeople className="mx-3 text-[26px]" />,
 			name: "Issuers",
 		},
 		{
@@ -65,7 +67,7 @@ const Sidebar = () => {
 				},
 				{
 					link: "/mint",
-					icon: <FaCertificate className="mx-3 text-[26px]" />,
+					icon: <TbCertificate className="mx-3 text-[26px]" />,
 					name: "Mint Certi	",
 				},
 				{
@@ -87,12 +89,12 @@ const Sidebar = () => {
 				},
 				{
 					link: "/nft",
-					icon: <MdOutlineSchool className="mx-3 text-[26px]" />,
+					icon: <TbFileCertificate className="mx-3 text-[26px]" />,
 					name: "My Certificates	",
 				},
 				{
 					link: "/mint",
-					icon: <FaCertificate className="mx-3 text-[26px]" />,
+					icon: <TbCertificate className="mx-3 text-[26px]" />,
 					name: "Mint Certi	",
 				},
 				{

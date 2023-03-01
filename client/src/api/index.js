@@ -2,7 +2,7 @@ import axios from "axios";
 import swal from "sweetalert";
 
 const API = axios.create({
-	baseURL: `http://3.110.67.226:8000/`,
+	baseURL: `https://ojuswi.pythonanywhere.com/`,
 	// baseURL: `http://localhost:5000/`,
 	// baseURL: `https://sih-a-normal-team.herokuapp.com`,
 });
@@ -65,7 +65,7 @@ export const getAttributes = async () => {
 
 export const addBankAccount = async (formData) => {
 	try {
-		const res = await API.patch("/accounts/users/", formData, config);
+		const res = await API.patch("/accounts/users/me", formData, config);
 		swal("Success", res.statusText, "success");
 		console.log(res);
 		return res;
