@@ -20,24 +20,26 @@ export const wallet = new BeaconWallet({
 		},
 	},
 });
+Tezos.setWalletProvider(wallet);
 
 export const mint_certificate = async (metadata, address) => {
-	if (!(await wallet.getPKH())) await connectWallet();
+	if (!(await wallet.client.getActiveAccount()))
+		await connectWallet();
 	const storage = await get_storage();
 	const token_id = storage.data.all_tokens;
-	const contract = await Tezos.contract.at(
+	const contract = await Tezos.wallet.at(
 		process.env.REACT_APP_CONTRACT_ADDRESS
 	);
 	const op = await contract.methodsObject
 		.mint({
-			metadata: new MichelsonMap.fromLiteral(metadata),
+			metadata: MichelsonMap.fromLiteral(metadata.metadata),
 			address,
 			token_id,
 			amount: 1,
 		})
 		.send();
 	await op.confirmation();
-	return op.hash;
+	return op.opHash;
 };
 
 export const get_certificate = () => {
@@ -80,10 +82,13 @@ export const get_storage = () => {
 };
 
 export const connectWallet = async () => {
-	try {
-		await wallet.requestPermissions();
-		Tezos.setWalletProvider(wallet);
-	} catch (error) {
-		console.log("error:", error);
-	}
+	await wallet.requestPermissions({
+		network: {
+			type: NetworkType.CUSTOM,
+			name: "Ghostnet",
+			rpcUrl: process.env.REACT_APP_RPC_URL,
+		}
+	});
+	const address = await wallet.getPKH();
+	localStorage.setItem("wallet", address);
 };
