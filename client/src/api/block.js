@@ -1,42 +1,43 @@
-import { TezosToolkit } from "@taquito/taquito";
-import { ThanosWallet } from "@thanos-wallet/dapp";
+import { TezosToolkit, MichelsonMap } from "@taquito/taquito";
+import { BeaconWallet } from "@taquito/beacon-wallet";
+import {
+	NetworkType,
+	BeaconEvent,
+	defaultEventCallbacks,
+} from "@airgap/beacon-sdk";
 import axios from "axios";
 import swal from "sweetalert";
 // import { sendStatus } from "./index";
 export const Tezos = new TezosToolkit(process.env.REACT_APP_RPC_URL);
-export const wallet = new ThanosWallet("CertiSetu");
+export const wallet = new BeaconWallet({
+	name: "CertiSetu",
+	preferredNetwork: NetworkType.GHOSTNET,
+	disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
+	eventHandlers: {
+		// To keep the pairing alert, we have to add the following default event handlers back
+		[BeaconEvent.PAIR_INIT]: {
+			handler: defaultEventCallbacks.PAIR_INIT,
+		},
+	},
+});
 
 export const mint_certificate = async (metadata, address) => {
-	const available = await ThanosWallet.isAvailable();
-	if (!available) swal("Error", "Thanos Wallet not installed", "error");
-	else
-		wallet
-			.connect("ghostnet")
-			.then(() => wallet.reconnect("ghostnet"))
-			.then(() => {
-				// Code to mint
-				get_storage().then(async (res) => {
-					const tokenId = res.data.all_tokens;
-					console.log(
-						"TOKENID:",
-						tokenId,
-						"KT1VdWmmLkpZPvZRijPuTS1cs7VBePcwiPE6"
-					);
-					console.log("TEZ:", Tezos);
-					const contract = Tezos.wallet
-						.at(process.env.REACT_APP_CONTRACT_ADDRESS)
-						.then(async (res) => {
-							console.log("CONTRACT:", res);
-							const op = await res.methodsObject.mint({
-								metadata,
-								address,
-								token_id: tokenId,
-								amount: 1,
-							});
-						})
-						.catch((err) => console.log(err));
-				});
-			});
+	if (!(await wallet.getPKH())) await connectWallet();
+	const storage = await get_storage();
+	const token_id = storage.data.all_tokens;
+	const contract = await Tezos.contract.at(
+		process.env.REACT_APP_CONTRACT_ADDRESS
+	);
+	const op = await contract.methodsObject
+		.mint({
+			metadata: new MichelsonMap.fromLiteral(metadata),
+			address,
+			token_id,
+			amount: 1,
+		})
+		.send();
+	await op.confirmation();
+	return op.hash;
 };
 
 export const get_certificate = () => {
@@ -79,14 +80,15 @@ export const get_storage = () => {
 };
 
 export const connectWallet = async () => {
-	const available = await ThanosWallet.isAvailable();
-	if (!available) swal("Error", "Thanos Wallet not installed", "error");
-	else
-		wallet
-			.connect("ghostnet")
-			.then(() => wallet.connect("ghostnet"))
-			.then(async () => {
-				await Tezos.setWalletProvider(wallet);
-				localStorage.setItem("wallet", await wallet.getPKH());
-			});
+	console.log("SEX");
+	try {
+		await wallet.requestPermissions({
+			network: {
+				type: NetworkType.GHOSTNET,
+			},
+		});
+		Tezos.setWalletProvider(wallet);
+	} catch (error) {
+		console.log("error:", error);
+	}
 };
