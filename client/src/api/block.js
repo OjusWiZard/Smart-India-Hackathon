@@ -80,13 +80,8 @@ export const get_storage = () => {
 };
 
 export const connectWallet = async () => {
-	console.log("SEX");
 	try {
-		await wallet.requestPermissions({
-			network: {
-				type: NetworkType.GHOSTNET,
-			},
-		});
+		await wallet.requestPermissions();
 		Tezos.setWalletProvider(wallet);
 	} catch (error) {
 		console.log("error:", error);
