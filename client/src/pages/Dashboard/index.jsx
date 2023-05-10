@@ -56,7 +56,7 @@ const Dashboard = () => {
 			}
 		})();
 	}, []);
-	console.log(showCerti);
+	console.log(showCerti, myApplications);
 
 	const colorMap = new Map();
 	colorMap.set("Eligible", "border-l-green-500");
@@ -159,7 +159,7 @@ const Dashboard = () => {
 						</div>
 						<div className="mt-5">
 							<div className="px-8 flex flex-col justify-start items-start bg-white rounded-md py-8">
-								{showCerti ? (
+								{true ? (
 									<div className="px-8 flex flex-col justify-start items-start bg-white rounded-md py-8">
 										{myApplications.map((application) => (
 											<div

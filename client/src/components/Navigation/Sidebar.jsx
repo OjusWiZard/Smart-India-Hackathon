@@ -48,7 +48,7 @@ const Sidebar = () => {
 			name: "Profile",
 		},
 	];
-	const links = isStudent
+	const links = !isStudent
 		? [
 				{
 					link: "/scholarships",
@@ -68,7 +68,7 @@ const Sidebar = () => {
 				{
 					link: "/mint",
 					icon: <TbCertificate className="mx-3 text-[26px]" />,
-					name: "Mint Certi	",
+					name: "Request NFT",
 				},
 				{
 					link: "/profile",
@@ -88,14 +88,14 @@ const Sidebar = () => {
 					name: "Scholarships",
 				},
 				{
-					link: "/nft",
-					icon: <TbFileCertificate className="mx-3 text-[26px]" />,
-					name: "My Certificates	",
+					link: "/mint",
+					icon: <TbCertificate className="mx-3 text-[26px]" />,
+					name: "Mint Certi	",
 				},
 				{
 					link: "/mint",
 					icon: <TbCertificate className="mx-3 text-[26px]" />,
-					name: "Mint Certi	",
+					name: "Requests",
 				},
 				{
 					link: "/profile",
@@ -124,7 +124,7 @@ const Sidebar = () => {
 									}
 								>
 									{icon}
-									<span className="font-normal">{name}</span>
+									<span className="font-normal">{name}s</span>
 								</NavLink>
 							);
 						})}

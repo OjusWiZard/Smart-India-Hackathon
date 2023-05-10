@@ -1,5 +1,5 @@
 import NftCard from "components/Cards/nft-card";
-import { getUserCustomCertificates } from "../../api/index";
+import { get_storage } from "../../api/block";
 import React, { useState, useEffect } from "react";
 
 const NFT = () => {
@@ -7,7 +7,28 @@ const NFT = () => {
 	const [nft, setNft] = useState([]);
 	useEffect(() => {
 		if (localStorage.getItem("wallet")) {
-			getUserCustomCertificates().then((res) => {
+			get_storage().then((res) => {
+				const NFTs = res.data.ledger.filter(
+					(data) =>
+						data.key.address === localStorage.getItem("wallet")
+				);
+				let ansArray = [];
+
+				const NFTData = Object.values(res.data.token_metadata).forEach(
+					// eslint-disable-next-line array-callback-return
+					(mdt) => {
+						NFTs.forEach((nft) => {
+							if (nft.key.nat === mdt.token_id) {
+								ansArray.push(mdt.token_info);
+							}
+						});
+					}
+				);
+				console.log(
+					"NFTDATA:",
+					Object.values(res.data.token_metadata),
+					ansArray
+				);
 				setNft(res);
 				setLoading(false);
 			});

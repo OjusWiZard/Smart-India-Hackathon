@@ -6,7 +6,7 @@ import swal from "sweetalert";
 export const Tezos = new TezosToolkit(process.env.REACT_APP_RPC_URL);
 export const wallet = new ThanosWallet("CertiSetu");
 
-export const mint_certificate = async () => {
+export const mint_certificate = async (metadata, address) => {
 	const available = await ThanosWallet.isAvailable();
 	if (!available) swal("Error", "Thanos Wallet not installed", "error");
 	else
@@ -15,12 +15,33 @@ export const mint_certificate = async () => {
 			.then(() => wallet.reconnect("ghostnet"))
 			.then(() => {
 				// Code to mint
+				get_storage().then(async (res) => {
+					const tokenId = res.data.all_tokens;
+					console.log(
+						"TOKENID:",
+						tokenId,
+						"KT1VdWmmLkpZPvZRijPuTS1cs7VBePcwiPE6"
+					);
+					console.log("TEZ:", Tezos);
+					const contract = Tezos.wallet
+						.at(process.env.REACT_APP_CONTRACT_ADDRESS)
+						.then(async (res) => {
+							console.log("CONTRACT:", res);
+							const op = await res.methodsObject.mint({
+								metadata,
+								address,
+								token_id: tokenId,
+								amount: 1,
+							});
+						})
+						.catch((err) => console.log(err));
+				});
 			});
 };
 
 export const get_certificate = () => {
 	axios
-		.get("https://api.hangzhou2net.tzkt.io/v1/bigmaps/176460/keys/0")
+		.get("https://api.ghostnet.tzkt.io/v1/bigmaps/176460/keys/0")
 		.then((res) => {
 			const id = Object.keys(res.data.value.token_info)[0].slice(7);
 			axios
@@ -46,12 +67,15 @@ export const pin_metadata = (metadata) => {
 	}
 };
 
-const get_storage = () => {
+export const get_storage = () => {
 	return axios
 		.get(
-			`https://api.hangzhou2net.tzkt.io/v1/contracts/${process.env.REACT_APP_CONTRACT_ADDRESS}/storage`
+			`https://api.ghostnet.tzkt.io/v1/contracts/${process.env.REACT_APP_CONTRACT_ADDRESS}/storage`
 		)
-		.then((res) => res.data);
+		.then((res) => {
+			console.log(res);
+			return res;
+		});
 };
 
 export const connectWallet = async () => {
@@ -62,6 +86,7 @@ export const connectWallet = async () => {
 			.connect("ghostnet")
 			.then(() => wallet.connect("ghostnet"))
 			.then(async () => {
+				await Tezos.setWalletProvider(wallet);
 				localStorage.setItem("wallet", await wallet.getPKH());
 			});
 };

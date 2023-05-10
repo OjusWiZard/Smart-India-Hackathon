@@ -12,8 +12,6 @@ import { get_certificate, mint_certificate } from "../../api/block";
 export default function Mint() {
 	const [details, setDetails] = useState({
 		name: "",
-		amount: "",
-		description: "",
 	});
 
 	const initialState = {};
@@ -21,7 +19,8 @@ export default function Mint() {
 	const [associated, setAssociated] = useState([]);
 	const [attributes, setAttributes] = useState();
 	const [logic, SetLogic] = useState();
-	const [number, setNumber] = useState([initialState]);
+	const [number, setNumber] = useState([{ attribute: "", value: "" }]);
+	const [tempDetails, setTempDetails] = useState();
 
 	const handleAttriChange = (index, e, val) => {
 		let newFormValues = [...number];
@@ -42,7 +41,8 @@ export default function Mint() {
 	};
 
 	const handleAddCriteria = () => {
-		setNumber((prevdata) => [...prevdata, initialState]);
+		setNumber((prevdata) => [...prevdata, tempDetails]);
+		// setTempDetails({ attribute: null, value: null });
 	};
 
 	const handleChange = (e) => {
@@ -52,10 +52,40 @@ export default function Mint() {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const metadata = { ...details, associated };
+		// console.log("ASS:", details, associated, number);
+		// mint_certificate({ ...details, number }, details.address);
+		console.log("NUMBER:", number);
+		let final = number.map((n, i) => {
+			if (i !== 0) {
+				let obj = {};
+				obj[n.attribute] = n.value;
+				return obj;
+			}
+		});
+		const spreadObject = final.reduce(
+			(acc, obj) => ({ ...acc, ...obj }),
+			{}
+		);
+		const metadata = { ...spreadObject, name: details.name };
+		console.log({ metadata }, details.address);
+		await mint_certificate({ metadata }, details.address);
 	};
+
+	const handleAttribute = (e) => {
+		setTempDetails({
+			...tempDetails,
+			attribute: e.target.value,
+		});
+	};
+	const handleValue = (e) => {
+		setTempDetails({
+			...tempDetails,
+			value: e.target.value,
+		});
+	};
+
 	return (
 		<>
 			<div className="px-14 py-[50px] bg-primary-light min-h-screen">
@@ -72,7 +102,18 @@ export default function Mint() {
 							<div className="font-bold text-2xl mt-4">Title</div>
 							<div className="flex items-center">
 								<TextInput
-									name="value"
+									name="name"
+									handleChange={handleChange}
+									placeholder={"Domicile Certificate"}
+									border="all"
+								/>
+							</div>
+							<div className="font-bold text-2xl mt-4">
+								Address
+							</div>
+							<div className="flex items-center">
+								<TextInput
+									name="address"
 									handleChange={handleChange}
 									placeholder={"Domicile Certificate"}
 									border="all"
@@ -88,7 +129,7 @@ export default function Mint() {
 											label={"Attribute"}
 											type="text"
 											name="attribute"
-											handleChange={handleChange}
+											handleChange={handleAttribute}
 											placeholder={"Result"}
 											border="all"
 										/>
@@ -96,7 +137,7 @@ export default function Mint() {
 											label={"Value"}
 											type="text"
 											name="value"
-											handleChange={handleChange}
+											handleChange={handleValue}
 											placeholder={"Pass/ Fail"}
 											border="all"
 										/>
@@ -123,7 +164,8 @@ export default function Mint() {
 							<FilledPrimary
 								className={"my-4 bg-primary-dark"}
 								text={"Mint Certificate"}
-								handleClick={() => mint_certificate()}
+								handleClick={(e) => handleSubmit(e)}
+								// handleClick={() => mint_certificate()}
 							/>
 						</div>
 					</form>

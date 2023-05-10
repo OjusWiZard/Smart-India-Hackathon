@@ -224,7 +224,7 @@ export const getUserCustomCertificates = async () => {
 			`https://api.ghostnet.tzkt.io/v1/tokens/balances?account=${localStorage.getItem(
 				"wallet"
 			)}&balance.gt=0&token.contract=${
-				process.env.REACT_APP_CONTRACT_ADDRESS_NFT
+				process.env.REACT_APP_CONTRACT_ADDRESS
 			}`
 		);
 		return res.data;
