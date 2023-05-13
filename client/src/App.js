@@ -41,6 +41,7 @@ function App() {
 	// const user = localStorage.getItem('jwt-token');
 	// const pathname = navigate.pathname();
 	// console.log(pathname);
+
 	useEffect(() => {
 		if (pathname !== "/login" && pathname !== "/") {
 			(async () => {

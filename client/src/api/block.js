@@ -1,6 +1,7 @@
 import axios from "axios";
 import swal from "sweetalert";
 import { create } from "ipfs-http-client";
+import ContractABI from "../contract/certificate-abi.json";
 
 const projectId = process.env.REACT_APP_INFURA_KEY;
 const projectSecret = process.env.REACT_APP_INFURA_SECRET;
@@ -26,10 +27,60 @@ export const uploadDataToIPFS = async (file) => {
 	}
 };
 
+export const getDataFromIPFS = async (hash) => {
+	try {
+		const response = await axios.get(
+			`${process.env.REACT_APP_GATEWAY}/ipfs/${hash}`
+		);
+		return await response.data;
+	} catch (error) {
+		console.log("ERROR", error);
+	}
+};
+
+export const getTokenIdFromAddress = async (address) => {
+	try {
+		const { ethers } = await import("ethers");
+		const provider = new ethers.providers.Web3Provider(window.ethereum);
+		await provider.send("eth_requestAccounts", []);
+		const signer = provider.getSigner();
+		const nftContract = new ethers.Contract(
+			process.env.REACT_APP_CONTRACT_ADDRESS,
+			ContractABI,
+			signer
+		);
+		const txn = await nftContract.getUserTokensIDs(address);
+		for (let tokenId of txn) {
+			const tokenURI = await nftContract.tokenURI(tokenId._hex);
+			const objs = await getDataFromIPFS(tokenURI);
+			console.log("URI", objs);
+		}
+
+		return txn;
+	} catch (error) {
+		console.log("ERROR:", error);
+	}
+};
+
 export const mint_certificate = async (file, address) => {
 	try {
-		await uploadDataToIPFS(file);
+		const res = await uploadDataToIPFS(file);
+		console.log("UPLOADED TO IPFS", res);
+		const { ethers } = await import("ethers");
+		const provider = new ethers.providers.Web3Provider(window.ethereum);
+		await provider.send("eth_requestAccounts", []);
+		const signer = provider.getSigner();
+		const nftContract = new ethers.Contract(
+			process.env.REACT_APP_CONTRACT_ADDRESS,
+			ContractABI,
+			signer
+		);
+		const txn = await nftContract.safeMint(address, res.path);
+		await txn.wait();
+		console.log(txn);
+		return txn;
 	} catch (error) {
+		console.log("ERROR", error);
 		swal("Error", error);
 	}
 };
