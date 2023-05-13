@@ -29,7 +29,6 @@ const Navbar = () => {
 					<div
 						onClick={async () => {
 							await connectWallet();
-							window.location.reload();
 						}}
 						className="border border-gray-400 py-2 px-4 bg-gradient-to-r from-blue-500 rounded-lg cursor-pointer to-primary-dark text-white font-semibold text-sm"
 					>

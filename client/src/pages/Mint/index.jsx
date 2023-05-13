@@ -7,7 +7,11 @@ import { getAttributes, getLogicList } from "api";
 import { Listbox } from "@headlessui/react";
 import { HiSelector } from "react-icons/hi";
 import { AiOutlineCheck } from "react-icons/ai";
-import { get_certificate, mint_certificate } from "../../api/block";
+import {
+	get_certificate,
+	mint_certificate,
+	uploadDataToIPFS,
+} from "../../api/block";
 
 export default function Mint() {
 	const [details, setDetails] = useState({
@@ -54,7 +58,22 @@ export default function Mint() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const metadata = { ...details, associated };
+		console.log("NUMBER:", number);
+		let final = number.map((n, i) => {
+			if (i !== 0) {
+				let obj = {};
+				obj[n.attribute] = n.value;
+				return obj;
+			}
+		});
+		const spreadObject = final.reduce(
+			(acc, obj) => ({ ...acc, ...obj }),
+			{}
+		);
+		const metadata = { ...spreadObject, name: details.name };
+
+		console.log("METDATA:", JSON.stringify(metadata));
+		uploadDataToIPFS(JSON.stringify(metadata));
 	};
 	return (
 		<>
@@ -123,7 +142,7 @@ export default function Mint() {
 							<FilledPrimary
 								className={"my-4 bg-primary-dark"}
 								text={"Mint Certificate"}
-								handleClick={() => mint_certificate()}
+								handleClick={(e) => handleSubmit(e)}
 							/>
 						</div>
 					</form>

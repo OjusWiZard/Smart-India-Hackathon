@@ -11,7 +11,7 @@ const FilledPrimary = ({
 	return (
 		<button
 			disabled={disabled}
-			onClick={() => handleClick()}
+			onClick={handleClick}
 			className={`bg-primary-dark opacity-90 ${
 				!disabled && "hover:opacity-100"
 			} rounded-md w-full py-4 

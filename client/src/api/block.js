@@ -1,26 +1,42 @@
-import { TezosToolkit } from "@taquito/taquito";
-import { ThanosWallet } from "@thanos-wallet/dapp";
 import axios from "axios";
 import swal from "sweetalert";
-// import { sendStatus } from "./index";
-export const Tezos = new TezosToolkit(process.env.REACT_APP_RPC_URL);
-export const wallet = new ThanosWallet("CertiSetu");
+import { create } from "ipfs-http-client";
 
-export const mint_certificate = async () => {
-	const available = await ThanosWallet.isAvailable();
-	if (!available) swal("Error", "Thanos Wallet not installed", "error");
-	else
-		wallet
-			.connect("ghostnet")
-			.then(() => wallet.reconnect("ghostnet"))
-			.then(() => {
-				// Code to mint
-			});
+const projectId = process.env.REACT_APP_INFURA_KEY;
+const projectSecret = process.env.REACT_APP_INFURA_SECRET;
+console.log("PROJECTID", projectId);
+const auth = "Basic " + btoa(projectId + ":" + projectSecret);
+
+const client = create({
+	host: "ipfs.infura.io",
+	port: 5001,
+	protocol: "https",
+	headers: {
+		authorization: auth,
+	},
+});
+
+export const uploadDataToIPFS = async (file) => {
+	try {
+		const response = await client.add(file);
+		console.log("RESPONSE");
+		return response;
+	} catch (error) {
+		swal("Error", "Error in uploading data to IPFS");
+	}
+};
+
+export const mint_certificate = async (file, address) => {
+	try {
+		await uploadDataToIPFS(file);
+	} catch (error) {
+		swal("Error", error);
+	}
 };
 
 export const get_certificate = () => {
 	axios
-		.get("https://api.hangzhou2net.tzkt.io/v1/bigmaps/176460/keys/0")
+		.get("https://api.ghostnet.tzkt.io/v1/bigmaps/176460/keys/0")
 		.then((res) => {
 			const id = Object.keys(res.data.value.token_info)[0].slice(7);
 			axios
@@ -46,22 +62,30 @@ export const pin_metadata = (metadata) => {
 	}
 };
 
-const get_storage = () => {
+export const get_storage = () => {
 	return axios
 		.get(
-			`https://api.hangzhou2net.tzkt.io/v1/contracts/${process.env.REACT_APP_CONTRACT_ADDRESS}/storage`
+			`https://api.ghostnet.tzkt.io/v1/contracts/${process.env.REACT_APP_CONTRACT_ADDRESS}/storage`
 		)
-		.then((res) => res.data);
+		.then((res) => {
+			console.log(res);
+			return res;
+		});
 };
 
 export const connectWallet = async () => {
-	const available = await ThanosWallet.isAvailable();
-	if (!available) swal("Error", "Thanos Wallet not installed", "error");
-	else
-		wallet
-			.connect("ghostnet")
-			.then(() => wallet.connect("ghostnet"))
-			.then(async () => {
-				localStorage.setItem("wallet", await wallet.getPKH());
-			});
+	try {
+		if (!window.ethereum) {
+			alert("Please install metamask");
+			return;
+		}
+		const { ethers } = await import("ethers");
+		const provider = new ethers.providers.Web3Provider(window.ethereum);
+		await provider.send("eth_requestAccounts", []);
+		const signer = provider.getSigner();
+		const address = await signer.getAddress();
+		localStorage.setItem("wallet", address);
+	} catch (error) {
+		console.log("ERROR:", error);
+	}
 };
